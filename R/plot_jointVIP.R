@@ -162,7 +162,7 @@ plot_jointVIP = function(df,
   # plot(std_diff, control_cor)
   measures = get_measures(df=df, covariates=covariates,
                           treatment=treatment, outcome=outcome,
-                          pilot_prop=0.2, seed = seed,
+                          pilot_prop=pilot_prop, seed = seed,
                           use_abs=use_abs)
   progs = measures$progs
   props = measures$props
