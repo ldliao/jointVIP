@@ -16,5 +16,10 @@ RoxygenNote: 7.1.1
 Imports: 
     dplyr,
     testthat,
-    ggplot2
+    ggplot2,
+    ggrepel
 Config/testthat/edition: 3
+Collate: 
+    'calc_measure.R'
+    'global.R'
+    'plot_jointVIP.R'
