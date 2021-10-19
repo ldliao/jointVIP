@@ -163,7 +163,7 @@ get_props <- function(df,
          title = "Propensity score comparison")
   return(list('props_plot' = props_plot,
               'props' = prop_scores$prop_score,
-              'props_coef' = glm_prop_score$coefficients))
+              'props_fit' = glm_prop_score))
 }
 
 #' Plot prognostic score histogram and get prognostic score.
@@ -197,5 +197,5 @@ get_progs <- function(df, covariates, outcome, pilot_sample_num) {
 
   return(list('progs_plot' = progs_plot,
               'progs' = prog_scores$prog_score,
-              'progs_coef' = glm_prog_score$coefficients))
+              'progs_fit' = glm_prog_score))
 }

@@ -67,8 +67,7 @@ get_jointVIP <-
     }
     for (b in bias_curve_cutoffs) {
       loop_input = paste("geom_function(fun = bias_func(",
-                         b
-                         ,
+                         b,
                          "), linetype = 'dotted',alpha = 0.4)",
                          sep = "")
       p <- p + eval(parse(text = loop_input))
@@ -189,10 +188,10 @@ plot_jointVIP = function(df,
     list(
       'VIP' = joint_vip,
       'propensity_comparison' = props$props_plot,
-      'propensity_coef' = props$props_coef,
+      'propensity_fit' = props$props_fit,
       'prognostic_histogram' = progs$progs_plot,
-      'prognostic_coef' = progs$progs_coef,
-      'measures' = measures
+      'prognostic_fit' = progs$progs_fit,
+      'measures' = measures$measures
     )
   )
 }
