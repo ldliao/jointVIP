@@ -157,8 +157,6 @@ plot_jointVIP = function(df,
                          plot_title = "Joint variable importance") {
   df = df[, c(covariates, treatment, outcome)]
   # sample splitting
-  set.seed(seed = seed)
-
   # plot(std_diff, control_cor)
   measures = get_measures(df=df, covariates=covariates,
                           treatment=treatment, outcome=outcome,
