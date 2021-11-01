@@ -5,16 +5,14 @@ NULL
 #' Get the measures and create plot
 #'
 #' @param measures the measures calculated for jointVIP
-#' @param use_pilot_denom if true uses the pilot denominator
-#' @param use_min_denom if true uses the min denominator between pilot or regular
+#' @param use_denom must be "standard", "pilot", or "min"
 #' @param bias_curve_cutoffs cut offs of the bias curve one wishes to plot
 #' @param use_abs boolean to denote whether absolute values are used to construct the measures
 #' @param plot_title title of the plot to plot
 get_jointVIP <-
   function(measures,
-           use_pilot_denom = F,
            bias_curve_cutoffs = c(-0.05,-0.03,-0.01,-0.005, 0.005, 0.01, 0.03, 0.05),
-           use_abs = F, use_min_denom = F,
+           use_abs = F, use_denom = "standard",
            plot_title = "Joint variable importance") {
     max_y = min(round(max(measures$control_cor), 1) + 0.1, 1)
     if (!use_abs) {
@@ -23,12 +21,15 @@ get_jointVIP <-
       min_y = 0
     }
 
+    if (!(use_denom %in% c("standard", "pilot", "min"))){
+      stop("The use_denom must be 'stanard', 'pilot', or 'min'; please check input!")
+    }
 
-    if (use_pilot_denom) {
+    if (use_denom == 'pilot') {
       measures$std_diff = measures$standard_difference_pilot
       measures$bias = measures$bias_std_diff_pilot_denom
     } else {
-      if (use_min_denom) {
+      if (use_denom == 'min') {
         measures$std_diff = measures$standard_difference_max
         measures$bias = measures$bias_max
       } else {
@@ -61,7 +62,7 @@ get_jointVIP <-
         color = "Bias"
       ) +
       ylim(c(min_y, max_y)) +
-      geom_text_repel(data = subset(measures, std_diff >= 0.1), size = 3)
+      geom_text_repel(data = subset(measures, (std_diff >= 0.1 | control_cor >= 0.1)), size = 3)
 
     bias_func = function(i) {
       i = force(i)
@@ -146,7 +147,7 @@ get_jointVIP <-
 #' @param seed int random seed
 #' @param bias_curve_cutoffs cut offs of the bias curve one wishes to plot
 #' @param use_abs boolean to denote whether absolute values are used to construct the measures
-#' @param use_pilot_denom if true uses the pilot denominator
+#' @param use_denom must be "standard", "pilot", or "min"
 #' @param plot_title title of the plot to plot
 #' @return a list
 #' @export
@@ -158,8 +159,7 @@ plot_jointVIP = function(df,
                          seed = 2521323,
                          bias_curve_cutoffs = NULL,
                          use_abs = F,
-                         use_pilot_denom = F,
-                         use_min_denom = F,
+                         use_denom = 'standard',
                          plot_title = "Joint variable importance") {
   df = df[, c(covariates, treatment, outcome)]
   # sample splitting
@@ -182,8 +182,7 @@ plot_jointVIP = function(df,
 
   joint_vip = get_jointVIP(
     measures$measures,
-    use_pilot_denom = use_pilot_denom,
-    use_min_denom = use_min_denom,
+    use_denom = use_denom,
     bias_curve_cutoffs = bias_curve_cutoffs,
     use_abs = use_abs,
     plot_title = plot_title

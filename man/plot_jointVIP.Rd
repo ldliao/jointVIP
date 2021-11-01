@@ -13,8 +13,7 @@ plot_jointVIP(
   seed = 2521323,
   bias_curve_cutoffs = NULL,
   use_abs = F,
-  use_pilot_denom = F,
-  use_min_denom = F,
+  use_denom = "standard",
   plot_title = "Joint variable importance"
 )
 }
@@ -35,7 +34,7 @@ plot_jointVIP(
 
 \item{use_abs}{boolean to denote whether absolute values are used to construct the measures}
 
-\item{use_pilot_denom}{if true uses the pilot denominator}
+\item{use_denom}{must be "standard", "pilot", or "min"}
 
 \item{plot_title}{title of the plot to plot}
 }

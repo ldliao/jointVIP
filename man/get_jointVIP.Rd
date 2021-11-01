@@ -6,23 +6,20 @@
 \usage{
 get_jointVIP(
   measures,
-  use_pilot_denom = F,
   bias_curve_cutoffs = c(-0.05, -0.03, -0.01, -0.005, 0.005, 0.01, 0.03, 0.05),
   use_abs = F,
-  use_min_denom = F,
+  use_denom = "standard",
   plot_title = "Joint variable importance"
 )
 }
 \arguments{
 \item{measures}{the measures calculated for jointVIP}
 
-\item{use_pilot_denom}{if true uses the pilot denominator}
-
 \item{bias_curve_cutoffs}{cut offs of the bias curve one wishes to plot}
 
 \item{use_abs}{boolean to denote whether absolute values are used to construct the measures}
 
-\item{use_min_denom}{if true uses the min denominator between pilot or regular}
+\item{use_denom}{must be "standard", "pilot", or "min"}
 
 \item{plot_title}{title of the plot to plot}
 }
