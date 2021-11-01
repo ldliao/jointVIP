@@ -187,7 +187,7 @@ plot_jointVIP = function(df,
       'VIP' = joint_vip,
       'propensity_comparison' = props$props_plot,
       'propensity_fit' = props$props_fit,
-      'prognostic_histogram' = progs$progs_plot,
+      'prognostic_fit' = progs$progs_plot,
       'prognostic_fit' = progs$progs_fit,
       'measures' = measures$measures
     )

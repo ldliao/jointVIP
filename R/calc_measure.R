@@ -83,6 +83,32 @@ get_measures = function(df, covariates, treatment, outcome,
       analysis_diff / pilot_denom,
     label = names(pilot_cor)
   )
+
+
+  progs$progs_plot = ggplot(data.frame(prognostic_score = analysis_sample$prognostic_score), aes_q(quote(prognostic_score),
+                                         fill = factor(analysis_sample %>% pull(treatment)))) +
+    geom_histogram(alpha = 0.5,
+                   binwidth = 0.05,
+                   position = "identity") +
+    theme_minimal() +
+    scale_fill_discrete(name = toTitleCase(tolower(as.character(treatment))),
+                        labels = c("control", "treatment")) +
+    labs(x = "Prognostic score",
+         y = "Count",
+         title = "Prognostic score comparison")
+
+  props$props_plot = ggplot(data.frame(propensity_score = analysis_sample$propensity_score), aes_q(quote(propensity_score),
+                                                                                                   fill = factor(analysis_sample %>% pull(treatment)))) +
+    geom_histogram(alpha = 0.5,
+                   binwidth = 0.05,
+                   position = "identity") +
+    theme_minimal() +
+    scale_fill_discrete(name = toTitleCase(tolower(as.character(treatment))),
+                        labels = c("control", "treatment")) +
+    labs(x = "Propensity score",
+         y = "Count",
+         title = "Propensity score comparison")
+
   return(list('measures'=measures, 'props'=props, 'progs'=progs))
 }
 
@@ -151,18 +177,8 @@ get_props <- function(df,
     prop_score = stats::predict(glm_prop_score,
                                 df, type = "response")
   )
-  props_plot = ggplot(prop_scores, aes_q(quote(prop_score), fill = factor(df %>% pull(treatment)))) +
-    geom_histogram(alpha = 0.5,
-                   binwidth = 0.05,
-                   position = "identity") +
-    theme_minimal() +
-    scale_fill_discrete(name = toTitleCase(tolower(as.character(treatment))),
-                        labels = c("control", "treatment")) +
-    labs(x = "Propensity score",
-         y = "Count",
-         title = "Propensity score comparison")
-  return(list('props_plot' = props_plot,
-              'props' = prop_scores$prop_score,
+
+  return(list('props' = prop_scores$prop_score,
               'props_fit' = glm_prop_score))
 }
 
@@ -183,19 +199,6 @@ get_progs <- function(df, covariates, outcome, pilot_sample_num) {
   prog_scores = data.frame(prog_score = stats::predict(glm_prog_score,
                                                        df, type = "response"))
 
-  progs_plot = ggplot(prog_scores, aes_q(quote(prog_score))) +
-    geom_histogram(
-      fill = '#E69F00',
-      alpha = 0.5,
-      binwidth = 0.05,
-      position = "identity"
-    ) +
-    theme_minimal() +
-    labs(x = "Prognostic score",
-         y = "Count",
-         title = "Prognostic score estimation")
-
-  return(list('progs_plot' = progs_plot,
-              'progs' = prog_scores$prog_score,
+  return(list('progs' = prog_scores$prog_score,
               'progs_fit' = glm_prog_score))
 }
