@@ -100,7 +100,7 @@ get_measures = function(df, covariates, treatment, outcome,
   props$props_plot = ggplot(data.frame(propensity_score = analysis_sample$propensity_score), aes_q(quote(propensity_score),
                                                                                                    fill = factor(analysis_sample %>% pull(treatment)))) +
     geom_histogram(alpha = 0.5,
-                   binwidth = 0.05,
+                   binwidth = 0.1,
                    position = "identity") +
     theme_minimal() +
     scale_fill_discrete(name = toTitleCase(tolower(as.character(treatment))),
@@ -192,13 +192,17 @@ get_props <- function(df,
 get_progs <- function(df, covariates, outcome, pilot_sample_num) {
   fmla = stats::as.formula(paste(paste(outcome, "~ "),
                                  paste(".", collapse = "+")))
+  family = if (length(unique(df %>% pull(outcome))) != 2){stats::gaussian()}
+  else{stats::binomial()}
 
-  glm_prog_score <- stats::glm(fmla, family = stats::binomial(),
+  glm_prog_score <- stats::glm(fmla, family = family,
                                data = df[pilot_sample_num, c(covariates, outcome)])
 
   prog_scores = data.frame(prog_score = stats::predict(glm_prog_score,
                                                        df, type = "response"))
-
+  # unsure if this is needed
+  range01 <- function(x){(x-min(x))/(max(x)-min(x))}
+  prog_scores = range01(prog_scores)
   return(list('progs' = prog_scores$prog_score,
               'progs_fit' = glm_prog_score))
 }

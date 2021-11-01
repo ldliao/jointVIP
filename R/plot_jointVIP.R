@@ -56,7 +56,7 @@ get_jointVIP <-
         color = "Bias"
       ) +
       ylim(c(min_y, max_y)) +
-      geom_text_repel(size = 3)
+      geom_text_repel(data = subset(measures, std_diff >= 0.1), size = 3)
 
     bias_func = function(i) {
       i = force(i)
@@ -187,7 +187,7 @@ plot_jointVIP = function(df,
       'VIP' = joint_vip,
       'propensity_comparison' = props$props_plot,
       'propensity_fit' = props$props_fit,
-      'prognostic_fit' = progs$progs_plot,
+      'prognostic_comparison' = progs$progs_plot,
       'prognostic_fit' = progs$progs_fit,
       'measures' = measures$measures
     )
