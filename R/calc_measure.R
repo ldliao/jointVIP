@@ -68,19 +68,41 @@ get_measures = function(df, covariates, treatment, outcome,
     analysis_diff = abs(analysis_diff)
     pilot_cor = abs(pilot_cor)
   }
+
+  standard_difference = analysis_diff / analysis_denom
+  standard_difference_pilot = analysis_diff / pilot_denom
+  control_cor = pilot_cor
+  bias_std_diff_analysis_denom = # stats::sd(pilot_sample %>% pull(outcome)) *
+    # removing this means that we are looking at the bias curves
+    # where 0.005 "bias" is bias measured divided by standard deviation of the outcome
+    # note this is okay because it is the same for every variable
+    pilot_cor *
+    standard_difference
+  bias_std_diff_pilot_denom = # stats::sd(pilot_sample %>% pull(outcome)) *
+    pilot_cor *
+    standard_difference_pilot
+  # pairwise min
+  min_denom = pmin(bias_std_diff_analysis_denom, bias_std_diff_pilot_denom)
+  standard_difference_max = analysis_diff / min_denom
+  bias_max = # stats::sd(pilot_sample %>% pull(outcome)) *
+    pilot_cor *
+    standard_difference_max
+
   measures = data.frame(
-    standard_difference = analysis_diff / analysis_denom,
-    standard_difference_pilot = analysis_diff / pilot_denom,
-    control_cor = pilot_cor,
+    standard_difference = standard_difference,
+    standard_difference_pilot = standard_difference_pilot,
+    control_cor = control_cor,
     bias_std_diff_analysis_denom = # stats::sd(pilot_sample %>% pull(outcome)) *
       # removing this means that we are looking at the bias curves
       # where 0.005 "bias" is bias measured divided by standard deviation of the outcome
       # note this is okay because it is the same for every variable
-      pilot_cor *
-      analysis_diff / analysis_denom,
+      bias_std_diff_analysis_denom,
     bias_std_diff_pilot_denom = # stats::sd(pilot_sample %>% pull(outcome)) *
-      pilot_cor *
-      analysis_diff / pilot_denom,
+      bias_std_diff_pilot_denom,
+    # pairwise max
+    standard_difference_max = pmax(standard_difference, standard_difference_pilot),
+    bias_max = # stats::sd(pilot_sample %>% pull(outcome)) *
+      pmax(bias_std_diff_analysis_denom, bias_std_diff_pilot_denom),
     label = names(pilot_cor)
   )
 

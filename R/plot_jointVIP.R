@@ -6,6 +6,7 @@ NULL
 #'
 #' @param measures the measures calculated for jointVIP
 #' @param use_pilot_denom if true uses the pilot denominator
+#' @param use_min_denom if true uses the min denominator between pilot or regular
 #' @param bias_curve_cutoffs cut offs of the bias curve one wishes to plot
 #' @param use_abs boolean to denote whether absolute values are used to construct the measures
 #' @param plot_title title of the plot to plot
@@ -13,7 +14,7 @@ get_jointVIP <-
   function(measures,
            use_pilot_denom = F,
            bias_curve_cutoffs = c(-0.05,-0.03,-0.01,-0.005, 0.005, 0.01, 0.03, 0.05),
-           use_abs = F,
+           use_abs = F, use_min_denom = F,
            plot_title = "Joint variable importance") {
     max_y = min(round(max(measures$control_cor), 1) + 0.1, 1)
     if (!use_abs) {
@@ -27,8 +28,12 @@ get_jointVIP <-
       measures$std_diff = measures$standard_difference_pilot
       measures$bias = measures$bias_std_diff_pilot_denom
     } else {
+      if (use_min_denom) {
+        measures$std_diff = measures$standard_difference_max
+        measures$bias = measures$bias_max
+      } else {
       measures$std_diff = measures$standard_difference
-      measures$bias = measures$bias_std_diff_analysis_denom
+      measures$bias = measures$bias_std_diff_analysis_denom}
     }
 
     # plot function
@@ -154,6 +159,7 @@ plot_jointVIP = function(df,
                          bias_curve_cutoffs = NULL,
                          use_abs = F,
                          use_pilot_denom = F,
+                         use_min_denom = F,
                          plot_title = "Joint variable importance") {
   df = df[, c(covariates, treatment, outcome)]
   # sample splitting
@@ -177,6 +183,7 @@ plot_jointVIP = function(df,
   joint_vip = get_jointVIP(
     measures$measures,
     use_pilot_denom = use_pilot_denom,
+    use_min_denom = use_min_denom,
     bias_curve_cutoffs = bias_curve_cutoffs,
     use_abs = use_abs,
     plot_title = plot_title

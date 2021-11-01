@@ -9,6 +9,7 @@ get_jointVIP(
   use_pilot_denom = F,
   bias_curve_cutoffs = c(-0.05, -0.03, -0.01, -0.005, 0.005, 0.01, 0.03, 0.05),
   use_abs = F,
+  use_min_denom = F,
   plot_title = "Joint variable importance"
 )
 }
@@ -20,6 +21,8 @@ get_jointVIP(
 \item{bias_curve_cutoffs}{cut offs of the bias curve one wishes to plot}
 
 \item{use_abs}{boolean to denote whether absolute values are used to construct the measures}
+
+\item{use_min_denom}{if true uses the min denominator between pilot or regular}
 
 \item{plot_title}{title of the plot to plot}
 }

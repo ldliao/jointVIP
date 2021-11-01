@@ -14,6 +14,7 @@ plot_jointVIP(
   bias_curve_cutoffs = NULL,
   use_abs = F,
   use_pilot_denom = F,
+  use_min_denom = F,
   plot_title = "Joint variable importance"
 )
 }
