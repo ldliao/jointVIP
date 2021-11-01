@@ -62,7 +62,7 @@ get_jointVIP <-
         color = "Bias"
       ) +
       ylim(c(min_y, max_y)) +
-      geom_text_repel(data = subset(measures, (std_diff >= 0.1 | control_cor >= 0.1)), size = 3)
+      geom_text_repel(data = subset(measures, (abs(std_diff) >= 0.1 | abs(control_cor) >= 0.1)), size = 3)
 
     bias_func = function(i) {
       i = force(i)
