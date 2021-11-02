@@ -17,9 +17,11 @@ Imports:
     dplyr,
     testthat,
     ggplot2,
-    ggrepel
+    ggrepel,
+    pheatmap
 Config/testthat/edition: 3
 Collate: 
     'calc_measure.R'
+    'calc_measure_variation.R'
     'global.R'
     'plot_jointVIP.R'

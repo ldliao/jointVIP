@@ -92,6 +92,8 @@ get_measures = function(df, covariates, treatment, outcome,
     standard_difference = standard_difference,
     standard_difference_pilot = standard_difference_pilot,
     control_cor = control_cor,
+    # pairwise max
+    standard_difference_max = pmax(standard_difference, standard_difference_pilot),
     bias_std_diff_analysis_denom = # stats::sd(pilot_sample %>% pull(outcome)) *
       # removing this means that we are looking at the bias curves
       # where 0.005 "bias" is bias measured divided by standard deviation of the outcome
@@ -99,8 +101,6 @@ get_measures = function(df, covariates, treatment, outcome,
       bias_std_diff_analysis_denom,
     bias_std_diff_pilot_denom = # stats::sd(pilot_sample %>% pull(outcome)) *
       bias_std_diff_pilot_denom,
-    # pairwise max
-    standard_difference_max = pmax(standard_difference, standard_difference_pilot),
     bias_max = # stats::sd(pilot_sample %>% pull(outcome)) *
       pmax(bias_std_diff_analysis_denom, bias_std_diff_pilot_denom),
     label = names(pilot_cor)
