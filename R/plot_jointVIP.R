@@ -1,5 +1,5 @@
-#' @import dplyr tools ggplot2 ggrepel
-#' @include calc_measure.R
+#' @import dplyr tools ggplot2 ggrepel tidyr
+#' @include calc_measures.R calc_boot_variation.R
 NULL
 
 #' Get the measures and create plot
@@ -9,11 +9,20 @@ NULL
 #' @param bias_curve_cutoffs cut offs of the bias curve one wishes to plot
 #' @param use_abs boolean to denote whether absolute values are used to construct the measures
 #' @param plot_title title of the plot to plot
+#' @param pre_matched_alpha set to 1; changed if post-match exists
+#' @param label_cutoff_std_diff text label cut off for standardized difference
+#' @param label_cutoff_control_cor text label cut off for correlation
+#' @param label_cutoff_bias text label cut off for bias
 get_jointVIP <-
   function(measures,
            bias_curve_cutoffs = c(-0.05,-0.03,-0.01,-0.005, 0.005, 0.01, 0.03, 0.05),
            use_abs = F, use_denom = "standard",
-           plot_title = "Joint variable importance") {
+           plot_title = "Joint variable importance",
+           pre_matched_alpha = 1,
+           label_cutoff_std_diff=NULL,
+           label_cutoff_control_cor=NULL,
+           label_cutoff_bias=NULL) {
+
     max_y = min(round(max(measures$control_cor), 1) + 0.1, 1)
     if (!use_abs) {
       min_y = max(round(min(measures$control_cor), 1) - 0.1,-1)
@@ -21,31 +30,44 @@ get_jointVIP <-
       min_y = 0
     }
 
-    if (!(use_denom %in% c("standard", "pilot", "min"))){
-      stop("The use_denom must be 'stanard', 'pilot', or 'min'; please check input!")
+    if (!(use_denom %in% c("standard", "pilot", "min", "both"))){
+      stop("The use_denom must be 'standard', 'pilot', 'min', or 'both' ; please check input!")
     }
 
     if (use_denom == 'pilot') {
       measures$std_diff = measures$standard_difference_pilot
-      measures$bias = measures$bias_std_diff_pilot_denom
+      measures$bias = measures$bias_std_diff_pilot
     } else {
       if (use_denom == 'min') {
         measures$std_diff = measures$standard_difference_max
         measures$bias = measures$bias_max
       } else {
-      measures$std_diff = measures$standard_difference
-      measures$bias = measures$bias_std_diff_analysis_denom}
+        measures$std_diff = measures$standard_difference
+        measures$bias = measures$bias_std_diff_analysis}
     }
 
+    if(is.null(label_cutoff_std_diff)){
+      label_cutoff_std_diff = 0
+    }
+    if(is.null(label_cutoff_control_cor)){
+      label_cutoff_control_cor = 0
+    }
+    if(is.null(label_cutoff_bias)){
+      label_cutoff_bias = 0
+    }
+
+    measures$text_labels = measures$label
+    measures[!((abs(measures$std_diff) >= label_cutoff_std_diff) |
+                 (abs(measures$control_cor) >= label_cutoff_control_cor)) &
+               (abs(measures$bias) >= label_cutoff_bias),'text_labels'] = ""
     # plot function
-    p = ggplot(measures,
-               aes(
-                 x = std_diff,
-                 y = control_cor,
-                 color = bias,
-                 label = label
-               )) +
-      geom_point() +
+    p = ggplot(measures, aes(
+      x = std_diff,
+      y = control_cor,
+      color = bias,
+      label = label
+    )) +
+      geom_point(alpha=pre_matched_alpha) +
       scale_color_gradient(low = "blue", high = "red") +
       theme_minimal() +
       theme(
@@ -62,7 +84,7 @@ get_jointVIP <-
         color = "Bias"
       ) +
       ylim(c(min_y, max_y)) +
-      geom_text_repel(data = subset(measures, (abs(std_diff) >= 0.1 | abs(control_cor) >= 0.05)), size = 3)
+      geom_text_repel(mapping = aes(label = text_labels), size = 3)
 
     bias_func = function(i) {
       i = force(i)
@@ -119,8 +141,6 @@ get_jointVIP <-
       if (0.005 %in% bias_curve_cutoffs) {
         text_bias_lab$y[which(bias_curve_cutoffs == 0.005)] = max_y - 0.02
       }
-
-      p = p + xlim(c(0,max(measures$std_diff)+0.1))
       #min(round(max(measures$std_diff), 1) + 0.1, 1)))
     }
 
@@ -133,60 +153,100 @@ get_jointVIP <-
         size = 2.5
       )
 
+    if (use_denom == 'both'){
+      m = measures[, c('standard_difference',
+                       'standard_difference_pilot','label')]
+      mm = tidyr::gather(m, 'std_diffs', 'values', -label)
+      mm$cors = measures$control_cor
+      mm$bias = measures$bias_std_diff_pilot
+      p = p +
+        geom_point(data = mm[mm$std_diffs == "standard_difference_pilot",],
+                   aes(values, cors), alpha=0.4) +
+        geom_line(data = mm, aes(values,cors, group = label), alpha=.4) +
+        labs(subtitle = "Pilot standardized differences plotted with transparency") +
+        xlim(c(0,max(measures$standard_difference_pilot)+0.1))
+    } else {
+      if(use_abs == T){
+        p = p + xlim(c(0,max(measures$std_diff)+0.1))
+      }
+    }
+
     return(p)
   }
 
 
 #' Wrapper for the plot
 #'
-#' @param df data.frame of the original data
+#' @param pilot_df dataframe of the pilot data
+#' @param analysis_df dataframe of the analysis data
 #' @param treatment string denoting the name of the treatment variable
 #' @param covariates vector of strings or list denoting column names of interest
 #' @param outcome string denoting the name of the outcome variable
-#' @param pilot_prop proportion denoted as the pilot sample
-#' @param seed int random seed
+#' @param post_analysis_df post match analysis data frame
 #' @param bias_curve_cutoffs cut offs of the bias curve one wishes to plot
 #' @param use_abs boolean to denote whether absolute values are used to construct the measures
 #' @param use_denom must be "standard", "pilot", or "min"
 #' @param plot_title title of the plot to plot
+#' @param label_cutoff_std_diff text label cut off for standardized difference
+#' @param label_cutoff_control_cor text label cut off for correlation
+#' @param label_cutoff_bias text label cut off for bias
 #' @return a list
 #' @export
-plot_jointVIP = function(df,
+plot_jointVIP = function(pilot_df,
+                         analysis_df,
                          treatment,
                          covariates,
                          outcome,
-                         pilot_prop = 0.2,
-                         seed = 2521323,
+                         post_analysis_df = NULL,
                          bias_curve_cutoffs = NULL,
                          use_abs = F,
                          use_denom = 'standard',
-                         plot_title = "Joint variable importance") {
-  df = df[, c(covariates, treatment, outcome)]
-  # sample splitting
-  # plot(std_diff, control_cor)
-  measures = get_measures(df=df, covariates=covariates,
-                          treatment=treatment, outcome=outcome,
-                          pilot_prop=pilot_prop, seed = seed,
+                         plot_title = "Joint variable importance",
+                         label_cutoff_std_diff = NULL,
+                         label_cutoff_control_cor = NULL,
+                         label_cutoff_bias = NULL) {
+
+  measures = get_measures(pilot_df=pilot_df, analysis_df=analysis_df,
+                          covariates=covariates, treatment=treatment,
+                          outcome=outcome,
                           use_abs=use_abs)
   progs = measures$progs
   props = measures$props
   if (is.null(bias_curve_cutoffs)) {
     if (use_abs) {
-      bias_curve_cutoffs = c(0.005, 0.01, 0.03, 0.05)
+      bias_curve_cutoffs = c(0.005)
+      bias_curve_cutoffs = c(bias_curve_cutoffs, seq(0.01, ceiling(max(max(abs(measures$measures$bias_max)), 0.03)/0.02)*0.02, 0.02))
     }
     else {
-      bias_curve_cutoffs = c(-0.05,-0.03,-0.01,-0.005,
-                             0.005, 0.01, 0.03, 0.05)
+      bias_curve_cutoffs = c(0.005)
+      bias_curve_cutoffs = c(bias_curve_cutoffs, seq(0.01, ceiling(max(max(abs(measures$measures$bias_max)), 0.03)/0.02)*0.02, 0.02))
+      bias_curve_cutoffs = c(bias_curve_cutoffs, -1*bias_curve_cutoffs)
     }
   }
+
+  if (! is.null(post_analysis_df)){
+    pre_matched_alpha = 0.4
+  } else {pre_matched_alpha = 1}
 
   joint_vip = get_jointVIP(
     measures$measures,
     use_denom = use_denom,
     bias_curve_cutoffs = bias_curve_cutoffs,
     use_abs = use_abs,
-    plot_title = plot_title
+    plot_title = plot_title,
+    pre_matched_alpha = pre_matched_alpha,
+    label_cutoff_std_diff = label_cutoff_std_diff,
+    label_cutoff_control_cor = label_cutoff_control_cor,
+    label_cutoff_bias = label_cutoff_bias
   )
+
+
+  if (! is.null(post_analysis_df)){
+    joint_vip = get_post_analysis_vip(post_analysis_df=post_analysis_df,
+                                      measures=measures, props=props, progs=progs,
+                                      treatment=treatment, use_denom=use_denom,
+                                      joint_vip=joint_vip, use_abs=use_abs)
+  }
 
   return(
     list(

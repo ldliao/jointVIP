@@ -5,20 +5,25 @@
 \title{Wrapper for the plot}
 \usage{
 plot_jointVIP(
-  df,
+  pilot_df,
+  analysis_df,
   treatment,
   covariates,
   outcome,
-  pilot_prop = 0.2,
-  seed = 2521323,
+  post_analysis_df = NULL,
   bias_curve_cutoffs = NULL,
   use_abs = F,
   use_denom = "standard",
-  plot_title = "Joint variable importance"
+  plot_title = "Joint variable importance",
+  label_cutoff_std_diff = NULL,
+  label_cutoff_control_cor = NULL,
+  label_cutoff_bias = NULL
 )
 }
 \arguments{
-\item{df}{data.frame of the original data}
+\item{pilot_df}{dataframe of the pilot data}
+
+\item{analysis_df}{dataframe of the analysis data}
 
 \item{treatment}{string denoting the name of the treatment variable}
 
@@ -26,9 +31,7 @@ plot_jointVIP(
 
 \item{outcome}{string denoting the name of the outcome variable}
 
-\item{pilot_prop}{proportion denoted as the pilot sample}
-
-\item{seed}{int random seed}
+\item{post_analysis_df}{post match analysis data frame}
 
 \item{bias_curve_cutoffs}{cut offs of the bias curve one wishes to plot}
 
@@ -37,6 +40,12 @@ plot_jointVIP(
 \item{use_denom}{must be "standard", "pilot", or "min"}
 
 \item{plot_title}{title of the plot to plot}
+
+\item{label_cutoff_std_diff}{text label cut off for standardized difference}
+
+\item{label_cutoff_control_cor}{text label cut off for correlation}
+
+\item{label_cutoff_bias}{text label cut off for bias}
 }
 \value{
 a list

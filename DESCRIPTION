@@ -18,10 +18,14 @@ Imports:
     testthat,
     ggplot2,
     ggrepel,
-    pheatmap
+    pheatmap,
+    ggpubr,
+    tidyr
 Config/testthat/edition: 3
 Collate: 
-    'calc_measure.R'
-    'calc_measure_variation.R'
+    'calc_measures.R'
+    'calc_boot_variation.R'
+    'calc_measures_variation.R'
+    'calc_post_measures.R'
     'global.R'
     'plot_jointVIP.R'

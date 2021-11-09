@@ -9,7 +9,11 @@ get_jointVIP(
   bias_curve_cutoffs = c(-0.05, -0.03, -0.01, -0.005, 0.005, 0.01, 0.03, 0.05),
   use_abs = F,
   use_denom = "standard",
-  plot_title = "Joint variable importance"
+  plot_title = "Joint variable importance",
+  pre_matched_alpha = 1,
+  label_cutoff_std_diff = NULL,
+  label_cutoff_control_cor = NULL,
+  label_cutoff_bias = NULL
 )
 }
 \arguments{
@@ -22,6 +26,14 @@ get_jointVIP(
 \item{use_denom}{must be "standard", "pilot", or "min"}
 
 \item{plot_title}{title of the plot to plot}
+
+\item{pre_matched_alpha}{set to 1; changed if post-match exists}
+
+\item{label_cutoff_std_diff}{text label cut off for standardized difference}
+
+\item{label_cutoff_control_cor}{text label cut off for correlation}
+
+\item{label_cutoff_bias}{text label cut off for bias}
 }
 \description{
 Get the measures and create plot

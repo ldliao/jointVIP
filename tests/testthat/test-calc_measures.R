@@ -8,10 +8,10 @@ test_that("get_diff works", {
                                  'X1']) - mean(analysis_sample_sm[analysis_sample_sm$treat==0,
                                                                   'X1'])
   expect_equal(round(X1diff), round(get_diff(covariate = analysis_sample_sm$X1,
-                                     analysis_sample = analysis_sample_sm,
-                                     treatment='treat')))
+                                    analysis_df = analysis_sample_sm,
+                                    treatment='treat')))
   expect_equal(0, round(get_diff(covariate = analysis_sample_sm$X2,
-                                             analysis_sample = analysis_sample_sm,
-                                             treatment='treat')))
+                                 analysis_df = analysis_sample_sm,
+                                 treatment='treat')))
 })
 
