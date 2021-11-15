@@ -64,7 +64,7 @@ get_jointVIP <-
     p = ggplot(measures, aes(
       x = std_diff,
       y = control_cor,
-      color = bias,
+      color = abs(bias),
       label = label
     )) +
       geom_point(alpha=pre_matched_alpha) +
@@ -154,6 +154,10 @@ get_jointVIP <-
       )
 
     if (use_denom == 'both'){
+      if (use_abs==T){
+        min_x = 0
+      } else { min_x = min(pmin(measures$standard_difference,
+                                measures$standard_difference_pilot))-0.1}
       m = measures[, c('standard_difference',
                        'standard_difference_pilot','label')]
       mm = tidyr::gather(m, 'std_diffs', 'values', -label)
@@ -164,9 +168,9 @@ get_jointVIP <-
                    aes(values, cors), alpha=0.4) +
         geom_line(data = mm, aes(values,cors, group = label), alpha=.4) +
         labs(subtitle = "Pilot standardized differences plotted with transparency") +
-        xlim(c(0,max(measures$standard_difference_pilot)+0.1))
+        xlim(c(min_x,max(measures$standard_difference_max)+0.1))
     } else {
-      if(use_abs == T){
+      if (use_abs == T){
         p = p + xlim(c(0,max(measures$std_diff)+0.1))
       }
     }
@@ -182,7 +186,11 @@ get_jointVIP <-
 #' @param treatment string denoting the name of the treatment variable
 #' @param covariates vector of strings or list denoting column names of interest
 #' @param outcome string denoting the name of the outcome variable
+#' @param props user input propensity score list
+#' @param progs user input prognostic score list
 #' @param post_analysis_df post match analysis data frame
+#' @param post_prop user input propensity score only used when post_analysis_df is used
+#' @param post_prog user input prognostic score only used when post_analysis_df is used
 #' @param bias_curve_cutoffs cut offs of the bias curve one wishes to plot
 #' @param use_abs boolean to denote whether absolute values are used to construct the measures
 #' @param use_denom must be "standard", "pilot", or "min"
@@ -197,19 +205,26 @@ plot_jointVIP = function(pilot_df,
                          treatment,
                          covariates,
                          outcome,
+                         props = NULL,
+                         progs = NULL,
                          post_analysis_df = NULL,
+                         post_prop = NULL,
+                         post_prog = NULL,
                          bias_curve_cutoffs = NULL,
                          use_abs = F,
                          use_denom = 'standard',
                          plot_title = "Joint variable importance",
                          label_cutoff_std_diff = NULL,
                          label_cutoff_control_cor = NULL,
-                         label_cutoff_bias = NULL) {
+                         label_cutoff_bias = NULL
+                         ) {
 
   measures = get_measures(pilot_df=pilot_df, analysis_df=analysis_df,
                           covariates=covariates, treatment=treatment,
                           outcome=outcome,
-                          use_abs=use_abs)
+                          use_abs=use_abs,
+                          user_props = props,
+                          user_progs = progs)
   progs = measures$progs
   props = measures$props
   if (is.null(bias_curve_cutoffs)) {
@@ -242,10 +257,20 @@ plot_jointVIP = function(pilot_df,
 
 
   if (! is.null(post_analysis_df)){
-    joint_vip = get_post_analysis_vip(post_analysis_df=post_analysis_df,
+    post_analysis_vip = get_post_analysis_vip(post_analysis_df=post_analysis_df,
                                       measures=measures, props=props, progs=progs,
                                       treatment=treatment, use_denom=use_denom,
-                                      joint_vip=joint_vip, use_abs=use_abs)
+                                      joint_vip=joint_vip, use_abs=use_abs,
+                                      post_prop = post_prop, post_prog = post_prog)
+
+    return(
+      list(
+        'VIP' = post_analysis_vip$joint_vip,
+        'propensity_comparison' = post_analysis_vip$propensity_comparison,
+        'prognostic_comparison' = post_analysis_vip$prognostic_comparison,
+        'measures' = post_analysis_vip$measures
+      )
+    )
   }
 
   return(

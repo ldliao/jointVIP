@@ -12,7 +12,9 @@ get_post_analysis_vip(
   treatment,
   use_denom,
   joint_vip,
-  use_abs
+  use_abs,
+  post_prop = NULL,
+  post_prog = NULL
 )
 }
 \arguments{
@@ -31,6 +33,10 @@ get_post_analysis_vip(
 \item{joint_vip}{plot to add to}
 
 \item{use_abs}{whether using absolute value or not}
+
+\item{post_prop}{post analysis propensity score}
+
+\item{post_prog}{post analysis prognostic score}
 }
 \description{
 Get standardized difference in analysis sample

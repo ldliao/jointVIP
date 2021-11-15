@@ -1,6 +1,8 @@
 #' @import dplyr tools ggplot2
 NULL
 
+
+
 #' Create a data frame filled with the difference and denominator
 #' of both the analysis sample and pilot sample.
 #' It also contains pilot vs outcome correlation.
@@ -12,9 +14,11 @@ NULL
 #' @param treatment string denoting the name of the treatment variable
 #' @param outcome string denoting the name of the outcome variable
 #' @param use_abs boolean to denote whether absolute values are used to construct the measures
-get_measures = function(pilot_df, analysis_df,
-                        covariates, treatment, outcome,
-                        use_abs=F){
+#' @param use_denom which denom to use
+get_measures_sm = function(pilot_df, analysis_df,
+                           covariates, treatment, outcome,
+                           use_abs=F, use_denom='standard'){
+
   # propensity score
   props = get_props(pilot_df = pilot_df,
                     analysis_df = analysis_df,
@@ -26,6 +30,120 @@ get_measures = function(pilot_df, analysis_df,
                     analysis_df = analysis_df,
                     covariates = covariates,
                     outcome = outcome)
+
+  # set scores
+  pilot_df$prognostic_score = progs$progs_pilot
+  pilot_df$propensity_score = props$props_pilot
+  analysis_df$prognostic_score = progs$progs_analysis
+  analysis_df$propensity_score = props$props_analysis
+
+  # standardized differences
+  # in the analysis sample
+  analysis_diff = apply(analysis_df[, !(names(analysis_df) %in% c(treatment, outcome))],
+                        2,
+                        get_diff,
+                        analysis_df = analysis_df,
+                        treatment = treatment)
+
+
+  # pearson coorrelation
+  # in the control sample
+  pilot_cor = apply(pilot_df[, !(names(pilot_df) %in% c(treatment, outcome))],
+                    2,
+                    get_pilot_cor,
+                    pilot_df = pilot_df,
+                    outcome = outcome)
+
+  if (use_abs) {
+    analysis_diff = abs(analysis_diff)
+    pilot_cor = abs(pilot_cor)
+  }
+
+  control_cor = pilot_cor
+
+  if(use_denom=='standard'){
+    analysis_denom = apply(
+      analysis_df[, !(names(analysis_df) %in% c(treatment, outcome))],
+      2,
+      get_analysis_denom,
+      analysis_df = analysis_df,
+      treatment = treatment
+    )
+    standard_difference = analysis_diff / analysis_denom
+    bias_std_diff_analysis = # stats::sd(pilot_sample %>% pull(outcome)) *
+      # removing this means that we are looking at the bias curves
+      # where 0.005 "bias" is bias measured divided by standard deviation of the outcome
+      # note this is okay because it is the same for every variable
+      pilot_cor *
+      standard_difference
+    measures = data.frame(
+      raw_diff = analysis_diff,
+      standard_difference = standard_difference,
+      control_cor = control_cor,
+      label = names(pilot_cor)
+    )
+  } else {
+    if(use_denom=='pilot'){
+      pilot_denom = apply(pilot_df[, !(names(pilot_df) %in% c(treatment, outcome))], 2, get_pilot_denom)
+
+      standard_difference_pilot = analysis_diff / pilot_denom
+
+      bias_std_diff_pilot = # stats::sd(pilot_sample %>% pull(outcome)) *
+        pilot_cor *
+        standard_difference_pilot
+
+      measures = data.frame(
+        raw_diff = analysis_diff,
+        standard_difference_pilot = standard_difference_pilot,
+        control_cor = control_cor,
+        label = names(pilot_cor)
+      )
+    }
+  }
+
+  return(measures)
+}
+
+
+#' Create a data frame filled with the difference and denominator
+#' of both the analysis sample and pilot sample.
+#' It also contains pilot vs outcome correlation.
+#' This is done for all the covariates.
+#'
+#' @param pilot_df dataframe of the pilot data
+#' @param analysis_df dataframe of the analysis data
+#' @param covariates vector of strings or list denoting column names of interest
+#' @param treatment string denoting the name of the treatment variable
+#' @param outcome string denoting the name of the outcome variable
+#' @param use_abs boolean to denote whether absolute values are used to construct the measures
+#' @param user_props user input propensity score for pilot and analysis sample, and model fit; if null calculates logistic regression
+#' @param user_progs user input prognostic score for pilot and analysis sample, and model fit; if null calculates logistic/ linear regression
+get_measures = function(pilot_df, analysis_df,
+                        covariates, treatment, outcome,
+                        use_abs=F,
+                        user_props = NULL,
+                        user_progs = NULL){
+
+  if(is.null(user_props)){
+    # propensity score
+    props = get_props(pilot_df = pilot_df,
+                      analysis_df = analysis_df,
+                      covariates = covariates,
+                      treatment=treatment)
+  } else {
+    props = user_props
+  }
+
+  if(is.null(user_progs)){
+    # prognostic score
+    progs = get_progs(pilot_df = pilot_df,
+                      analysis_df = analysis_df,
+                      covariates = covariates,
+                      outcome = outcome)
+  } else {
+    progs = user_progs
+  }
+
 
   # set scores
   pilot_df$prognostic_score = progs$progs_pilot

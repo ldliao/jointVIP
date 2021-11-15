@@ -11,28 +11,36 @@ NULL
 #' @param use_denom which denominator to use
 #' @param joint_vip plot to add to
 #' @param use_abs whether using absolute value or not
+#' @param post_prop post analysis propensity score
+#' @param post_prog post analysis prognostic score
 get_post_analysis_vip <- function(post_analysis_df, measures, props, progs,
-                                  treatment, use_denom, joint_vip, use_abs
-                                  ){
+                                  treatment, use_denom, joint_vip, use_abs,
+                                  post_prop = NULL,
+                                  post_prog = NULL){
   post_analysis_diff = apply(post_analysis_df[, !(names(post_analysis_df) %in% c(treatment, outcome))],
                              2,
                              get_diff,
                              analysis_df = post_analysis_df,
                              treatment = treatment)
 
-  # propensity score
-  post_prop = stats::predict(props$props_fit,
-                             post_analysis_df,
-                             type = "response")
-  # prognostic score
-  post_prog = stats::predict(progs$progs_fit,
-                             post_analysis_df,
-                             type = "response")
+  if (is.null(post_prop)){
+    # propensity score
+    post_prop = stats::predict(props$props_fit,
+                               post_analysis_df,
+                               type = "response")
+  } else { post_prop = post_prop }
+  if (is.null(post_prog)){
+    # prognostic score
+    post_prog = stats::predict(progs$progs_fit,
+                               post_analysis_df,
+                               type = "response")
+  } else { post_prog = post_prog }
 
-  post_analysis_diff['propensity_score'] = mean(post_prop[post_analysis_df%>% pull(treatment) == 1]) -
-    mean(post_prop[post_analysis_df%>% pull(treatment) == 0])
   post_analysis_diff['prognostic_score'] = mean(post_prog[post_analysis_df%>% pull(treatment) == 1]) -
     mean(post_prog[post_analysis_df%>% pull(treatment) == 0])
+  post_analysis_diff['propensity_score'] = mean(post_prop[post_analysis_df%>% pull(treatment) == 1]) -
+    mean(post_prop[post_analysis_df%>% pull(treatment) == 0])
+
 
   post_analysis_standard_difference =
     post_analysis_diff * measures$measures$standard_difference / measures$measures$raw_diff
@@ -74,17 +82,50 @@ get_post_analysis_vip <- function(post_analysis_df, measures, props, progs,
   }
 
   post_df$control_cor = measures$measures$control_cor
-  post_df$label = measures$measures$label
+  post_df$label = row.names(post_df)
   # post_df[!((measures$measures$std_diff >= label_cutoff_std_diff) |
   #             (measures$measures$control_cor >= label_cutoff_control_cor)) &
   #           (measures$measures$bias >= label_cutoff_bias),'text_labels'] = ""
 
-  ggplot(post_df, aes(x = std_diff,
-                      y = control_cor)) + geom_point()
+  # ggplot(post_df, aes(x = std_diff,
+  #                     y = control_cor)) + geom_point() + geom_text_repel(mapping = aes(label = label), size = 3)
 
   joint_vip = joint_vip + geom_point(data=post_df,
                                      aes(x = std_diff,
                                          y = control_cor)) +
     xlim(c(min_x,max_x))
-  return(joint_vip)
+
+  post_progs_plot = ggplot(data.frame(prognostic_score = post_prog),
+                            aes_q(quote(prognostic_score),
+                                  fill = factor(post_analysis_df %>% pull(treatment)))) +
+    geom_histogram(alpha = 0.5,
+                   binwidth = 0.05,
+                   position = "identity") +
+    theme_minimal() +
+    scale_fill_discrete(name = toTitleCase(tolower(as.character(treatment))),
+                        labels = c("control", "treatment")) +
+    labs(x = "Prognostic score",
+         y = "Count",
+         title = "Prognostic score comparison")
+
+
+
+
+  post_props_plot = ggplot(data.frame(propensity_score = post_prop),
+                            aes_q(quote(propensity_score),
+                                  fill = factor(post_analysis_df %>% pull(treatment)))) +
+    geom_histogram(alpha = 0.5,
+                   binwidth = 0.1,
+                   position = "identity") +
+    theme_minimal() +
+    scale_fill_discrete(name = toTitleCase(tolower(as.character(treatment))),
+                        labels = c("control", "treatment")) +
+    labs(x = "Propensity score",
+         y = "Count",
+         title = "Propensity score comparison")
+
+  return(list('joint_vip' = joint_vip,
+              'measures' = post_df,
+              'propensity_comparison' = post_props_plot,
+              'prognostic_comparison' = post_progs_plot))
 }

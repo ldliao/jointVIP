@@ -10,7 +10,11 @@ plot_jointVIP(
   treatment,
   covariates,
   outcome,
+  props = NULL,
+  progs = NULL,
   post_analysis_df = NULL,
+  post_prop = NULL,
+  post_prog = NULL,
   bias_curve_cutoffs = NULL,
   use_abs = F,
   use_denom = "standard",
@@ -31,7 +35,15 @@ plot_jointVIP(
 
 \item{outcome}{string denoting the name of the outcome variable}
 
+\item{props}{user input propensity score list}
+
+\item{progs}{user input prognostic score list}
+
 \item{post_analysis_df}{post match analysis data frame}
+
+\item{post_prop}{user input propensity score only used when post_analysis_df is used}
+
+\item{post_prog}{user input prognostic score only used when post_analysis_df is used}
 
 \item{bias_curve_cutoffs}{cut offs of the bias curve one wishes to plot}
 
