@@ -149,8 +149,6 @@ get_jointVIP <-
                                                              label = label),
                         color = 'grey3', direction = "y",
                         min.segment.length = 10,
-                        box.padding = 0.5,
-                        force = 0.5,
                         size=2.2)
 
     if (use_denom == 'both'){
