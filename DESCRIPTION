@@ -18,7 +18,6 @@ Imports:
     testthat,
     ggplot2,
     ggrepel,
-    pheatmap,
     ggpubr,
     tidyr
 Config/testthat/edition: 3
