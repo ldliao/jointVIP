@@ -115,10 +115,10 @@ get_jointVIP <-
       if (0.005 %in% abs(bias_curve_cutoffs)) {
         for (ind in which(abs(rep(bias_curve_cutoffs, 2)) == 0.005)) {
           if (text_bias_lab[ind, 'y'] > 0) {
-            text_bias_lab$y[ind] = max_y - 0.02
+            text_bias_lab$y[ind] = max_y - 0.03
           }
           else {
-            text_bias_lab$y[ind] = min_y + 0.02
+            text_bias_lab$y[ind] = min_y + 0.03
           }
         }
         p = p + geom_function(
@@ -175,6 +175,13 @@ get_jointVIP <-
       }
     }
 
+    if (use_denom == "pilot"){
+      p = p + labs(subtitle = "Standardized differences uses pilot sample variance in denominator.")
+    }
+    if (use_denom == "min"){
+      p = p + labs(subtitle = "Standardized differences uses max difference.")
+    }
+
     return(p)
   }
 
@@ -219,6 +226,8 @@ plot_jointVIP = function(pilot_df,
                          label_cutoff_bias = NULL
                          ) {
 
+  pilot_df = pilot_df[,c(covariates, treatment, outcome)]
+  analysis_df = analysis_df[,c(covariates, treatment, outcome)]
   measures = get_measures(pilot_df=pilot_df, analysis_df=analysis_df,
                           covariates=covariates, treatment=treatment,
                           outcome=outcome,
@@ -263,6 +272,8 @@ plot_jointVIP = function(pilot_df,
                                       joint_vip=joint_vip, use_abs=use_abs,
                                       post_prop = post_prop, post_prog = post_prog)
 
+    post_analysis_vip$joint_vip = post_analysis_vip$joint_vip +
+      labs(subtitle = "Pre-matched variables plotted with transparency")
     return(
       list(
         'VIP' = post_analysis_vip$joint_vip,
