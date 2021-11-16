@@ -147,16 +147,11 @@ get_jointVIP <-
     p = p + geom_text_repel(data = text_bias_lab, mapping = aes(x = as.numeric(x),
                                                              y = as.numeric(y),
                                                              label = label),
-                        color = 'grey37', direction = "y",
-                        nudge_y = abs(text_bias_lab$label)*0.02,
-                        size=2.75)
-      # annotate(
-      #   "text",
-      #   x = text_bias_lab$x,
-      #   y = text_bias_lab$y,
-      #   label = text_bias_lab$label,
-      #   size = 2.5
-      # )
+                        color = 'grey3', direction = "y",
+                        min.segment.length = 10,
+                        box.padding = 0.5,
+                        force = 0.5,
+                        size=2.2)
 
     if (use_denom == 'both'){
       if (use_abs==T){
