@@ -13,6 +13,8 @@ get_measures_sm(
   covariates,
   treatment,
   outcome,
+  props_fit,
+  progs_fit,
   use_abs = F,
   use_denom = "standard"
 )
@@ -27,6 +29,10 @@ get_measures_sm(
 \item{treatment}{string denoting the name of the treatment variable}
 
 \item{outcome}{string denoting the name of the outcome variable}
+
+\item{props_fit}{propensity score fit}
+
+\item{progs_fit}{prognostic score fit}
 
 \item{use_abs}{boolean to denote whether absolute values are used to construct the measures}
 

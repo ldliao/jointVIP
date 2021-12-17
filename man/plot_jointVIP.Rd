@@ -10,6 +10,7 @@ plot_jointVIP(
   treatment,
   covariates,
   outcome,
+  raw_plot = F,
   props = NULL,
   progs = NULL,
   post_analysis_df = NULL,
@@ -34,6 +35,8 @@ plot_jointVIP(
 \item{covariates}{vector of strings or list denoting column names of interest}
 
 \item{outcome}{string denoting the name of the outcome variable}
+
+\item{raw_plot}{plot without bias}
 
 \item{props}{user input propensity score list}
 

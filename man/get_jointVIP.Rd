@@ -13,7 +13,8 @@ get_jointVIP(
   pre_matched_alpha = 1,
   label_cutoff_std_diff = NULL,
   label_cutoff_control_cor = NULL,
-  label_cutoff_bias = NULL
+  label_cutoff_bias = NULL,
+  raw_plot = F
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ get_jointVIP(
 \item{label_cutoff_control_cor}{text label cut off for correlation}
 
 \item{label_cutoff_bias}{text label cut off for bias}
+
+\item{raw_plot}{plot without bias}
 }
 \description{
 Get the measures and create plot

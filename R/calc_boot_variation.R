@@ -19,11 +19,13 @@ calc_bootstrap <- function(B, pilot_df, analysis_df,
   set.seed(123456)
   seeds <- paste(sample(1e5:1e6, B, replace=F))
 
-  og_measures = get_measures_sm(pilot_df=pilot_df, analysis_df=analysis_df,
+  og_measures = get_measures(pilot_df=pilot_df, analysis_df=analysis_df,
                              covariates=covariates, treatment=treatment,
                              outcome=outcome,
-                             use_abs=use_abs, use_denom=use_denom)
-
+                             use_abs=use_abs)
+  props_fit = og_measures$props$props_fit
+  progs_fit = og_measures$progs$progs_fit
+  og_measures = og_measures$measures
   # assigning row names background variables
   bg_vars=og_measures$label
 
@@ -32,7 +34,7 @@ calc_bootstrap <- function(B, pilot_df, analysis_df,
 
   # 3d array
   result <- array(0, dim = c(length(bg_vars),
-                             length(msr),
+                             3,
                              B))
 
   for (b in (1:B)){
@@ -44,13 +46,16 @@ calc_bootstrap <- function(B, pilot_df, analysis_df,
                                 covariates=covariates,
                                 treatment=treatment,
                                 outcome=outcome,
-                                use_abs=use_abs,use_denom=use_denom)
+                                use_abs=use_abs,
+                                use_denom=use_denom,
+                                props_fit=props_fit,
+                                progs_fit=progs_fit)
     result[,,b] = as.matrix(temp_measure[,names(temp_measure)!="label"])
     # if((b %% 100) == 0){
     #   print(b)
     # }
   }
-  dimnames(result) = list(bg_vars, msr, seeds)
+  dimnames(result) = list(bg_vars, names(temp_measure)[-4], seeds)
 
   boot_sd = apply(result*is.finite(result), c(1,2),
                   stats::quantile,
@@ -106,7 +111,9 @@ plot_bootstrap <- function(og_measures, boot_sd, use_denom, joint_vip,
               size=1.5, alpha=0.4) +
     geom_line(data=mm_cors, aes(y=values, x=std_diff, group=label), color="cornsilk4",
               size=1.5, alpha=0.4) +
-    ylim(c(min_y, max_y)) + geom_point(alpha=1)
+    ylim(c(min_y, max_y)) + geom_point(alpha=1) +
+    labs(subtitle = "Bootstrap confidence interval")
+
 
   return(joint_vip)
 }

@@ -13,29 +13,37 @@ NULL
 #' @param covariates vector of strings or list denoting column names of interest
 #' @param treatment string denoting the name of the treatment variable
 #' @param outcome string denoting the name of the outcome variable
+#' @param props_fit propensity score fit
+#' @param progs_fit prognostic score fit
 #' @param use_abs boolean to denote whether absolute values are used to construct the measures
 #' @param use_denom which denom to use
 get_measures_sm = function(pilot_df, analysis_df,
                            covariates, treatment, outcome,
+                           props_fit, progs_fit,
                            use_abs=F, use_denom='standard'){
 
   # propensity score
-  props = get_props(pilot_df = pilot_df,
-                    analysis_df = analysis_df,
-                    covariates = covariates,
-                    treatment=treatment)
+  props_analysis = stats::predict(props_fit, analysis_df, type = "response")
+  props_pilot = stats::predict(props_fit, pilot_df, type = "response")
+
+  # props = get_props(pilot_df = pilot_df,
+  #                   analysis_df = analysis_df,
+  #                   covariates = covariates,
+  #                   treatment=treatment)
 
   # prognostic score
-  progs = get_progs(pilot_df = pilot_df,
-                    analysis_df = analysis_df,
-                    covariates = covariates,
-                    outcome = outcome)
+  progs_analysis = stats::predict(progs_fit, analysis_df, type = "response")
+  progs_pilot = stats::predict(progs_fit, pilot_df, type = "response")
+  # progs = get_progs(pilot_df = pilot_df,
+  #                   analysis_df = analysis_df,
+  #                   covariates = covariates,
+  #                   outcome = outcome)
 
   # set scores
-  pilot_df$prognostic_score = progs$progs_pilot
-  pilot_df$propensity_score = props$props_pilot
-  analysis_df$prognostic_score = progs$progs_analysis
-  analysis_df$propensity_score = props$props_analysis
+  pilot_df$prognostic_score = progs_pilot
+  pilot_df$propensity_score = props_pilot
+  analysis_df$prognostic_score = progs_analysis
+  analysis_df$propensity_score = props_analysis
 
   # standardized differences
   # in the analysis sample
@@ -227,11 +235,26 @@ get_measures = function(pilot_df, analysis_df,
                    binwidth = 0.05,
                    position = "identity") +
     theme_minimal() +
-    scale_fill_discrete(name = toTitleCase(tolower(as.character(treatment))),
+    scale_fill_discrete(name = toTitleCase(treatment),
                         labels = c("control", "treatment")) +
     labs(x = "Prognostic score",
          y = "Count",
-         title = "Prognostic score comparison")
+         title = "Prognostic score comparison") +
+    theme_minimal() +
+    theme(
+      axis.text.x = element_text(size = 10),
+      axis.text.y = element_text(size = 10),
+      axis.title.x = element_text(size = 12),
+      axis.title.y = element_text(size = 12),
+      plot.title = element_text(size = 14)
+    ) +
+    theme(panel.background = element_rect(fill = "white"),
+          axis.text.x = element_text(color = "black"),
+          axis.text.y = element_text(color = "black"),
+          panel.border = element_rect(fill = NA, color = "black"),
+          plot.background = element_blank(),
+          legend.background = element_blank(),
+          legend.key = element_blank())
 
   props$props_plot = ggplot(data.frame(propensity_score = analysis_df$propensity_score),
                             aes_q(quote(propensity_score),
@@ -240,11 +263,26 @@ get_measures = function(pilot_df, analysis_df,
                    binwidth = 0.1,
                    position = "identity") +
     theme_minimal() +
-    scale_fill_discrete(name = toTitleCase(tolower(as.character(treatment))),
+    scale_fill_discrete(name = toTitleCase(treatment),
                         labels = c("control", "treatment")) +
     labs(x = "Propensity score",
          y = "Count",
-         title = "Propensity score comparison")
+         title = "Propensity score comparison") +
+    theme_minimal() +
+    theme(
+      axis.text.x = element_text(size = 10),
+      axis.text.y = element_text(size = 10),
+      axis.title.x = element_text(size = 12),
+      axis.title.y = element_text(size = 12),
+      plot.title = element_text(size = 14)
+    ) +
+    theme(panel.background = element_rect(fill = "white"),
+          axis.text.x = element_text(color = "black"),
+          axis.text.y = element_text(color = "black"),
+          panel.border = element_rect(fill = NA, color = "black"),
+          plot.background = element_blank(),
+          legend.background = element_blank(),
+          legend.key = element_blank())
 
   return(list('measures'=measures, 'props'=props, 'progs'=progs))
 }

@@ -13,6 +13,7 @@ NULL
 #' @param label_cutoff_std_diff text label cut off for standardized difference
 #' @param label_cutoff_control_cor text label cut off for correlation
 #' @param label_cutoff_bias text label cut off for bias
+#'@param raw_plot plot without bias
 get_jointVIP <-
   function(measures,
            bias_curve_cutoffs = c(-0.05,-0.03,-0.01,-0.005, 0.005, 0.01, 0.03, 0.05),
@@ -21,11 +22,12 @@ get_jointVIP <-
            pre_matched_alpha = 1,
            label_cutoff_std_diff=NULL,
            label_cutoff_control_cor=NULL,
-           label_cutoff_bias=NULL) {
+           label_cutoff_bias=NULL,
+           raw_plot = F) {
 
-    max_y = min(round(max(measures$control_cor), 1) + 0.1, 1)
+    max_y = min(round(max(measures$control_cor), 1) + 0.05, 1)
     if (!use_abs) {
-      min_y = max(round(min(measures$control_cor), 1) - 0.1,-1)
+      min_y = max(round(min(measures$control_cor), 1) - 0.05,-1)
     } else{
       min_y = 0
     }
@@ -60,6 +62,56 @@ get_jointVIP <-
     measures[!((abs(measures$std_diff) >= label_cutoff_std_diff) |
                  (abs(measures$control_cor) >= label_cutoff_control_cor)) &
                (abs(measures$bias) >= label_cutoff_bias),'text_labels'] = ""
+
+    if(raw_plot){
+      raw_p = ggplot(measures[!row.names(measures) %in% c("prognostic_score",
+                                                          "propensity_score"),],
+                     aes(
+        x = std_diff,
+        y = control_cor,
+        label = label
+      ))
+
+      if(!use_abs){
+        raw_p = raw_p + geom_function(
+          fun = function(x) {
+            0
+          },
+          linetype = 'dashed',
+          alpha = 0.4
+        ) +
+          geom_vline(xintercept = 0,
+                     linetype = 'dashed',
+                     alpha = 0.4)
+      }
+
+      raw_p = raw_p +
+        geom_point(alpha=pre_matched_alpha) +
+        theme_minimal() +
+        theme(
+          axis.text.x = element_text(size = 10),
+          axis.text.y = element_text(size = 10),
+          axis.title.x = element_text(size = 12),
+          axis.title.y = element_text(size = 12),
+          plot.title = element_text(size = 14)
+        ) +
+        theme(panel.background = element_rect(fill = "white"),
+              axis.text.x = element_text(color = "black"),
+              axis.text.y = element_text(color = "black"),
+              panel.border = element_rect(fill = NA, color = "black"),
+              plot.background = element_blank()) +
+        labs(
+          x = "Standardized Mean Differences",
+          y = "Outcome Correlation",
+          title = plot_title
+        ) +
+        ylim(c(min_y, max_y)) +
+        geom_text_repel(mapping = aes(label = text_labels), size = 3)
+
+
+      return(raw_p)
+    }
+
     # plot function
     p = ggplot(measures, aes(
       x = std_diff,
@@ -73,13 +125,20 @@ get_jointVIP <-
       theme(
         axis.text.x = element_text(size = 10),
         axis.text.y = element_text(size = 10),
-        axis.title.x = element_text(size = 13),
-        axis.title.y = element_text(size = 13),
-        plot.title = element_text(size = 15)
+        axis.title.x = element_text(size = 12),
+        axis.title.y = element_text(size = 12),
+        plot.title = element_text(size = 14)
       ) +
+      theme(panel.background = element_rect(fill = "white"),
+                       axis.text.x = element_text(color = "black"),
+                       axis.text.y = element_text(color = "black"),
+                       panel.border = element_rect(fill = NA, color = "black"),
+                       plot.background = element_blank(),
+                       legend.background = element_blank(),
+                       legend.key = element_blank()) +
       labs(
-        x = "Standardized difference",
-        y = "Outcome correlation",
+        x = "Standardized Mean Differences",
+        y = "Outcome Correlation",
         title = plot_title,
         color = "Bias"
       ) +
@@ -135,21 +194,20 @@ get_jointVIP <-
     } else {
       text_bias_lab = data.frame(
         x = c(bias_curve_cutoffs / max_y),
-        y = max_y,
+        y = seq(max_y-(length(bias_curve_cutoffs)-1)*0.015,max_y,0.015),
         label = bias_curve_cutoffs
       )
-      if (0.005 %in% bias_curve_cutoffs) {
-        text_bias_lab$y[which(bias_curve_cutoffs == 0.005)] = max_y - 0.02
-      }
+      # if (0.005 %in% bias_curve_cutoffs) {
+      #   text_bias_lab$y[which(bias_curve_cutoffs == 0.005)] = max_y - 0.02
+      # }
       #min(round(max(measures$std_diff), 1) + 0.1, 1)))
     }
 
-    p = p + geom_text_repel(data = text_bias_lab, mapping = aes(x = as.numeric(x),
+    p = p + geom_text(data = text_bias_lab, mapping = aes(x = as.numeric(x),
                                                              y = as.numeric(y),
                                                              label = label),
-                        color = 'grey3', direction = "y",
-                        min.segment.length = 10,
-                        size=2.2)
+                        color = 'grey3', direction = "y", alpha=0.85,
+                        size=2.8)
 
     if (use_denom == 'both'){
       if (use_abs==T){
@@ -165,7 +223,7 @@ get_jointVIP <-
         geom_point(data = mm[mm$std_diffs == "standard_difference_pilot",],
                    aes(values, cors), alpha=0.4) +
         geom_line(data = mm, aes(values,cors, group = label), alpha=.4) +
-        labs(subtitle = "Pilot standardized differences plotted with transparency") +
+        labs(subtitle = "OVB standardized mean differences plotted with transparency") +
         xlim(c(min_x,max(measures$standard_difference_max)+0.1))
     } else {
       if (use_abs == T){
@@ -191,6 +249,7 @@ get_jointVIP <-
 #' @param treatment string denoting the name of the treatment variable
 #' @param covariates vector of strings or list denoting column names of interest
 #' @param outcome string denoting the name of the outcome variable
+#' @param raw_plot plot without bias
 #' @param props user input propensity score list
 #' @param progs user input prognostic score list
 #' @param post_analysis_df post match analysis data frame
@@ -210,6 +269,7 @@ plot_jointVIP = function(pilot_df,
                          treatment,
                          covariates,
                          outcome,
+                         raw_plot = F,
                          props = NULL,
                          progs = NULL,
                          post_analysis_df = NULL,
@@ -226,6 +286,7 @@ plot_jointVIP = function(pilot_df,
 
   pilot_df = pilot_df[,c(covariates, treatment, outcome)]
   analysis_df = analysis_df[,c(covariates, treatment, outcome)]
+
   measures = get_measures(pilot_df=pilot_df, analysis_df=analysis_df,
                           covariates=covariates, treatment=treatment,
                           outcome=outcome,
@@ -259,7 +320,8 @@ plot_jointVIP = function(pilot_df,
     pre_matched_alpha = pre_matched_alpha,
     label_cutoff_std_diff = label_cutoff_std_diff,
     label_cutoff_control_cor = label_cutoff_control_cor,
-    label_cutoff_bias = label_cutoff_bias
+    label_cutoff_bias = label_cutoff_bias,
+    raw_plot = raw_plot
   )
 
 
@@ -282,6 +344,15 @@ plot_jointVIP = function(pilot_df,
     )
   }
 
+  if(raw_plot){
+    return(
+      list(
+        'VIP' = joint_vip,
+        'measures' = measures$measures[!row.names(measures$measures) %in% c("prognostic_score",
+                                                                            "propensity_score"),]
+      )
+    )
+  }
   return(
     list(
       'VIP' = joint_vip,
