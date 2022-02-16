@@ -8,16 +8,19 @@ NULL
 #' @param props properpensity score list containing the model
 #' @param progs prognostic score list containing the model
 #' @param treatment specify treatment
+#' @param outcome specify outcome
+#' @param covariates specify covariates
 #' @param use_denom which denominator to use
 #' @param joint_vip plot to add to
 #' @param use_abs whether using absolute value or not
 #' @param post_prop post analysis propensity score
 #' @param post_prog post analysis prognostic score
 get_post_analysis_vip <- function(post_analysis_df, measures, props, progs,
-                                  treatment, use_denom, joint_vip, use_abs,
+                                  treatment, outcome, covariates,
+                                  use_denom, joint_vip, use_abs,
                                   post_prop = NULL,
                                   post_prog = NULL){
-  post_analysis_diff = apply(post_analysis_df[, !(names(post_analysis_df) %in% c(treatment, outcome))],
+  post_analysis_diff = apply(post_analysis_df[, covariates],
                              2,
                              get_diff,
                              analysis_df = post_analysis_df,

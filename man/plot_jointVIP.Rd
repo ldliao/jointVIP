@@ -18,7 +18,7 @@ plot_jointVIP(
   post_prog = NULL,
   bias_curve_cutoffs = NULL,
   use_abs = F,
-  use_denom = "standard",
+  use_denom = "both",
   plot_title = "Joint variable importance",
   label_cutoff_std_diff = NULL,
   label_cutoff_control_cor = NULL,

@@ -13,11 +13,11 @@ NULL
 #' @param label_cutoff_std_diff text label cut off for standardized difference
 #' @param label_cutoff_control_cor text label cut off for correlation
 #' @param label_cutoff_bias text label cut off for bias
-#'@param raw_plot plot without bias
+#' @param raw_plot plot without bias
 get_jointVIP <-
   function(measures,
            bias_curve_cutoffs = c(-0.05,-0.03,-0.01,-0.005, 0.005, 0.01, 0.03, 0.05),
-           use_abs = F, use_denom = "standard",
+           use_abs = F, use_denom = "both",
            plot_title = "Joint variable importance",
            pre_matched_alpha = 1,
            label_cutoff_std_diff=NULL,
@@ -206,7 +206,7 @@ get_jointVIP <-
     p = p + geom_text(data = text_bias_lab, mapping = aes(x = as.numeric(x),
                                                              y = as.numeric(y),
                                                              label = label),
-                        color = 'grey3', direction = "y", alpha=0.85,
+                        color = 'grey3', alpha=0.85,
                         size=2.8)
 
     if (use_denom == 'both'){
@@ -277,7 +277,7 @@ plot_jointVIP = function(pilot_df,
                          post_prog = NULL,
                          bias_curve_cutoffs = NULL,
                          use_abs = F,
-                         use_denom = 'standard',
+                         use_denom = 'both',
                          plot_title = "Joint variable importance",
                          label_cutoff_std_diff = NULL,
                          label_cutoff_control_cor = NULL,
@@ -298,19 +298,27 @@ plot_jointVIP = function(pilot_df,
   if (is.null(bias_curve_cutoffs)) {
     if (use_abs) {
       bias_curve_cutoffs = c(0.005)
-      bias_curve_cutoffs = c(bias_curve_cutoffs, seq(0.01, ceiling(max(max(abs(measures$measures$bias_max)), 0.03)/0.02)*0.02, 0.02))
+      if(max(abs(measures$measures$bias_max)) > 0.1){
+        bias_curve_cutoffs = c(bias_curve_cutoffs, seq(0.01, ceiling(max(max(abs(measures$measures$bias_max)), 0.03)/0.04)*0.04, 0.04))
+      } else {
+        bias_curve_cutoffs = c(bias_curve_cutoffs, seq(0.01, ceiling(max(max(abs(measures$measures$bias_max)), 0.03)/0.02)*0.02, 0.02))
+      }
     }
     else {
       bias_curve_cutoffs = c(0.005)
-      bias_curve_cutoffs = c(bias_curve_cutoffs, seq(0.01, ceiling(max(max(abs(measures$measures$bias_max)), 0.03)/0.02)*0.02, 0.02))
-      bias_curve_cutoffs = c(bias_curve_cutoffs, -1*bias_curve_cutoffs)
+      if(max(abs(measures$measures$bias_max)) > 0.1){
+        bias_curve_cutoffs = c(bias_curve_cutoffs, seq(0.01, ceiling(max(max(abs(measures$measures$bias_max)), 0.03)/0.04)*0.04, 0.04))
+        bias_curve_cutoffs = c(bias_curve_cutoffs, -1*bias_curve_cutoffs)
+      } else {
+        bias_curve_cutoffs = c(bias_curve_cutoffs, seq(0.01, ceiling(max(max(abs(measures$measures$bias_max)), 0.03)/0.02)*0.02, 0.02))
+        bias_curve_cutoffs = c(bias_curve_cutoffs, -1*bias_curve_cutoffs)
+      }
     }
   }
 
   if (! is.null(post_analysis_df)){
     pre_matched_alpha = 0.4
   } else {pre_matched_alpha = 1}
-
   joint_vip = get_jointVIP(
     measures$measures,
     use_denom = use_denom,
@@ -328,7 +336,9 @@ plot_jointVIP = function(pilot_df,
   if (! is.null(post_analysis_df)){
     post_analysis_vip = get_post_analysis_vip(post_analysis_df=post_analysis_df,
                                       measures=measures, props=props, progs=progs,
-                                      treatment=treatment, use_denom=use_denom,
+                                      treatment=treatment, outcome=outcome,
+                                      covariates = covariates,
+                                      use_denom=use_denom,
                                       joint_vip=joint_vip, use_abs=use_abs,
                                       post_prop = post_prop, post_prog = post_prog)
 

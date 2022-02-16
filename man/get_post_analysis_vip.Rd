@@ -10,6 +10,8 @@ get_post_analysis_vip(
   props,
   progs,
   treatment,
+  outcome,
+  covariates,
   use_denom,
   joint_vip,
   use_abs,
@@ -27,6 +29,10 @@ get_post_analysis_vip(
 \item{progs}{prognostic score list containing the model}
 
 \item{treatment}{specify treatment}
+
+\item{outcome}{specify outcome}
+
+\item{covariates}{specify covariates}
 
 \item{use_denom}{which denominator to use}
 

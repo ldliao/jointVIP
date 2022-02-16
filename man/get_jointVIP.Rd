@@ -8,7 +8,7 @@ get_jointVIP(
   measures,
   bias_curve_cutoffs = c(-0.05, -0.03, -0.01, -0.005, 0.005, 0.01, 0.03, 0.05),
   use_abs = F,
-  use_denom = "standard",
+  use_denom = "both",
   plot_title = "Joint variable importance",
   pre_matched_alpha = 1,
   label_cutoff_std_diff = NULL,

@@ -126,11 +126,13 @@ get_measures_sm = function(pilot_df, analysis_df,
 #' @param use_abs boolean to denote whether absolute values are used to construct the measures
 #' @param user_props user input propensity score for pilot and analysis sample, and model fit; if null calculates logistic regression
 #' @param user_progs user input prognostic score for pilot and analysis sample, and model fit; if null calculates logistic/ linear regression
+#' @param bias_tol bias tolerance; note always calculated by pilot sample
 get_measures = function(pilot_df, analysis_df,
                         covariates, treatment, outcome,
                         use_abs=F,
                         user_props = NULL,
-                        user_progs = NULL){
+                        user_progs = NULL,
+                        bias_tol = 0.005){
 
   if(is.null(user_props)){
     # propensity score
@@ -207,6 +209,7 @@ get_measures = function(pilot_df, analysis_df,
   bias_max = # stats::sd(pilot_sample %>% pull(outcome)) *
     pilot_cor *
     standard_difference_max
+  tol_suggest = abs(bias_tol/ pilot_cor * pilot_denom / stats::sd(pilot_df %>% pull(outcome)))
 
   measures = data.frame(
     raw_diff = analysis_diff,
@@ -224,6 +227,7 @@ get_measures = function(pilot_df, analysis_df,
       bias_std_diff_pilot,
     bias_max = # stats::sd(pilot_sample %>% pull(outcome)) *
       pmax(bias_std_diff_analysis, bias_std_diff_pilot),
+    tol_suggest = tol_suggest,
     label = names(pilot_cor)
   )
 
@@ -234,7 +238,6 @@ get_measures = function(pilot_df, analysis_df,
     geom_histogram(alpha = 0.5,
                    binwidth = 0.05,
                    position = "identity") +
-    theme_minimal() +
     scale_fill_discrete(name = toTitleCase(treatment),
                         labels = c("control", "treatment")) +
     labs(x = "Prognostic score",

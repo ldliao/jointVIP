@@ -15,7 +15,8 @@ get_measures(
   outcome,
   use_abs = F,
   user_props = NULL,
-  user_progs = NULL
+  user_progs = NULL,
+  bias_tol = 0.005
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ get_measures(
 \item{user_props}{user input propensity score for pilot and analysis sample, and model fit; if null calculates logistic regression}
 
 \item{user_progs}{user input prognostic score for pilot and analysis sample, and model fit; if null calculates logistic/ linear regression}
+
+\item{bias_tol}{bias tolerance; note always calculated by pilot sample}
 }
 \description{
 Create a data frame filled with the difference and denominator
