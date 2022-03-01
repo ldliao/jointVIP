@@ -37,6 +37,10 @@ main_page <- tabPanel(title = "Analysis",
                               width = 3,
                               title = "Inputs",
                               fileInput("csv_input", "Select CSV File to Import", accept = ".csv"),
+                              helpText(
+                                  "A sample data exists; please",
+                                  "hit the run analysis button to view the Joint VIP plot."
+                              ),
                               selectInput("treatment", "Treatment", choices = c(not_sel)),
                               selectInput("outcome", "Outcome", choices = c(not_sel)),
                               selectInput(
@@ -46,7 +50,7 @@ main_page <- tabPanel(title = "Analysis",
                               ),
                               selectInput("pilot_indi", "Pilot sample indicator", choices = c(not_sel)),
 
-                              br(),
+                              # br(),
                               actionButton("run_button", "Run Analysis", icon = icon("play"))
                           ),
                           mainPanel(tabsetPanel(
@@ -89,35 +93,36 @@ main_page <- tabPanel(title = "Analysis",
                                               "return to joint VIP plot for updated plot."
                                           )
                                       ),
-                                      column(
-                                          4,
-                                          selectInput(
-                                              "use_denom",
-                                              "Measure for standardized difference denominator calculation",
-                                              choices = c(not_sel)
-                                          )
+                                      column(4,
+                                             selectInput("use_denom", "Measure for standardized difference denominator calculation", choices = c(not_sel))
                                       ),
                                       column(
                                           4,
-                                          selectInput(
-                                              "use_abs",
-                                              "Absolute mean differences and correlation?",
-                                              choices = c(not_sel)
-                                          )
+                                          radioButtons("use_abs",
+                                                       "View plot with absolute measures?",
+                                                       choices = list("Absolute standardized mean differences and correlation" = 'yes',
+                                                                      "raw standardized mean differences and correlation" = 'no'),
+                                                       selected = 'yes')
                                       )
                                   ),
                                   fluidRow(column(
                                       4,
                                       fileInput("post_input",
-                                                "Select post-matched CSV File to Import",
-                                                accept = ".csv")# ,
-                                      # actionButton('reset', 'Reset post-matched CSV', icon = icon("play"))
+                                                "Select post-matched or post-weighted CSV File to Import",
+                                                accept = ".csv"),
+                                      radioButtons("use_post",
+                                                   "View plot with pre-post both plotted?",
+                                                   choices = list("Pre-post plot" = 'yes',
+                                                                  "Original plot" = 'no'),
+                                                   selected = 'no')
                                   ),
                                   column(
                                       4,
-                                      selectInput("run_boot",
-                                                  "Bootstrap analysis",
-                                                  choices = c(not_sel)),
+                                      radioButtons("run_boot",
+                                                   "Use Bootstrap analysis?",
+                                                   choices = list("Bootstrap plot" = 'yes',
+                                                                  "Original plot" = 'no'),
+                                                   selected = 'no'),
                                       helpText(
                                           "It will take a few minutes to run bootstrap,",
                                           "only standard or pilot choices are valid for standardizing mean difference."
@@ -195,11 +200,16 @@ draw_plot_1 <-
              run_boot,
              label_cutoff_std_diff,
              label_cutoff_control_cor,
-             label_cutoff_bias) {
+             label_cutoff_bias,
+             use_post) {
         data_input = as.data.frame(data_input)
         use_abs = ifelse(use_abs == 'yes', yes = T, no =  F)
         run_boot = ifelse(run_boot == 'yes', yes = T, no =  F)
-
+        use_post = ifelse(use_post == 'yes', yes = T, no =  F)
+        # print(use_post)
+        if (!use_post){
+            post_input = NULL
+        }
         if (pilot_indi == not_sel) {
             set.seed(1234567)
             pilot_prop = 0.2
@@ -211,8 +221,8 @@ draw_plot_1 <-
             pilot_df = data_input[pilot_sample_num, ]
             analysis_df = data_input[-pilot_sample_num, ]
         } else {
-            pilot_df = data_input[which(data_input[, get(pilot_indi)] == 'pilot'), ]
-            analysis_df = data_input[which(data_input[, get(pilot_indi)] == 'analysis'), ]
+            pilot_df = data_input[which(data_input %>% pull(pilot_indi) == 'pilot'), ]
+            analysis_df = data_input[which(data_input %>% pull(pilot_indi) == 'analysis'), ]
         }
 
         if (sum(sapply(data_input, is.factor)) + sum(sapply(data_input, is.character)) > 0) {
@@ -227,12 +237,10 @@ draw_plot_1 <-
                                            c(treatment, outcome, pilot_indi, omit_vars)]
 
         if (!is.null(post_input)) {
-            post_input = as.data.frame(post_input)
+            post_df = as.data.frame(post_input)
         } else {
             post_df = post_input
         }
-
-
 
         res_VIP <<- plot_jointVIP(
             pilot_df = pilot_df,
@@ -242,7 +250,10 @@ draw_plot_1 <-
             outcome = outcome,
             use_denom = use_denom,
             use_abs = use_abs,
-            post_analysis_df = post_input
+            post_analysis_df = post_df,
+            label_cutoff_std_diff = label_cutoff_std_diff,
+            label_cutoff_control_cor = label_cutoff_control_cor,
+            label_cutoff_bias = label_cutoff_bias
         )
 
 
@@ -282,8 +293,6 @@ draw_plot_1 <-
         } else {
             res_VIP$VIP
         }
-
-
     }
 
 get_fact <-
@@ -583,32 +592,44 @@ create_pilot_table <-
         }
     }
 
-create_combined_table <- function(treatment, outcome, use_abs) {
+create_combined_table <- function(treatment, outcome, use_abs, use_post) {
     use_abs = ifelse(use_abs == 'yes', yes = T, no =  F)
+    use_post = ifelse(use_post == 'yes', yes = T, no =  F)
 
     if (treatment != not_sel & outcome != not_sel) {
         ranked_df = res_VIP$measures[order(abs(res_VIP$VIP$data %>% pull('bias_std_diff_pilot')),
                                            decreasing = T),]
-        rank_vip = data.frame(
-            rownames(ranked_df),
-            res_VIP$VIP$data[order(abs(res_VIP$VIP$data %>% pull('bias_std_diff_pilot')),
-                                   decreasing = T),] %>% pull('bias_std_diff_pilot'),
-            ranked_df$tol_suggest
-        )
-        if (!use_abs) {
+        if(!use_post){
+            rank_vip = data.frame(
+                rownames(ranked_df),
+                abs(res_VIP$VIP$data[order(abs(res_VIP$VIP$data %>% pull('bias_std_diff_pilot')),
+                                       decreasing = T),] %>% pull('bias_std_diff_pilot')),
+                ranked_df$tol_suggest
+            )
             colnames(rank_vip) <-
-                c('absolute variable importance (hi-lo)',
-                  'bias',
-                  'tolerance suggestion')
+                    c('absolute variable importance (hi-lo)',
+                      'bias',
+                      'tolerance suggestion')
+
+            rank_vip = rank_vip[abs(round(rank_vip %>% pull('bias'), 2)) > 0,]
+
         } else {
+            rank_vip = data.frame(
+                rownames(ranked_df),
+                abs(res_VIP$measures[order(abs(res_VIP$measures %>% pull('pre_bias')),
+                                       decreasing = T),] %>% pull('pre_bias')),
+                abs(res_VIP$measures[order(abs(res_VIP$measures %>% pull('pre_bias')),
+                                       decreasing = T),] %>% pull('bias_std_diff_post_pilot'))
+            )
+
             colnames(rank_vip) <-
-                c('Variable importance (hi-lo)',
-                  'bias',
-                  'tolerance suggestion')
+                c('Absolute variable importance (hi-lo)',
+                  'pre-bias',
+                  'post-bias')
+
+            rank_vip = rank_vip[abs(round(rank_vip %>% pull('pre-bias'), 2)) > 0,]
+
         }
-        rank_vip = rank_vip[abs(round(rank_vip %>% pull('bias'), 2)) > 0,]
-
-
         return(head(rank_vip, 10))
     }
 }
@@ -623,14 +644,48 @@ server <- function(input, output) {
     options(shiny.maxRequestSize = 10 * 1024 ^ 2)
 
     data_input <- reactive({
-        req(input$csv_input)
-        if (all(fread(input$csv_input$datapath)[, 1] == 1:nrow(fread(input$csv_input$datapath)))) {
-            fread(input$csv_input$datapath)[,-c(1)]
-        }
-        else {
-            fread(input$csv_input$datapath)
-        }
+        if (is.null(input$csv_input)) {
+            ##### using matching dataset online as example #####
+            brfss <-
+                read.csv("http://static.lib.virginia.edu/statlab/materials/data/brfss_2015_sample.csv")
+            # COPD: Ever told you have chronic obstructive pulmonary disease (COPD)?
+            # SMOKE: Adults who are current smokers (0 = no, 1 = yes)
+            # RACE: Race group
+            # AGE: age group
+            # SEX: gender
+            # WTLBS: weight in lbs
+            # AVEDRNK2: During the past 30 days, when you drank, how many drinks did you drink on average?
+            #
+            # We wish to investigate the effect of smoking on COPD. Does smoking increase the chance of contracting COPD?
 
+            # data cleaning
+            brfss$COPD = ifelse(factor(brfss$COPD) == 'No', 0, 1) # reference is no
+            brfss$RACE = factor(brfss$RACE)
+            brfss$RACE <-
+                relevel(brfss$RACE, ref = 'White') # reference is majority in data
+            brfss$AGE = factor(brfss$AGE)
+            brfss$SEX = ifelse(factor(brfss$SEX) == 'Female', 0, 1) # reference is majority in data
+            brfss = fastDummies::dummy_cols(brfss)
+            df = (brfss[, !(names(brfss) %in% c("RACE", "AGE"))])
+
+            ## cleaned data
+            df = (brfss[, !(names(brfss) %in% c("RACE", "AGE"))])
+            names(df) <- c("COPD", "smoke", "sex", "weight",
+                           "average_drinks", "race_white", "race_black",
+                           "race_hispanic", "race_other", "age_18to24",
+                           "age_25to34", "age_35to44", "age_45to54",
+                           "age_55to64", "age_over65")
+            class(df) <- c("data.table", "data.frame")
+            df
+        } else {
+            if (all(fread(input$csv_input$datapath)[, 1] == 1:nrow(fread(input$csv_input$datapath)))) {
+                fread(input$csv_input$datapath)[,-c(1)]
+            }
+            else {
+                fread(input$csv_input$datapath)
+            }
+        }
+        # req(input$csv_input)
     })
 
 
@@ -652,17 +707,24 @@ server <- function(input, output) {
 
     observeEvent(data_input(), {
         choices <- c(not_sel, names(data_input()))
-        updateSelectInput(inputId = "treatment", choices = choices)
-        updateSelectInput(inputId = "outcome", choices = choices)
+        if (is.null(input$csv_input)){
+            updateSelectInput(inputId = "treatment", choices = choices,
+                              selected = 'smoke')
+            updateSelectInput(inputId = "outcome", choices = choices,
+                              selected = 'COPD')
+        } else {
+            updateSelectInput(inputId = "treatment", choices = choices)
+            updateSelectInput(inputId = "outcome", choices = choices)
+        }
         updateSelectInput(inputId = "pilot_indi", choices = choices)
         updateSelectInput(inputId = "use_denom",
                           choices = c("both", "standard", "pilot"))
-        updateSelectInput(inputId = "use_abs",
-                          choices = c('yes', 'no'))
+        # updateSelectInput(inputId = "use_abs",
+        #                   choices = c('yes', 'no'))
         updateSelectInput(inputId = "variable_of_interest",
                           choices = choices)
-        updateSelectInput(inputId = "run_boot",
-                          choices = c('no', 'yes'))
+        # updateSelectInput(inputId = "run_boot",
+        #                   choices = c('no', 'yes'))
     })
 
     observeEvent(post_input(), {
@@ -675,6 +737,8 @@ server <- function(input, output) {
     pilot_indi <<- eventReactive(input$run_button, input$pilot_indi)
     use_denom <<- eventReactive(input$run_button, input$use_denom)
     use_abs <<- eventReactive(input$run_button, input$use_abs)
+    use_post <<- eventReactive(input$run_button, input$use_post)
+
     variable_of_interest <<- eventReactive(input$run_button,
                                            input$variable_of_interest)
     run_boot <<- eventReactive(input$run_button,
@@ -708,7 +772,6 @@ server <- function(input, output) {
     })
 
     # plot
-
     plot_1 <- eventReactive(input$run_button, {
         p = draw_plot_1(
             data_input = data_input(),
@@ -721,7 +784,8 @@ server <- function(input, output) {
             run_boot = run_boot(),
             label_cutoff_std_diff = label_cutoff_std_diff(),
             label_cutoff_control_cor = label_cutoff_control_cor(),
-            label_cutoff_bias = label_cutoff_bias()
+            label_cutoff_bias = label_cutoff_bias(),
+            use_post = use_post()
         )
         if (plot_title() == 'Enter title...' &
             plot_subtitle() == 'Enter subtitle...') {
@@ -748,6 +812,7 @@ server <- function(input, output) {
                     outcome(),
                     variable_of_interest())
     })
+
     output$plot_1 <- renderPlot({
         input$run_button
         withProgress({
@@ -797,7 +862,7 @@ server <- function(input, output) {
     # multi-d summary table
 
     combined_summary_table <- eventReactive(input$run_button, {
-        create_combined_table(treatment(), outcome(), use_abs())
+        create_combined_table(treatment(), outcome(), use_abs(), use_post())
     })
 
     output$combined_summary_table <-

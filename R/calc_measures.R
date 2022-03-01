@@ -210,7 +210,7 @@ get_measures = function(pilot_df, analysis_df,
     pilot_cor *
     standard_difference_max
   tol_suggest = abs(bias_tol/ pilot_cor * pilot_denom / stats::sd(pilot_df %>% pull(outcome)))
-
+  tol_std_pilot_denom = abs(bias_tol/ pilot_cor / stats::sd(pilot_df %>% pull(outcome)))
   measures = data.frame(
     raw_diff = analysis_diff,
     standard_difference = standard_difference,
@@ -228,6 +228,7 @@ get_measures = function(pilot_df, analysis_df,
     bias_max = # stats::sd(pilot_sample %>% pull(outcome)) *
       pmax(bias_std_diff_analysis, bias_std_diff_pilot),
     tol_suggest = tol_suggest,
+    # tol_std_pilot_denom = tol_std_pilot_denom,
     label = names(pilot_cor)
   )
 

@@ -341,9 +341,10 @@ plot_jointVIP = function(pilot_df,
                                       use_denom=use_denom,
                                       joint_vip=joint_vip, use_abs=use_abs,
                                       post_prop = post_prop, post_prog = post_prog)
-
+    post_analysis_vip$measures$pre_bias = measures$measures$bias_std_diff_pilot
     post_analysis_vip$joint_vip = post_analysis_vip$joint_vip +
       labs(subtitle = "Pre-matched variables plotted with transparency")
+
     return(
       list(
         'VIP' = post_analysis_vip$joint_vip,
@@ -370,6 +371,8 @@ plot_jointVIP = function(pilot_df,
       'propensity_fit' = props$props_fit,
       'prognostic_comparison' = progs$progs_plot,
       'prognostic_fit' = progs$progs_fit,
+      'propensity_scores' = progs$progs_analysis,
+      'prognostic_scores' = props$props_analysis,
       'measures' = measures$measures
     )
   )
