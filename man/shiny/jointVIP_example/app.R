@@ -1,3 +1,8 @@
+library(devtools)
+devtools::install_github("ldliao/jointVIP")
+# require(jointVIP)
+
+
 library(shiny)
 library(bslib)
 library(shinythemes)
@@ -870,6 +875,7 @@ server <- function(input, output) {
 
 }
 
+library(shiny.semantic)
 shinyApp(ui = ui, server = server)
 
 # runApp("/Users/ldliao/Research/Projects/jointVIP/man/shiny/jointVIP_example/app.R", display.mode = "showcase")

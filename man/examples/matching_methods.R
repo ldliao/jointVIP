@@ -43,8 +43,8 @@ cat_only_covs = c(covariates[!covariates %in% c('average_drinks', 'weight')], 'a
 df$pilot_sample_indi = ifelse(row.names(df) %in% pilot_sample_num,
                               'pilot',
                               'analysis')
-write.csv(df[,c(treatment, outcome, cat_only_covs, 'pilot_sample_indi')],
-          '../../Data/JointVIP/sm_brfss_cat_only.csv')
+# write.csv(df[,c(treatment, outcome, cat_only_covs, 'pilot_sample_indi')],
+#           '../../Data/JointVIP/sm_brfss_cat_only.csv')
 
 sm_brfss_cat = df[,c(treatment, outcome, cat_only_covs, 'pilot_sample_indi')]
 
@@ -86,11 +86,14 @@ t_ind = analysis_df$smoke
 #              1.412281e-01, 2.569560e+00)
 # round(absstddif(mom_covs, t_ind, .05), 2)
 
-mom_covs = analysis_df[, c('age_over65',
-                           'age_25to34',
-                           'race_black')]
-mom_tols = c(7.539945e-02, 1.497689e-01,
-             1.412281e-01)
+# mom_covs = analysis_df[, c('age_over65',
+#                            'age_25to34',
+#                            'race_black')]
+# mom_tols = c(7.539945e-02, 1.497689e-01,
+#              1.412281e-01)
+
+mom_covs = analysis_df[, tol_df$label]
+mom_tols = tol_df$tol_suggest
 
 # Solver options
 t_max = 60*5
