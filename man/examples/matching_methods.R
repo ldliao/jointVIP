@@ -9,7 +9,7 @@ library(optmatch)
 df = read.csv("../../Data/JointVIP/sm_brfss_example.csv")
 if(all(df[,1] == 1:nrow(df))){df <- df[,-c(1)]}
 
-set.seed(1234567)
+set.seed(123485)
 pilot_prop = 0.2
 
 treatment = 'smoke'
@@ -43,11 +43,10 @@ cat_only_covs = c(covariates[!covariates %in% c('average_drinks', 'weight')], 'a
 df$pilot_sample_indi = ifelse(row.names(df) %in% pilot_sample_num,
                               'pilot',
                               'analysis')
-# write.csv(df[,c(treatment, outcome, cat_only_covs, 'pilot_sample_indi')],
-#           '../../Data/JointVIP/sm_brfss_cat_only.csv')
 
 sm_brfss_cat = df[,c(treatment, outcome, cat_only_covs, 'pilot_sample_indi')]
-
+write.csv(sm_brfss_cat,
+          '../../Data/JointVIP/sm_brfss_cat_only.csv')
 # reassigning names
 # adding prognostic score and propensity score into the dataframe
 analysis_df$prognostic_score = res_VIP$prognostic_scores
@@ -78,10 +77,22 @@ t_ind = analysis_df$smoke
 # mom_covs = analysis_df[, c(head(tol_df)$label)]
 # mom_tols = head(tol_df$tol_suggest)
 
-# mom_covs = analysis_df[, c('age_over65',
-#                            'age_25to34',
-#                            'race_black',
-#                            'average_drinks')]
+mom_covs = analysis_df[, c('age_over65',
+                           'age_25to34',
+                           'race_black',
+                           'average_drinks',
+                           'race_white',
+                           'age_35to44',
+                           'prognostic_score',
+                           'propensity_score')]
+mom_tols = tol_df[c('age_over65',
+                    'age_25to34',
+                    'race_black',
+                    'average_drinks',
+                    'race_white',
+                    'age_35to44',
+                    'prognostic_score',
+                    'propensity_score'),'tol_suggest']
 # mom_tols = c(7.539945e-02, 1.497689e-01,
 #              1.412281e-01, 2.569560e+00)
 # round(absstddif(mom_covs, t_ind, .05), 2)
@@ -92,8 +103,8 @@ t_ind = analysis_df$smoke
 # mom_tols = c(7.539945e-02, 1.497689e-01,
 #              1.412281e-01)
 
-mom_covs = analysis_df[, tol_df$label]
-mom_tols = tol_df$tol_suggest
+# mom_covs = analysis_df[, tol_df$label]
+# mom_tols = tol_df$tol_suggest
 
 # Solver options
 t_max = 60*5
@@ -130,6 +141,23 @@ step_1_df = analysis_df[c(t_id_1, c_id_1),]
 rownames(step_1_df) = NULL
 write.csv(step_1_df[, c(treatment, outcome, covariates)],
           '../../Data/JointVIP/sm_brfss_matched_card1.csv')
+
+brfss_vip_match = plot_jointVIP(
+  pilot_df = pilot_df,
+  analysis_df = analysis_df,
+  post_analysis_df = step_1_df,
+  # brfss.match[,c(outcome, treatment, covariates)],
+  treatment = treatment,
+  covariates = covariates,
+  outcome = outcome,
+  use_abs = T,
+  use_denom = 'pilot',
+  plot_title="Joint variable importance",
+  label_cutoff_std_diff = 0.15,
+  label_cutoff_control_cor = 0.1
+)
+brfss_vip_match$VIP
+
 
 
 # 1.2. step 2 -------------------------------------------------------------
@@ -192,24 +220,23 @@ library(rcbalance)
 
 #read in dataframe
 
-# coarsen continuous
-pilot_df$weight_cat <- pilot_df$weight > median(pilot_df$weight)
-pilot_df$average_drinks_cat <- pilot_df$average_drinks > mean(pilot_df$average_drinks)
+# # coarsen continuous
+# pilot_df$weight_cat <- pilot_df$weight > median(pilot_df$weight)
+# pilot_df$average_drinks_cat <- pilot_df$average_drinks > mean(pilot_df$average_drinks)
+#
+# analysis_df$weight_cat <- analysis_df$weight > median(analysis_df$weight)
+# analysis_df$average_drinks_cat <- analysis_df$average_drinks > mean(analysis_df$average_drinks)
 
-analysis_df$weight_cat <- df$weight > median(df$weight)
-analysis_df$average_drinks_cat <- df$average_drinks > mean(df$average_drinks)
+pilot_df = sm_brfss_cat[sm_brfss_cat$pilot_sample_indi == 'pilot',]
+analysis_df = sm_brfss_cat[sm_brfss_cat$pilot_sample_indi != 'pilot',]
 
-write.csv(analysis_df[,vars_to_save],'../../Data/JointVIP/sm_brfss_cat_only.csv')
-
-
+covariates = names(sm_brfss_cat)[!names(sm_brfss_cat)%in%c(treatment, outcome, 'pilot_sample_indi')]
 # run jointVIP here
 res_VIP <- plot_jointVIP(
   pilot_df = pilot_df,
   analysis_df = analysis_df,
   treatment = treatment,
-  covariates = c(covariates,
-                 'weight_cat',
-                 'average_drinks_cat'),
+  covariates = covariates,
   outcome = outcome,
   use_denom = 'both',
   use_abs = T
@@ -217,30 +244,27 @@ res_VIP <- plot_jointVIP(
 res_VIP$VIP
 # after running grab the analysis_df
 
-df = analysis_df
+# df = analysis_df
 # define fine balance levels
 l1 <- c("age_over65")
 l2 <- c(l1, "race_white", "age_25to34")
 l3 <- c(l2, "race_black", "age_35to44")
 # define variables for Mahalanobis distance
-maha.vars <- c(covariates[!covariates %in% c('weight', 'average_drinks')],
-               'weight_cat',
-               'average_drinks_cat')
-
+maha.vars <- covariates
 # make distance structure
-my.dist <- build.dist.struct(z=df$smoke,
-                             X=df[,maha.vars])
+my.dist <- build.dist.struct(z=analysis_df$smoke,
+                             X=analysis_df[,maha.vars])
 
 # maybe its from caliper
 # check this!
 
 # compute match
 match.out <- rcbalance(my.dist, fb.list = list(l1, l2, l3),
-                       treated.info = df[df$smoke == 1,],
-                       control.info = df[df$smoke == 0,],
+                       treated.info = analysis_df[analysis_df$smoke == 1,],
+                       control.info = analysis_df[analysis_df$smoke == 0,],
                        exclude.treated = T)
 
-vars_to_save = names(analysis_df)[!names(analysis_df) %in% c("weight", "average_drinks")]
+vars_to_save = c(treatment, outcome, covariates, 'pilot_sample_indi')
 
 matched_df = analysis_df[c(which(analysis_df$smoke == 1),
                            which(analysis_df$smoke == 0)[match.out$matches]),
@@ -250,9 +274,6 @@ matched_df = matched_df[,vars_to_save]
 rownames(matched_df) = NULL
 write.csv(matched_df,'../../Data/JointVIP/matched_brfss.csv')
 
-
-rownames(analysis_df) = NULL
-write.csv(analysis_df[,vars_to_save],'../../Data/JointVIP/sm_brfss_cat_only.csv')
 
 
 sm_brfss_cat = read.csv('../../Data/JointVIP/sm_brfss_cat_only.csv')
@@ -280,4 +301,11 @@ brfss_vip_match = plot_jointVIP(
   label_cutoff_std_diff = 0.15,
   label_cutoff_control_cor = 0.1
 )
-brfss_vip_match$VIP
+
+
+ggsave("man/figures/matched.pdf", brfss_vip_match$VIP + labs(
+  x = "Absolute Standardized Mean Differences",
+  y = "Absolute Outcome Correlation"
+))
+
+

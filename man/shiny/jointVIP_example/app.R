@@ -1,5 +1,5 @@
-library(devtools)
-devtools::install_github("ldliao/jointVIP")
+# library(devtools)
+# devtools::install_github("ldliao/jointVIP")
 # require(jointVIP)
 
 
@@ -216,7 +216,7 @@ draw_plot_1 <-
             post_input = NULL
         }
         if (pilot_indi == not_sel) {
-            set.seed(1234567)
+            set.seed(123485)
             pilot_prop = 0.2
             pilot_sample_num = sample(which(data_input %>% pull(treatment) == 0),
                                       length(which(
@@ -575,7 +575,7 @@ create_pilot_table <-
                 return(freq_tbl)
             }
         } else if (treatment != not_sel & outcome != not_sel) {
-            set.seed(1234567)
+            set.seed(123485)
             pilot_prop = 0.2
             pilot_sample_num = sample(which(data_input %>% pull(treatment) == 0),
                                       length(which(
@@ -645,7 +645,7 @@ ui <- navbarPage(# shinythemes::themeSelector(),
     main_page,
     about_page)
 
-server <- function(input, output) {
+server <- function(input, output, session) {
     options(shiny.maxRequestSize = 10 * 1024 ^ 2)
 
     data_input <- reactive({
@@ -875,7 +875,7 @@ server <- function(input, output) {
 
 }
 
-library(shiny.semantic)
+# library(shiny.semantic)
 shinyApp(ui = ui, server = server)
 
 # runApp("/Users/ldliao/Research/Projects/jointVIP/man/shiny/jointVIP_example/app.R", display.mode = "showcase")
