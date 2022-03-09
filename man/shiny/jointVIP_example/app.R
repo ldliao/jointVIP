@@ -1,16 +1,18 @@
 # library(devtools)
-# devtools::install_github("ldliao/jointVIP")
+devtools::install_github("ldliao/jointVIP")
 # require(jointVIP)
 
-
 library(shiny)
-library(bslib)
+# library(bslib)
 library(shinythemes)
 library(data.table)
 library(ggplot2)
 library(jointVIP)
 library(cowplot)
 library(dplyr)
+# using symengine to bypass cmake error
+library(symengine)
+
 # library(shinyjs)
 
 
@@ -160,6 +162,14 @@ main_page <- tabPanel(title = "Analysis",
                                            column(
                                                4,
                                                # label_cutoff_control_cor
+                                               sliderInput(
+                                                   "max_overlap",
+                                                   "maximum overlap labels",
+                                                   min = 0,
+                                                   max = 30,
+                                                   step = 1,
+                                                   value = 10
+                                               ),
                                                sliderInput(
                                                    "label_cutoff_control_cor",
                                                    "labeling points above outcome correlation",
@@ -878,4 +888,6 @@ server <- function(input, output, session) {
 # library(shiny.semantic)
 shinyApp(ui = ui, server = server)
 
+# library(rsconnect)
+# deployApp()
 # runApp("/Users/ldliao/Research/Projects/jointVIP/man/shiny/jointVIP_example/app.R", display.mode = "showcase")

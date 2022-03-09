@@ -1,11 +1,13 @@
-name: jointvip_example
-title:
+name: jointVIP_example
+title: jointVIP_example
 username:
 account: jointvip
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
-appId: 5759783
-bundleId: 5630606
-url: https://jointvip.shinyapps.io/jointvip_example/
-when: 1646173941.5558
-lastSyncTime: 1646173941.55582
+appId: 5816458
+bundleId: 5663591
+url: https://jointvip.shinyapps.io/jointVIP_example/
+when: 1646860480.90994
+lastSyncTime: 1646860480.90995
+asMultiple: FALSE
+asStatic: FALSE
