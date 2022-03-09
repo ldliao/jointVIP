@@ -14,6 +14,7 @@ NULL
 #' @param label_cutoff_control_cor text label cut off for correlation
 #' @param label_cutoff_bias text label cut off for bias
 #' @param raw_plot plot without bias
+#' @param max_overlap maximum overlap of points
 get_jointVIP <-
   function(measures,
            bias_curve_cutoffs = c(-0.05,-0.03,-0.01,-0.005, 0.005, 0.01, 0.03, 0.05),
@@ -23,7 +24,8 @@ get_jointVIP <-
            label_cutoff_std_diff=NULL,
            label_cutoff_control_cor=NULL,
            label_cutoff_bias=NULL,
-           raw_plot = F) {
+           raw_plot = F,
+           max_overlap = 10) {
 
     max_y = min(round(max(measures$control_cor), 1) + 0.05, 1)
     if (!use_abs) {
@@ -106,7 +108,8 @@ get_jointVIP <-
           title = plot_title
         ) +
         ylim(c(min_y, max_y)) +
-        geom_text_repel(mapping = aes(label = text_labels), size = 3)
+        geom_text_repel(mapping = aes(label = text_labels), size = 3,
+                        max_overlap=max_overlap)
 
 
       return(raw_p)

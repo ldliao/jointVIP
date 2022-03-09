@@ -14,7 +14,8 @@ get_jointVIP(
   label_cutoff_std_diff = NULL,
   label_cutoff_control_cor = NULL,
   label_cutoff_bias = NULL,
-  raw_plot = F
+  raw_plot = F,
+  max_overlap = 10
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ get_jointVIP(
 \item{label_cutoff_bias}{text label cut off for bias}
 
 \item{raw_plot}{plot without bias}
+
+\item{max_overlap}{maximum overlap of points}
 }
 \description{
 Get the measures and create plot
