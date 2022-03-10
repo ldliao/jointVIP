@@ -68,4 +68,4 @@ brfss_vip = plot_jointVIP(pilot_df = pilot_df,
 brfss_vip$VIP
 ```
 
-<img src="man/figures/README-jointvip_specify-1.png" width="100%" />
+<img src="man/figures/README-jointvip_specify-1.png" width="100%" style="display: block; margin: auto;" />

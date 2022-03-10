@@ -65,7 +65,7 @@ To demonstrate, we use the 2015 Behavioral Risk Factor Surveillance System (BRFS
 
 With the cleaned data, you can specify details in the function `plot_jointVIP` like so:
 
-```{r jointvip_specify}
+```{r jointvip_specify, fig.height = 5, fig.width = 5, fig.align = "center"}
 library(jointVIP)
 
 treatment = 'smoke'
