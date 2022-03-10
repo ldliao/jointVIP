@@ -46,7 +46,7 @@ main_page <- tabPanel(title = "Analysis",
                               fileInput("csv_input", "Select CSV File to Import", accept = ".csv"),
                               helpText(
                                   "A sample data exists; please",
-                                  "hit the run analysis button to view the Joint VIP plot."
+                                  "hit the run analysis button to view the joint VIP."
                               ),
                               selectInput("treatment", "Treatment", choices = c(not_sel)),
                               selectInput("outcome", "Outcome", choices = c(not_sel)),
@@ -61,7 +61,7 @@ main_page <- tabPanel(title = "Analysis",
                               actionButton("run_button", "Run Analysis", icon = icon("play"))
                           ),
                           mainPanel(tabsetPanel(
-                              tabPanel(title = "joint VIP Plot",
+                              tabPanel(title = "joint VIP",
                                        fluidRow(
                                            align = "center",
                                            splitLayout(
@@ -94,10 +94,10 @@ main_page <- tabPanel(title = "Analysis",
                                           "Note:",
                                           helpText(
                                               "Advanced options supports other forms of",
-                                              "the joint VIP plot,",
+                                              "the joint VIP,",
                                               "please see documentation for more details.",
                                               "After updating please press the 'Run Analysis' botton and",
-                                              "return to joint VIP plot for updated plot."
+                                              "return to joint VIP for updated plot."
                                           )
                                       ),
                                       column(4,
@@ -146,7 +146,7 @@ main_page <- tabPanel(title = "Analysis",
                                                    "please see documentation for more details.",
                                                    "After updating please press 'Run Analysis'",
                                                    "button.",
-                                                   "Return to joint VIP plot for updated plot."
+                                                   "Return to joint VIP for updated plot."
                                                )
                                            ),
                                            column(

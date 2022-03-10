@@ -1,57 +1,71 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# jointVIP
+# Joint variable importance plot
 
 <!-- badges: start -->
 
 <!-- badges: end -->
 
-The goal of jointVIP is to …
+Joint variable importance plot (jointVIP) visualizes each variable’s
+outcome importance via Pearson’s correlation and treatment importance
+via standardized mean differences. Bias curves enable comparisons to
+support priotization.
 
 ## Installation
 
-You can install the released version of jointVIP from
-[CRAN](https://CRAN.R-project.org) with:
+You can install the released version of jointVIP with:
 
 ``` r
 install.packages("jointVIP")
 ```
 
-## Example
+## BRFSS Example
 
-This is a basic example which shows you how to solve a common problem:
+To demonstrate, we use the 2015 Behavioral Risk Factor Surveillance
+System (BRFSS) example to answer the causal question: Does smoking
+increase the risk of chronic obstructive pulmonary disease (COPD)? The
+data and background is inspired by [Clay Ford’s work from University of
+Virginia
+Library](https://data.library.virginia.edu/getting-started-with-matching-methods/).
+First, the data is cleaned to only have numeric variables,
+i.e. dichodimize all factored variables. Treatment variable only
+contains 0 (control) and 1 (treatment).
+
+With the cleaned data, you can specify details in the function
+`plot_jointVIP` like so:
 
 ``` r
 library(jointVIP)
-## basic example code
 
-# will work on this soon
+treatment = 'smoke'
+outcome = 'COPD'
+covariates = names(df)[!names(df) %in% c(treatment, outcome)]
+
+## select the pilot sample from random portion
+set.seed(123485)
+pilot_prop = 0.2
+pilot_sample_num = sample(which(df %>% pull(treatment) == 0),
+                          length(which(df %>% pull(treatment) == 0)) *
+                            pilot_prop)
+
+## set up pilot and analysis data
+pilot_df = df[pilot_sample_num, ]
+analysis_df = df[-pilot_sample_num, ]
+
+## minimal example
+brfss_vip = plot_jointVIP(pilot_df = pilot_df,
+                          analysis_df = analysis_df,
+                          treatment = treatment,
+                          covariates = covariates,
+                          outcome = outcome,
+                          use_abs = T)
+
+## not run
+## obtain summary measures
+# brfss_vip$measures
+## show the joint variable importance plot
+brfss_vip$VIP
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
-
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this. You could also
-use GitHub Actions to re-render `README.Rmd` every time you push. An
-example workflow can be found here:
-<https://github.com/r-lib/actions/tree/master/examples>.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+<img src="man/figures/README-jointvip_specify-1.png" width="100%" />
