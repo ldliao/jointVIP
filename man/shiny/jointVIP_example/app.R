@@ -1,9 +1,9 @@
 # library(devtools)
-devtools::install_github("ldliao/jointVIP")
-# require(jointVIP)
+# devtools::install_github("ldliao/jointVIP", upgrade = F)
+require(jointVIP)
 
 library(shiny)
-# library(bslib)
+library(bslib)
 library(shinythemes)
 library(data.table)
 library(ggplot2)
@@ -65,9 +65,9 @@ main_page <- tabPanel(title = "Analysis",
                                        fluidRow(
                                            align = "center",
                                            splitLayout(
-                                               cellWidths = c("60%", "50%"),
-                                               plotOutput("plot_1"),
-                                               plotOutput("plot_2")
+                                               cellWidths = c("60%", "40%"),
+                                               plotOutput("plot_1", height = "500px"),
+                                               plotOutput("plot_2", height = "500px")
                                            )
                                        )),
                               tabPanel(
@@ -171,6 +171,14 @@ main_page <- tabPanel(title = "Analysis",
                                                    value = 10
                                                ),
                                                sliderInput(
+                                                   "point_text_size",
+                                                   "text label size",
+                                                   min = 2,
+                                                   max = 10,
+                                                   step = 1,
+                                                   value = 4
+                                               ),
+                                               sliderInput(
                                                    "label_cutoff_control_cor",
                                                    "labeling points above outcome correlation",
                                                    min = 0,
@@ -216,7 +224,9 @@ draw_plot_1 <-
              label_cutoff_std_diff,
              label_cutoff_control_cor,
              label_cutoff_bias,
-             use_post) {
+             use_post,
+             max_overlap,
+             point_text_size) {
         data_input = as.data.frame(data_input)
         use_abs = ifelse(use_abs == 'yes', yes = T, no =  F)
         run_boot = ifelse(run_boot == 'yes', yes = T, no =  F)
@@ -268,7 +278,9 @@ draw_plot_1 <-
             post_analysis_df = post_df,
             label_cutoff_std_diff = label_cutoff_std_diff,
             label_cutoff_control_cor = label_cutoff_control_cor,
-            label_cutoff_bias = label_cutoff_bias
+            label_cutoff_bias = label_cutoff_bias,
+            max_overlap = max_overlap,
+            point_text_size = point_text_size
         )
 
 
@@ -651,7 +663,7 @@ create_combined_table <- function(treatment, outcome, use_abs, use_post) {
 
 ui <- navbarPage(# shinythemes::themeSelector(),
     title = "Run Joint [treatment-outcome] Variable Importance Plot",
-    theme = shinytheme('united'),
+    theme = bs_theme(bootswatch = "united"),
     main_page,
     about_page)
 
@@ -753,6 +765,8 @@ server <- function(input, output, session) {
     use_denom <<- eventReactive(input$run_button, input$use_denom)
     use_abs <<- eventReactive(input$run_button, input$use_abs)
     use_post <<- eventReactive(input$run_button, input$use_post)
+    max_overlap <<- eventReactive(input$run_button, input$max_overlap)
+    point_text_size <<- eventReactive(input$run_button, input$point_text_size)
 
     variable_of_interest <<- eventReactive(input$run_button,
                                            input$variable_of_interest)
@@ -800,7 +814,9 @@ server <- function(input, output, session) {
             label_cutoff_std_diff = label_cutoff_std_diff(),
             label_cutoff_control_cor = label_cutoff_control_cor(),
             label_cutoff_bias = label_cutoff_bias(),
-            use_post = use_post()
+            use_post = use_post(),
+            max_overlap = max_overlap(),
+            point_text_size = point_text_size()
         )
         if (plot_title() == 'Enter title...' &
             plot_subtitle() == 'Enter subtitle...') {
@@ -889,5 +905,5 @@ server <- function(input, output, session) {
 shinyApp(ui = ui, server = server)
 
 # library(rsconnect)
-# deployApp()
+# deployApp(appName="jointVIP")
 # runApp("/Users/ldliao/Research/Projects/jointVIP/man/shiny/jointVIP_example/app.R", display.mode = "showcase")

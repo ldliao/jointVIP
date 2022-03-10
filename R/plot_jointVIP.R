@@ -15,6 +15,7 @@ NULL
 #' @param label_cutoff_bias text label cut off for bias
 #' @param raw_plot plot without bias
 #' @param max_overlap maximum overlap of points
+#' @param point_text_size text size for each point
 get_jointVIP <-
   function(measures,
            bias_curve_cutoffs = c(-0.05,-0.03,-0.01,-0.005, 0.005, 0.01, 0.03, 0.05),
@@ -25,7 +26,8 @@ get_jointVIP <-
            label_cutoff_control_cor=NULL,
            label_cutoff_bias=NULL,
            raw_plot = F,
-           max_overlap = 10) {
+           max_overlap = 10,
+           point_text_size = 3) {
 
     max_y = min(round(max(measures$control_cor), 1) + 0.05, 1)
     if (!use_abs) {
@@ -108,7 +110,7 @@ get_jointVIP <-
           title = plot_title
         ) +
         ylim(c(min_y, max_y)) +
-        geom_text_repel(mapping = aes(label = text_labels), size = 3,
+        geom_text_repel(mapping = aes(label = text_labels), size = point_text_size,
                         max_overlap=max_overlap)
 
 
@@ -146,7 +148,9 @@ get_jointVIP <-
         color = "Bias"
       ) +
       ylim(c(min_y, max_y)) +
-      geom_text_repel(mapping = aes(label = text_labels), size = 3)
+      geom_text_repel(mapping = aes(label = text_labels),
+                      size = point_text_size,
+                      max_overlap=max_overlap)
 
     bias_func = function(i) {
       i = force(i)
@@ -265,6 +269,8 @@ get_jointVIP <-
 #' @param label_cutoff_std_diff text label cut off for standardized difference
 #' @param label_cutoff_control_cor text label cut off for correlation
 #' @param label_cutoff_bias text label cut off for bias
+#' @param max_overlap maximum overlap of points
+#' @param point_text_size text size for each point
 #' @return a list
 #' @export
 plot_jointVIP = function(pilot_df,
@@ -284,7 +290,9 @@ plot_jointVIP = function(pilot_df,
                          plot_title = "Joint variable importance",
                          label_cutoff_std_diff = NULL,
                          label_cutoff_control_cor = NULL,
-                         label_cutoff_bias = NULL
+                         label_cutoff_bias = NULL,
+                         max_overlap = 10,
+                         point_text_size = 3
                          ) {
 
   pilot_df = pilot_df[,c(covariates, treatment, outcome)]
@@ -332,7 +340,9 @@ plot_jointVIP = function(pilot_df,
     label_cutoff_std_diff = label_cutoff_std_diff,
     label_cutoff_control_cor = label_cutoff_control_cor,
     label_cutoff_bias = label_cutoff_bias,
-    raw_plot = raw_plot
+    raw_plot = raw_plot,
+    max_overlap = max_overlap,
+    point_text_size = point_text_size
   )
 
 
