@@ -163,7 +163,7 @@ main_page <- tabPanel(title = "Analysis",
                                                4,
                                                # label_cutoff_control_cor
                                                sliderInput(
-                                                   "max_overlap",
+                                                   "max.overlap",
                                                    "maximum overlap labels",
                                                    min = 0,
                                                    max = 30,
@@ -225,7 +225,7 @@ draw_plot_1 <-
              label_cutoff_control_cor,
              label_cutoff_bias,
              use_post,
-             max_overlap,
+             max.overlap,
              point_text_size) {
         data_input = as.data.frame(data_input)
         use_abs = ifelse(use_abs == 'yes', yes = T, no =  F)
@@ -279,7 +279,7 @@ draw_plot_1 <-
             label_cutoff_std_diff = label_cutoff_std_diff,
             label_cutoff_control_cor = label_cutoff_control_cor,
             label_cutoff_bias = label_cutoff_bias,
-            max_overlap = max_overlap,
+            max.overlap = max.overlap,
             point_text_size = point_text_size
         )
 
@@ -765,7 +765,7 @@ server <- function(input, output, session) {
     use_denom <<- eventReactive(input$run_button, input$use_denom)
     use_abs <<- eventReactive(input$run_button, input$use_abs)
     use_post <<- eventReactive(input$run_button, input$use_post)
-    max_overlap <<- eventReactive(input$run_button, input$max_overlap)
+    max.overlap <<- eventReactive(input$run_button, input$max.overlap)
     point_text_size <<- eventReactive(input$run_button, input$point_text_size)
 
     variable_of_interest <<- eventReactive(input$run_button,
@@ -815,7 +815,7 @@ server <- function(input, output, session) {
             label_cutoff_control_cor = label_cutoff_control_cor(),
             label_cutoff_bias = label_cutoff_bias(),
             use_post = use_post(),
-            max_overlap = max_overlap(),
+            max.overlap = max.overlap(),
             point_text_size = point_text_size()
         )
         if (plot_title() == 'Enter title...' &

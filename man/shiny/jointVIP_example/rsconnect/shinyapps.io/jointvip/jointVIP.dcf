@@ -5,7 +5,9 @@ account: jointvip
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 5819894
-bundleId: 5664460
+bundleId: 5669545
 url: https://jointvip.shinyapps.io/jointVIP/
-when: 1646878816.73412
-lastSyncTime: 1646878816.73413
+when: 1646972752.45101
+lastSyncTime: 1646972752.45102
+asMultiple: FALSE
+asStatic: FALSE
