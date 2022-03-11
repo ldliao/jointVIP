@@ -23,7 +23,7 @@ plot_jointVIP(
   label_cutoff_std_diff = NULL,
   label_cutoff_control_cor = NULL,
   label_cutoff_bias = NULL,
-  max.overlap = 10,
+  max.overlapss = 10,
   point_text_size = 3
 )
 }
@@ -64,7 +64,7 @@ plot_jointVIP(
 
 \item{label_cutoff_bias}{text label cut off for bias}
 
-\item{max.overlap}{maximum overlap of points}
+\item{max.overlapss}{maximum overlap of points}
 
 \item{point_text_size}{text size for each point}
 }
