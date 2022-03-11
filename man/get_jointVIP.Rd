@@ -15,7 +15,7 @@ get_jointVIP(
   label_cutoff_control_cor = NULL,
   label_cutoff_bias = NULL,
   raw_plot = F,
-  max.overlapss = 10,
+  max.overlaps = 10,
   point_text_size = 3
 )
 }
@@ -40,7 +40,7 @@ get_jointVIP(
 
 \item{raw_plot}{plot without bias}
 
-\item{max.overlapss}{maximum overlap of points}
+\item{max.overlaps}{maximum overlap of points}
 
 \item{point_text_size}{text size for each point}
 }
