@@ -1,6 +1,7 @@
 # library(devtools)
-# devtools::install_github("ldliao/jointVIP", upgrade = F)
+# devtools::install_github("ldliao/jointVIP", upgrade = T)
 require(jointVIP)
+
 require(shiny)
 library(shiny)
 library(bslib)

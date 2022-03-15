@@ -155,7 +155,7 @@ get_jointVIP <-
     bias_func = function(i) {
       i = force(i)
       f = function(x) {
-        i / x
+        i/x
       }
       return(f)
     }

@@ -17,7 +17,9 @@ support priotization.
 You can install the released version of jointVIP with:
 
 ``` r
-install.packages("jointVIP")
+# Install devtools if necessary:
+# install.packages("devtools")
+devtools::install_github("ldliao/jointVIP")
 ```
 
 ## BRFSS Example

@@ -345,7 +345,7 @@ get_props <- function(pilot_df,
 
   ## unsure if this should be trained on analysis sample only
   ## or entire sample used analysis sample only for training
-  ## implemented entire sample
+  ## implemented analysis sample
   fmla = stats::as.formula(paste(paste(treatment, "~ "),
                                  paste(".", collapse = "+")))
 
