@@ -4,12 +4,12 @@
 \alias{floor_dec}
 \title{support function for floor function with decimals}
 \usage{
-floor_dec(x, level = 1)
+floor_dec(num, dec_place = 1)
 }
 \arguments{
-\item{x}{numeric}
+\item{num}{numeric}
 
-\item{level}{decimal place that is desired floor for}
+\item{dec_place}{decimal place that is desired floor for}
 }
 \value{
 numeric number desired

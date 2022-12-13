@@ -4,12 +4,12 @@
 \alias{ceiling_dec}
 \title{support function for ceiling function with decimals}
 \usage{
-ceiling_dec(x, level = 1)
+ceiling_dec(num, dec_place = 1)
 }
 \arguments{
-\item{x}{numeric}
+\item{num}{numeric}
 
-\item{level}{decimal place that is desired ceiling for}
+\item{dec_place}{decimal place that is desired ceiling for}
 }
 \value{
 numeric number desired
