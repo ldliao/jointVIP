@@ -696,20 +696,23 @@ add_variable_labels <- function(p,
 
 #' support function for ceiling function with decimals
 #'
-#' @param x numeric
-#' @param level decimal place that is desired ceiling for
+#' @param num numeric
+#' @param dec_place decimal place that is desired ceiling for
 #' @return numeric number desired
 ceiling_dec <-
-  function(x, level = 1)
-    round(x + 5 * 10 ^ (-level - 1), level)
+  function(num, dec_place = 1){
+    round(num+5*10^(-dec_place - 1), dec_place)
+}
+
 
 #' support function for floor function with decimals
 #'
-#' @param x numeric
-#' @param level decimal place that is desired floor for
+#' @param num numeric
+#' @param dec_place decimal place that is desired floor for
 #' @return numeric number desired
-floor_dec <- function(x, level = 1)
-  round(x - 5 * 10 ^ (-level - 1), level)
+floor_dec <- function(num, dec_place = 1){
+  round(num-5*10^(-dec_place - 1), dec_place)
+}
 
 
 #' plot the post_jointVIP object
