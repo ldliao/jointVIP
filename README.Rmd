@@ -11,7 +11,7 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "80%"
 )
-
+devtools::load_all(".")
 library(fastDummies)
 library(dplyr)
 ## using brfss example

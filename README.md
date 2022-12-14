@@ -82,31 +82,6 @@ print(brfss_jointVIP)
 
 ``` r
 plot(brfss_jointVIP)
-#> Warning: The following aesthetics were dropped during statistical transformation: colour
-#> ℹ This can happen when ggplot fails to infer the correct grouping structure in
-#>   the data.
-#> ℹ Did you forget to specify a `group` aesthetic or to convert a numerical
-#>   variable into a factor?
-#> The following aesthetics were dropped during statistical transformation: colour
-#> ℹ This can happen when ggplot fails to infer the correct grouping structure in
-#>   the data.
-#> ℹ Did you forget to specify a `group` aesthetic or to convert a numerical
-#>   variable into a factor?
-#> The following aesthetics were dropped during statistical transformation: colour
-#> ℹ This can happen when ggplot fails to infer the correct grouping structure in
-#>   the data.
-#> ℹ Did you forget to specify a `group` aesthetic or to convert a numerical
-#>   variable into a factor?
-#> The following aesthetics were dropped during statistical transformation: colour
-#> ℹ This can happen when ggplot fails to infer the correct grouping structure in
-#>   the data.
-#> ℹ Did you forget to specify a `group` aesthetic or to convert a numerical
-#>   variable into a factor?
-#> The following aesthetics were dropped during statistical transformation: colour
-#> ℹ This can happen when ggplot fails to infer the correct grouping structure in
-#>   the data.
-#> ℹ Did you forget to specify a `group` aesthetic or to convert a numerical
-#>   variable into a factor?
 ```
 
 <img src="man/figures/README-plot-1.png" width="80%" style="display: block; margin: auto;" />
