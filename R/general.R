@@ -533,7 +533,7 @@ add_OVB_curves <- function(p, ...) {
     loop_input = paste(
       "geom_function(fun = bias_func(",
       b,
-      "), linetype = 'dotted', alpha = 0.4, na.rm=TRUE)",
+      "), colour = 'grey5', linetype = 'dotted', alpha = 0.7, na.rm=TRUE)",
       sep = ""
     )
     p <- p + eval(parse(text = loop_input))
