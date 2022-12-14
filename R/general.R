@@ -431,12 +431,12 @@ plot.jointVIP <- function(x,
       fun = function(x) {
         0
       },
-      linetype = 'dashed',
+      linetype = 'dashed', color = 'grey7',
       alpha = 0.4
     ) +
       geom_vline(xintercept = 0,
                  linetype = 'dashed',
-                 alpha = 0.4) +
+                 alpha = 0.4, color = 'grey7') +
       ylim(c(-ceiling_dec(max(
         abs(measures$outcome_cor)
       ), 2),
@@ -533,7 +533,7 @@ add_OVB_curves <- function(p, ...) {
     loop_input = paste(
       "geom_function(fun = bias_func(",
       b,
-      "), colour = 'grey5', linetype = 'dotted', alpha = 0.7, na.rm=TRUE)",
+      "), colour = 'grey5', linetype = 'dotted', alpha = 0.5, na.rm=TRUE)",
       sep = ""
     )
     p <- p + eval(parse(text = loop_input))
@@ -551,7 +551,7 @@ add_OVB_curves <- function(p, ...) {
     )
     text_bias_lab[text_bias_lab$label == 0.005, 'y'] =
       (ceiling_dec(max(abs(measures$outcome_cor)), 2) -
-      min(c(max(bias_curve_cutoffs), 0.04))) + expanded_y
+      min(c(max(bias_curve_cutoffs), 0.02))) + expanded_y
     p <- p + geom_text(
       data = text_bias_lab,
       mapping = aes(
@@ -593,7 +593,7 @@ add_OVB_curves <- function(p, ...) {
     text_bias_lab[abs(as.numeric(text_bias_lab$label)) == 0.005,
                   'y'] =
       (text_bias_lab[abs(as.numeric(text_bias_lab$label)) == 0.005, 'y'] -
-      min(c(max(bias_curve_cutoffs), 0.04)) *
+      min(c(max(bias_curve_cutoffs), 0.02)) *
       sign(text_bias_lab[abs(as.numeric(text_bias_lab$label)) == 0.005, 'y']))
 
     text_bias_lab[abs(as.numeric(text_bias_lab$label)) == 0.005 &
@@ -601,7 +601,7 @@ add_OVB_curves <- function(p, ...) {
                   'y'] =
       text_bias_lab[abs(as.numeric(text_bias_lab$label)) == 0.005 &
                       text_bias_lab$x < 0,
-                    'y'] + 0.015
+                    'y'] + 0.008
 
     p <- p + geom_text(
       data = text_bias_lab,

@@ -46,8 +46,9 @@ covariates = names(df)[!names(df) %in% c(treatment, outcome)]
 
 ## select the pilot sample from random portion
 ## pilot data here are considered as 'external controls'
+## can be a separate dataset; should be chosen with caution
 set.seed(1234895)
-pilot_prop = 0.15
+pilot_prop = 0.2
 pilot_sample_num = sample(which(df %>% pull(treatment) == 0),
                           length(which(df %>% pull(treatment) == 0)) *
                           pilot_prop)
@@ -70,14 +71,14 @@ information as a glance with `summary()` and `print()`.
 
 ``` r
 summary(brfss_jointVIP)
-#> Max absolute bias is 0.042
+#> Max absolute bias is 0.032
 #> 3 variables are above the desired 0.01 absolute bias tolerance
 #> 13 variables can be plotted
 print(brfss_jointVIP)
 #>                 bias
-#> average_drinks 0.042
-#> age_over65     0.024
-#> age_25to34     0.016
+#> age_over65     0.032
+#> average_drinks 0.031
+#> age_25to34     0.012
 ```
 
 ``` r
@@ -85,3 +86,12 @@ plot(brfss_jointVIP)
 ```
 
 <img src="man/figures/README-plot-1.png" width="80%" style="display: block; margin: auto;" />
+
+In this example, `age_over65` and `average_drinks` are two most
+important variables to adjust. At a bias tolerance of 0.01, 3 variables:
+`age_over65`, `average_drinks`, and `age_25to34` are above the tolerance
+threshold. Moreover, `age_over65` and `average_drinks` are of higher
+importance for adjustment than `age_25to34`. Although `race_black` and
+`age_over65` have similar absolute standardized mean differences (0.322
+and 0.333, respectively), `age_over65` is more important to adjust for
+since its highly correlated with the outcome.
