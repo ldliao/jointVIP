@@ -44,6 +44,9 @@ library(causaldata)
 library(optmatch)
 library(rcbalance)
 library(MatchIt)
+
+# weighting methods shown in example
+library(WeightIt)
 ```
 
 
@@ -170,7 +173,7 @@ m.out <- matchit(
 optmatch_df <- match.data(m.out)[, c(treatment, outcome, covariates)]
 ```
 
-## Refined covariate balance matching
+### Refined covariate balance matching
 
 The refined covariate balance matching (rcbalance) is more involved [@pimentel2016large]; see @pimentel2015large for details. Specifically, fine balance needs to be specified in nominal nested sets of the top most desired variables to balance. First, the most stringent balance is performed for `log_re75`, then `log_re74` is specified as well. 
 
@@ -180,8 +183,8 @@ Since the `log_re75` and `log_re74` are both numeric, slight variable transforma
 # define fine balance 
 l1 <- c("re75_cut")
 l2 <- c(l1, "re74_cut")
-
-analysis_df$re75_cut <- cut(
+analysis_df_wcut <- analysis_df
+analysis_df_wcut$re75_cut <- cut(
   analysis_df$log_re75,
   breaks =
     quantile(analysis_df$log_re75,
@@ -194,7 +197,7 @@ analysis_df$re75_cut <- cut(
   include.lowest = TRUE
 )
 
-analysis_df$re74_cut <- cut(
+analysis_df_wcut$re74_cut <- cut(
   analysis_df$log_re74,
   breaks =
     quantile(analysis_df$log_re74,
@@ -210,26 +213,44 @@ analysis_df$re74_cut <- cut(
 # define variables for Mahalanobis distance
 maha.vars <- covariates
 # make distance structure
-my.dist <- build.dist.struct(z = analysis_df[[treatment]],
-                             X = analysis_df[, maha.vars])
+my.dist <- build.dist.struct(z = analysis_df_wcut[[treatment]],
+                             X = analysis_df_wcut[, maha.vars])
 # compute match
 match.out <- rcbalance(
   my.dist,
   fb.list = list(l1, l2),
-  treated.info = analysis_df[analysis_df[[treatment]] == 1, ],
-  control.info = analysis_df[analysis_df[[treatment]] == 0, ],
+  treated.info = analysis_df_wcut[analysis_df_wcut[[treatment]] == 1, ],
+  control.info = analysis_df_wcut[analysis_df_wcut[[treatment]] == 0, ],
   exclude.treated = T
 )
 
-rcmatch_df = analysis_df[c(which(analysis_df[[treatment]] == 1)[as.numeric(row.names(match.out$matches))],
-                           which(analysis_df[[treatment]] == 0)[match.out$matches]),
+rcmatch_df = analysis_df_wcut[c(which(analysis_df_wcut[[treatment]] == 1)[as.numeric(row.names(match.out$matches))],
+                           which(analysis_df_wcut[[treatment]] == 0)[match.out$matches]),
                          c(treatment, outcome, covariates)]
 
 post_optmatch_jointVIP <- create_post_jointVIP(new_jointVIP, 
                                            post_analysis_df = optmatch_df)
 ```
 
-### Post-match assessment with `post_jointVIP` object
+### Optimal weighting
+
+```{r op}
+# ordering for the weightit
+ordered_analysis_df = analysis_df[order(analysis_df$treat, decreasing = T),]
+
+optwt <- weightit(treat ~ log_re74 + log_re75,
+                  data = ordered_analysis_df,
+                  method = "optweight", estimand = "ATE",
+                  tols = 0.01, include.obj = TRUE)
+# summary(optwt)
+
+optwt_df = ordered_analysis_df[row.names(optwt$covs),
+                               covariates] * optwt$weights
+optwt_df$treat = optwt$treat
+optwt_df$log_re78 = analysis_df[row.names(optwt$covs), 'log_re78']
+```
+
+## Post-matching/weighting assessment with `post_jointVIP` object
 
 Below are the examples showing how to plot after matching. The main function to use is the **create_post_jointVIP()** function, which takes in the original jointVIP object `new_jointVIP` in our example. The post-matched data frame need to be specified as `post_analysis_df` argument.
 
@@ -252,6 +273,14 @@ post_rcmatch_jointVIP = create_post_jointVIP(new_jointVIP,
 summary(post_rcmatch_jointVIP)
 print(post_rcmatch_jointVIP)
 plot(post_rcmatch_jointVIP, plot_title = "Post-match jointVIP using rcbalance matching")
+```
+
+```{r post_wt, dpi=300, fig.asp = 0.75, fig.width = 6, out.width = "80%", fig.align = "center", message=FALSE}
+post_optwt_jointVIP = create_post_jointVIP(new_jointVIP,
+                                           post_analysis_df = optwt_df)
+summary(post_optwt_jointVIP)
+print(post_optwt_jointVIP)
+plot(post_optwt_jointVIP, plot_title = "Post-weighting jointVIP using optweight matching")
 ```
 
 ## References

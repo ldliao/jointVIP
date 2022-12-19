@@ -113,7 +113,7 @@ get_post_measures <- function(object, smd = 'OVB-based'){
   measures <- get_measures(object, smd = smd)
 
   treated <- object$post_analysis_df[, object$treatment]
-  covariates <- names(object$post_analysis_df)[!(names(object$analysis_df)
+  covariates <- names(object$post_analysis_df)[!(names(object$post_analysis_df)
                                                  %in% c(object$treatment,
                                                         object$outcome))]
 
@@ -123,7 +123,7 @@ get_post_measures <- function(object, smd = 'OVB-based'){
               })
 
   post_measures = measures
-  post_measures$post_std_md <- post_md*measures$std_md/(measures$pre_md)
+  post_measures$post_std_md <- post_md/measures$pre_sd
   post_measures$post_bias <- post_measures$post_std_md*post_measures$outcome_cor
   post_measures[, c("outcome_cor",
                     "std_md",
