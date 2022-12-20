@@ -225,9 +225,6 @@ match.out <- rcbalance(
 rcmatch_df = analysis_df_wcut[c(which(analysis_df_wcut[[treatment]] == 1)[as.numeric(row.names(match.out$matches))],
                            which(analysis_df_wcut[[treatment]] == 0)[match.out$matches]),
                          c(treatment, outcome, covariates)]
-
-post_optmatch_jointVIP <- create_post_jointVIP(new_jointVIP, 
-                                           post_analysis_df = optmatch_df)
 ```
 
 ### Optimal weighting

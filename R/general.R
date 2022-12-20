@@ -59,13 +59,15 @@ create_jointVIP <- function(treatment,
     if (!(treatment %in% names(analysis_df))) {
       stop("`treatment` variable must be in analysis_df")
     } else if (!all(sapply(analysis_df[, treatment],
-                       function(x) {all(x %in% 0:1)}))) {
+                           function(x) {
+                             all(x %in% 0:1)
+                           }))) {
       stop("`treatment` must be binary: 0 (control) and 1 (treated)")
     }
     if (var(pilot_df[, outcome]) == 0) {
       stop("`pilot_df` outcome must have some variation")
     }
-    if(!all(pilot_df[, treatment] == 0)){
+    if (!all(pilot_df[, treatment] == 0)) {
       stop("`pilot_df` should only be controls only")
     }
   }
@@ -92,7 +94,7 @@ create_jointVIP <- function(treatment,
       class = "jointVIP"
     )
   }
-
+  
   invisible(new_jointVIP(treatment,
                          outcome,
                          covariates,
@@ -138,10 +140,12 @@ create_post_jointVIP <- function(object,
     )
   }
   if (!all(sapply(post_analysis_df[, object$treatment],
-               function(x) {all(x %in% 0:1)}))) {
+                  function(x) {
+                    all(x %in% 0:1)
+                  }))) {
     stop("`treatment` must be binary: 0 (control) and 1 (treated)")
   }
-
+  
   structure(
     list(
       treatment = object$treatment,
@@ -169,11 +173,10 @@ summary.jointVIP <- function(object,
                              smd = 'OVB-based',
                              use_abs = TRUE,
                              bias_tol = 0.01) {
-
   if (any(is.null(names(list(...)))) & length(list(...)) > 0) {
     warning("anything passed in ... must be named or it'll be ignored")
   }
-
+  
   if (use_abs) {
     measures = abs(get_measures(object, smd = smd))
   } else {
@@ -186,8 +189,8 @@ summary.jointVIP <- function(object,
                             decreasing = TRUE), ]
   summary_measures = measures[abs(round(measures$bias, 3)) >= abs(bias_tol),
                               "bias", drop = FALSE]
-
-  if (use_abs == TRUE){
+  
+  if (use_abs == TRUE) {
     writeLines(sprintf("Max absolute bias is %.3f",
                        abs(max(measures$bias))))
   } else {
@@ -196,14 +199,14 @@ summary.jointVIP <- function(object,
     writeLines(sprintf("Min bias is %.3f",
                        (min(measures$bias))))
   }
-
-
+  
+  
   writeLines(sprintf(
     "%d variables are above the desired %s absolute bias tolerance",
     length(row.names(summary_measures)),
     abs(bias_tol)
   ))
-
+  
   writeLines(sprintf("%d variables can be plotted",
                      length(row.names(measures))))
   invisible()
@@ -267,7 +270,7 @@ print.jointVIP <- function(x,
   if (any(is.null(names(list(...)))) & length(list(...)) > 0) {
     warning("anything passed in ... must be named or it'll be ignored")
   }
-
+  
   if (use_abs) {
     measures = abs(get_measures(x, smd = smd))
   } else {
@@ -306,7 +309,7 @@ print.post_jointVIP <- function(x,
                                       decreasing = TRUE), ]
   summary_post_measures = post_measures[abs(round(post_measures$bias, 3)) >= bias_tol,
                                         c("bias", "post_bias")]
-
+  
   print(round(summary_post_measures, 3))
   invisible()
 }
@@ -339,18 +342,31 @@ plot.jointVIP <- function(x,
   if (any(is.null(names(list(...)))) & length(list(...)) > 0) {
     warning("anything passed in ... must be named or it'll be ignored")
   } else {
-    if (length(list(...)) > 0) {
-      if (!all(names(list(...)) %in% c(
-        'bias_curve_cutoffs',
-        'text_size',
-        'max.overlaps',
-        'label_cut_std_md',
-        'label_cut_outcome_cor',
-        'label_cut_bias',
-        'OVB_curves',
-        'add_var_labs',
-        'expanded_y_curvelab'
-      ))) {
+    params = list(...)
+    if ("add_post_labs" %in% names(params) &
+        'post_jointVIP' %in% class(x)) {
+      params = within(params,
+                      rm("add_post_labs"))
+    }
+    if ("post_label_cut_bias" %in% names(params) &
+        'post_jointVIP' %in% class(x)) {
+      params = within(params,
+                      rm("post_label_cut_bias"))
+    }
+    if (length(params) > 0) {
+      if (!all(
+        names(params) %in% c(
+          'bias_curve_cutoffs',
+          'text_size',
+          'max.overlaps',
+          'label_cut_std_md',
+          'label_cut_outcome_cor',
+          'label_cut_bias',
+          'OVB_curves',
+          'add_var_labs',
+          'expanded_y_curvelab'
+        )
+      )) {
         stop(
           paste0(
             "custom plot options passed into ... must be one of the following:",
@@ -368,13 +384,13 @@ plot.jointVIP <- function(x,
       }
     }
   }
-
+  
   if (use_abs) {
     measures = abs(get_measures(x, smd = smd))
   } else {
     measures = get_measures(x, smd = smd)
   }
-
+  
   if (smd == 'standard') {
     p <- ggplot(measures,
                 aes(x = .data$std_md,
@@ -409,7 +425,7 @@ plot.jointVIP <- function(x,
       legend.background = element_blank(),
       legend.key = element_blank()
     )
-
+  
   if (use_abs) {
     p <- p + labs(
       x = "Absolute Standardized Mean Difference",
@@ -431,12 +447,16 @@ plot.jointVIP <- function(x,
       fun = function(x) {
         0
       },
-      linetype = 'dashed', color = 'grey7',
+      linetype = 'dashed',
+      color = 'grey7',
       alpha = 0.4
     ) +
-      geom_vline(xintercept = 0,
-                 linetype = 'dashed',
-                 alpha = 0.4, color = 'grey7') +
+      geom_vline(
+        xintercept = 0,
+        linetype = 'dashed',
+        alpha = 0.4,
+        color = 'grey7'
+      ) +
       ylim(c(-ceiling_dec(max(
         abs(measures$outcome_cor)
       ), 2),
@@ -444,7 +464,7 @@ plot.jointVIP <- function(x,
         abs(measures$outcome_cor)
       ), 2)))
   }
-
+  
   OVB_curves = list(...)[['OVB_curves']]
   if (is.null(OVB_curves)) {
     OVB_curves = TRUE
@@ -458,7 +478,7 @@ plot.jointVIP <- function(x,
                           measures = measures, ...)
     }
   }
-
+  
   add_var_labs = list(...)[['add_var_labs']]
   if (is.null(add_var_labs)) {
     add_var_labs = TRUE
@@ -483,32 +503,32 @@ add_OVB_curves <- function(p, ...) {
   measures = list(...)[['measures']]
   bias_curve_cutoffs = list(...)[['bias_curve_cutoffs']]
   expanded_y = list(...)[['expanded_y_curvelab']]
-
-  if(is.null(expanded_y)){
+  
+  if (is.null(expanded_y)) {
     expanded_y = 0
   }
   if (is.null(bias_curve_cutoffs)) {
     if (use_abs) {
       bias_curve_cutoffs = c(0.005)
       bias_curve_cutoffs = c(bias_curve_cutoffs,
-                               floor_dec(seq(0.011,
-                                             max(
-                                               abs(measures$bias)
-                                             ),
-                                             length.out = 4), 2))
+                             floor_dec(seq(0.011,
+                                           max(
+                                             abs(measures$bias)
+                                           ),
+                                           length.out = 4), 2))
       bias_curve_cutoffs = bias_curve_cutoffs[abs(bias_curve_cutoffs) >= 0.01 |
                                                 abs(bias_curve_cutoffs) == 0.005]
     } else {
       bias_curve_cutoffs = c(0.005)
-
-        bias_curve_cutoffs = c(bias_curve_cutoffs,
-                               floor_dec(seq(0.011,
-                                             max(
-                                               abs(measures$bias)
-                                             ),
-                                             length.out = 4), 2))
-        bias_curve_cutoffs = c(bias_curve_cutoffs, -1 * bias_curve_cutoffs)
-
+      
+      bias_curve_cutoffs = c(bias_curve_cutoffs,
+                             floor_dec(seq(0.011,
+                                           max(
+                                             abs(measures$bias)
+                                           ),
+                                           length.out = 4), 2))
+      bias_curve_cutoffs = c(bias_curve_cutoffs, -1 * bias_curve_cutoffs)
+      
       bias_curve_cutoffs = bias_curve_cutoffs[abs(bias_curve_cutoffs) >= 0.01 |
                                                 abs(bias_curve_cutoffs) == 0.005]
     }
@@ -517,10 +537,10 @@ add_OVB_curves <- function(p, ...) {
   } else  if (0 %in% bias_curve_cutoffs) {
     warning("0 in the `bias_curve_cutoffs` will not be plotted")
   }
-
+  
   bias_curve_cutoffs = bias_curve_cutoffs[!duplicated(bias_curve_cutoffs)]
   bias_curve_cutoffs = bias_curve_cutoffs[bias_curve_cutoffs != 0]
-
+  
   bias_func = function(i) {
     i = force(i)
     f = function(x) {
@@ -528,7 +548,7 @@ add_OVB_curves <- function(p, ...) {
     }
     return(f)
   }
-
+  
   for (b in bias_curve_cutoffs) {
     loop_input = paste(
       "geom_function(fun = bias_func(",
@@ -538,10 +558,10 @@ add_OVB_curves <- function(p, ...) {
     )
     p <- p + eval(parse(text = loop_input))
   }
-
+  
   if (use_abs) {
     text_bias_lab = data.frame(
-      x = c(bias_curve_cutoffs / (expanded_y+ceiling_dec(max(
+      x = c(bias_curve_cutoffs / (expanded_y + ceiling_dec(max(
         abs(measures$outcome_cor)
       ), 2))),
       y = ceiling_dec(max(abs(
@@ -550,8 +570,12 @@ add_OVB_curves <- function(p, ...) {
       label = as.character(bias_curve_cutoffs)
     )
     text_bias_lab[text_bias_lab$label == 0.005, 'y'] =
-      (ceiling_dec(max(abs(measures$outcome_cor)), 2) -
-      min(c(max(bias_curve_cutoffs), 0.02))) + expanded_y
+      (ceiling_dec(max(abs(
+        measures$outcome_cor
+      )), 2) -
+        min(c(max(
+          bias_curve_cutoffs
+        ), 0.02))) + expanded_y
     p <- p + geom_text(
       data = text_bias_lab,
       mapping = aes(
@@ -568,41 +592,46 @@ add_OVB_curves <- function(p, ...) {
     text_bias_lab = data.frame(
       x = c(
         bias_curve_cutoffs /
-          (expanded_y+ceiling_dec(max(abs(
-            measures$outcome_cor
-          )), 2)),
+          (expanded_y + ceiling_dec(max(
+            abs(measures$outcome_cor)
+          ), 2)),
         bias_curve_cutoffs /
-          (expanded_y+ceiling_dec(max(abs(
+          (expanded_y + ceiling_dec(max(
+            abs(measures$outcome_cor)
+          ), 2))
+      ),
+      y = c(
+        rep(
+          ceiling_dec(max(abs(
             measures$outcome_cor
-          )), 2))
+          )), 2) - 0.002 + expanded_y,
+          length(bias_curve_cutoffs)
+        ),
+        rep(
+          -(ceiling_dec(max(
+            abs(measures$outcome_cor)
+          ), 2) - 0.002) - expanded_y,
+          length(bias_curve_cutoffs)
+        )
       ),
-      y = c(rep(
-        ceiling_dec(max(abs(
-          measures$outcome_cor
-        )), 2) - 0.002 + expanded_y,
-        length(bias_curve_cutoffs)
-      ),
-      rep(
-        -(ceiling_dec(max(
-          abs(measures$outcome_cor)
-        ), 2) - 0.002) - expanded_y, length(bias_curve_cutoffs)
-      )),
       label = c(bias_curve_cutoffs, -(bias_curve_cutoffs))
     )
-
+    
     text_bias_lab[abs(as.numeric(text_bias_lab$label)) == 0.005,
                   'y'] =
       (text_bias_lab[abs(as.numeric(text_bias_lab$label)) == 0.005, 'y'] -
-      min(c(max(bias_curve_cutoffs), 0.02)) *
-      sign(text_bias_lab[abs(as.numeric(text_bias_lab$label)) == 0.005, 'y']))
-
+         min(c(max(
+           bias_curve_cutoffs
+         ), 0.1)) *
+         sign(text_bias_lab[abs(as.numeric(text_bias_lab$label)) == 0.005, 'y']))
+    
     text_bias_lab[abs(as.numeric(text_bias_lab$label)) == 0.005 &
                     text_bias_lab$x < 0,
                   'y'] =
       text_bias_lab[abs(as.numeric(text_bias_lab$label)) == 0.005 &
                       text_bias_lab$x < 0,
-                    'y'] + 0.008
-
+                    'y'] + 0.04
+    
     p <- p + geom_text(
       data = text_bias_lab,
       mapping = aes(
@@ -634,7 +663,7 @@ add_variable_labels <- function(p,
   label_cut_bias <- arguments$label_cut_bias
   text_size <- arguments$text_size
   max.overlaps <- arguments$max.overlaps
-
+  
   if (is.null(label_cut_std_md)) {
     label_cut_std_md = 0
   } else {
@@ -685,7 +714,7 @@ add_variable_labels <- function(p,
     )) &
       (abs(measures$bias) >= label_cut_bias)), 'text_label'] = ""
   }
-
+  
   p + geom_text_repel(
     data = measures,
     mapping = aes(label = .data$text_label),
@@ -700,9 +729,9 @@ add_variable_labels <- function(p,
 #' @param dec_place decimal place that is desired ceiling for
 #' @return numeric number desired
 ceiling_dec <-
-  function(num, dec_place = 1){
-    round(num+5*10^(-dec_place - 1), dec_place)
-}
+  function(num, dec_place = 1) {
+    round(num + 5 * 10 ^ (-dec_place - 1), dec_place)
+  }
 
 
 #' support function for floor function with decimals
@@ -710,8 +739,8 @@ ceiling_dec <-
 #' @param num numeric
 #' @param dec_place decimal place that is desired floor for
 #' @return numeric number desired
-floor_dec <- function(num, dec_place = 1){
-  round(num-5*10^(-dec_place - 1), dec_place)
+floor_dec <- function(num, dec_place = 1) {
+  round(num - 5 * 10 ^ (-dec_place - 1), dec_place)
 }
 
 
@@ -744,33 +773,33 @@ plot.post_jointVIP <- function(x,
   } else {
     post_measures = get_post_measures(x, smd = smd)
   }
-
+  
   if (!is.logical(add_post_labs)) {
     stop("`add_post_labs` can only be set as TRUE or FALSE")
   }
-
+  
   if (!((class(post_label_cut_bias) == "numeric") &
         (post_label_cut_bias > 0))) {
     stop("`post_label_cut_bias` must be a positive numeric")
   }
-
-
+  
+  
   # first turn off the original points
   p$layers[[1]] <- NULL
-
+  
   add_var_labs = list(...)[['add_var_labs']]
   if (is.null(add_var_labs)) {
     add_var_labs = TRUE
   } else if (!is.logical(add_var_labs)) {
     stop("`add_var_labs` can only be set as TRUE or FALSE")
   }
-
+  
   if (add_var_labs == TRUE) {
     # turn off the variable labels
     # which is the last layer
     p$layers[[length(p$layers)]] <- NULL
   }
-
+  
   if (smd == 'standard') {
     p <- p + geom_point(data = post_measures,
                         aes(x = .data$post_std_md,
@@ -786,7 +815,7 @@ plot.post_jointVIP <- function(x,
   arguments <- list(...)
   text_size <- arguments$text_size
   max.overlaps <- arguments$max.overlaps
-
+  
   if (add_post_labs) {
     if (is.null(text_size)) {
       text_size = 3.5
@@ -806,9 +835,9 @@ plot.post_jointVIP <- function(x,
     }
     post_measures$text_label <- row.names(post_measures)
     if (!(post_label_cut_bias == 0)) {
-      post_measures[!(abs(post_measures$post_bias) >= post_label_cut_bias), 'text_label'] = ""
+      post_measures[!(abs(round(post_measures$post_bias, 3)) >= post_label_cut_bias), 'text_label'] = ""
     }
-
+    
     if (smd == 'standard') {
       p <- p + geom_text_repel(
         data = post_measures,
@@ -820,7 +849,7 @@ plot.post_jointVIP <- function(x,
         size = text_size,
         max.overlaps = max.overlaps
       )
-
+      
     } else {
       p <- p + geom_text_repel(
         data = post_measures,
@@ -833,21 +862,22 @@ plot.post_jointVIP <- function(x,
         size = text_size,
         max.overlaps = max.overlaps
       )
-      if (ceiling_dec(max(abs(post_measures$post_bias)), 2) > ceiling_dec(max(abs(post_measures$bias)), 2)) {
-        warning("Color not scaled to previous pre-bias plot since the post-bias is greater than pre-bias")
-
-      } else {
-        sc <- scale_color_gradient(
-          low = 'blue',
-          high = 'red',
-          limits = c(0, ceiling_dec(max(
-            abs(post_measures$bias)
-          ), 2))
-        )
-        p <- p + sc
-      }
     }
   }
+  if (ceiling_dec(max(abs(post_measures$post_bias)), 2) > ceiling_dec(max(abs(post_measures$bias)), 2)) {
+    warning(
+      "Color not scaled to previous pre-bias plot since the post-bias is greater than pre-bias"
+    )
+    
+  } else {
+    sc <- scale_color_gradient(low = 'blue',
+                               high = 'red',
+                               limits = c(0, ceiling_dec(max(
+                                 abs(post_measures$bias)
+                               ), 2)))
+    p <- p + sc
+  }
+  
   return(p)
 }
 
@@ -871,65 +901,92 @@ bootstrap.plot <- function(x,
                            use_abs = TRUE,
                            plot_title = "Joint Variable Importance Plot",
                            B = 100) {
-
-  if(!all(class(x) == 'jointVIP')){
+  if (!all(class(x) == 'jointVIP')) {
     stop("bootstrap_plot function only applicable to class jointVIP only!")
   }
-
+  
   OVB_curves = list(...)[['OVB_curves']]
   if (is.null(OVB_curves)) {
-    if(smd == 'OVB-based'){
+    if (smd == 'OVB-based') {
       specified_OVB_curves = TRUE
-    } else { specified_OVB_curves = FALSE }
+    } else {
+      specified_OVB_curves = FALSE
+    }
   } else if (!is.logical(OVB_curves)) {
     stop("`OVB_curves` can only be set as TRUE or FALSE")
   } else {
     specified_OVB_curves = OVB_curves
   }
-
-  p <- plot(x, ..., smd=smd, OVB_curves=FALSE, use_abs=use_abs, plot_title=plot_title)
-
-  boot_measures <- get_boot_measures(object = x,
-                                     smd = smd,
-                                     use_abs = use_abs,
-                                     B = B)
-  if(use_abs){
+  
+  p <-
+    plot(
+      x,
+      ...,
+      smd = smd,
+      OVB_curves = FALSE,
+      use_abs = use_abs,
+      plot_title = plot_title
+    )
+  
+  boot_measures <- get_boot_measures(
+    object = x,
+    smd = smd,
+    use_abs = use_abs,
+    B = B
+  )
+  if (use_abs) {
     og <- abs(get_measures(x, smd = smd))
   } else {
     og <- get_measures(x, smd = smd)
   }
-
-  p <- p + geom_segment(data = data.frame(t(boot_measures[,,'outcome_cor'])),
-                   aes(x=og$std_md,
-                       xend=og$std_md,
-                       y=.data$X2.5.,
-                       yend=.data$X97.5.),
-                   color="cornsilk4",
-                   size=1.5, alpha=0.4) +
+  
+  p <-
+    p + geom_segment(
+      data = data.frame(t(boot_measures[, , 'outcome_cor'])),
+      aes(
+        x = og$std_md,
+        xend = og$std_md,
+        y = .data$X2.5.,
+        yend = .data$X97.5.
+      ),
+      color = "cornsilk4",
+      size = 1.5,
+      alpha = 0.4
+    ) +
     ylim(c(min(0,
-               ifelse(use_abs, 0,
-                      -ceiling_dec(max(abs(data.frame(t(boot_measures[,,'outcome_cor'])))), 2))),
-           ceiling_dec(max(data.frame(t(boot_measures[,,'outcome_cor']))), 2))) +
-    geom_segment(data = data.frame(t(boot_measures[,,'std_md'])),
-               aes(x=.data$X2.5.,
-                   xend=.data$X97.5.,
-                   y=og$outcome_cor,
-                   yend=og$outcome_cor),
-               color="cornsilk4",
-               size=1.5, alpha=0.4)
-
-  if(smd == "OVB-based" & specified_OVB_curves){
-    p <- add_OVB_curves(p,
-                        use_abs = use_abs,
-                        measures = og,
-                        expanded_y_curvelab=
-                          ceiling_dec(max(abs(
-                            max(abs(t(boot_measures[,,'outcome_cor'])))
-                          )), 2) -
-                          ceiling_dec(max(abs(
-                            og$outcome_cor
-                          )), 2),
-                        ...)
+               ifelse(
+                 use_abs, 0, -ceiling_dec(max(abs(data.frame(
+                   t(boot_measures[, , 'outcome_cor'])
+                 ))), 2)
+               )),
+           ceiling_dec(max(data.frame(
+             t(boot_measures[, , 'outcome_cor'])
+           )), 2))) +
+    geom_segment(
+      data = data.frame(t(boot_measures[, , 'std_md'])),
+      aes(
+        x = .data$X2.5.,
+        xend = .data$X97.5.,
+        y = og$outcome_cor,
+        yend = og$outcome_cor
+      ),
+      color = "cornsilk4",
+      size = 1.5,
+      alpha = 0.4
+    )
+  
+  if (smd == "OVB-based" & specified_OVB_curves) {
+    p <- add_OVB_curves(
+      p,
+      use_abs = use_abs,
+      measures = og,
+      expanded_y_curvelab =
+        ceiling_dec(max(abs(max(
+          abs(t(boot_measures[, , 'outcome_cor']))
+        ))), 2) -
+        ceiling_dec(max(abs(og$outcome_cor)), 2),
+      ...
+    )
   }
   return(p)
 }

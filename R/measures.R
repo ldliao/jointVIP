@@ -51,7 +51,6 @@ get_measures = function(object, smd='OVB-based'){
       outcome_cor = outcome_cor,
       std_md = smd_calc,
       bias = outcome_cor * smd_calc,
-      pre_md = md,
       pre_sd = denom
     )
   }
