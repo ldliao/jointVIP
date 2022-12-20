@@ -532,7 +532,7 @@ add_OVB_curves <- function(p, ...) {
       bias_curve_cutoffs = bias_curve_cutoffs[abs(bias_curve_cutoffs) >= 0.01 |
                                                 abs(bias_curve_cutoffs) == 0.005]
     }
-  } else if (class(bias_curve_cutoffs) != "numeric") {
+  } else if (!is.numeric(bias_curve_cutoffs)) {
     stop("`bias_curve_cutoffs` must be numeric")
   } else  if (0 %in% bias_curve_cutoffs) {
     warning("0 in the `bias_curve_cutoffs` will not be plotted")
@@ -667,7 +667,7 @@ add_variable_labels <- function(p,
   if (is.null(label_cut_std_md)) {
     label_cut_std_md = 0
   } else {
-    if (!((class(label_cut_std_md) == "numeric") &
+    if (!((is.numeric(label_cut_std_md)) &
           (label_cut_std_md > 0))) {
       stop("`label_cut_std_md` must be a positive numeric")
     }
@@ -675,7 +675,7 @@ add_variable_labels <- function(p,
   if (is.null(label_cut_outcome_cor)) {
     label_cut_outcome_cor = 0
   } else {
-    if (!((class(label_cut_outcome_cor) == "numeric") &
+    if (!(is.numeric(label_cut_outcome_cor) &
           (label_cut_outcome_cor > 0))) {
       stop("`label_cut_outcome_cor` must be a positive numeric")
     }
@@ -683,7 +683,7 @@ add_variable_labels <- function(p,
   if (is.null(label_cut_bias)) {
     label_cut_bias = 0
   } else {
-    if (!((class(label_cut_bias) == "numeric") &
+    if (!((is.numeric(label_cut_bias)) &
           (label_cut_bias > 0))) {
       stop("`label_cut_bias` must be a positive numeric")
     }
@@ -691,7 +691,7 @@ add_variable_labels <- function(p,
   if (is.null(text_size)) {
     text_size = 3.5
   } else {
-    if (!((class(text_size) == "numeric") &
+    if (!((is.numeric(text_size)) &
           (text_size > 0))) {
       stop("`text_size` must be a positive numeric")
     }
@@ -699,7 +699,7 @@ add_variable_labels <- function(p,
   if (is.null(max.overlaps)) {
     max.overlaps = 10
   } else {
-    if (!((class(max.overlaps) == "numeric") &
+    if (!((is.numeric(max.overlaps)) &
           (max.overlaps > 0))) {
       stop("`max.overlaps` must be a positive numeric")
     }
@@ -778,7 +778,7 @@ plot.post_jointVIP <- function(x,
     stop("`add_post_labs` can only be set as TRUE or FALSE")
   }
   
-  if (!((class(post_label_cut_bias) == "numeric") &
+  if (!(is.numeric(post_label_cut_bias) &
         (post_label_cut_bias > 0))) {
     stop("`post_label_cut_bias` must be a positive numeric")
   }
@@ -820,7 +820,7 @@ plot.post_jointVIP <- function(x,
     if (is.null(text_size)) {
       text_size = 3.5
     } else {
-      if (!((class(text_size) == "numeric") &
+      if (!(is.numeric(text_size) &
             (text_size > 0))) {
         stop("`text_size` must be a positive numeric")
       }
@@ -828,14 +828,14 @@ plot.post_jointVIP <- function(x,
     if (is.null(max.overlaps)) {
       max.overlaps = 10
     } else {
-      if (!((class(max.overlaps) == "numeric") &
+      if (!(is.numeric(max.overlaps) &
             (max.overlaps > 0))) {
         stop("`max.overlaps` must be a positive numeric")
       }
     }
     post_measures$text_label <- row.names(post_measures)
     if (!(post_label_cut_bias == 0)) {
-      post_measures[!(abs(round(post_measures$post_bias, 3)) >= post_label_cut_bias), 'text_label'] = ""
+      post_measures[!(abs(round(post_measures$post_bias, 4)) >= post_label_cut_bias), 'text_label'] = ""
     }
     
     if (smd == 'standard') {

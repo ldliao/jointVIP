@@ -27,10 +27,8 @@ library(jointVIP)
 library(causaldata)
 
 # matching methods shown in example
-library(optmatch)
-library(rcbalance)
 library(MatchIt)
-
+library(optmatch)
 # load data for estimating earnings from 1978
 # treatment is the NSW program
 pilot_df = cps_mixtape
@@ -67,57 +65,17 @@ new_jointVIP = create_jointVIP(treatment = treatment,
                                pilot_df = pilot_df,
                                analysis_df = analysis_df)
 
-# define fine balance 
-l1 <- c("re75_cut")
-l2 <- c(l1, "re74_cut")
-analysis_df_wcut <- analysis_df
-analysis_df_wcut$re75_cut <- cut(
-  analysis_df$log_re75,
-  breaks =
-    quantile(analysis_df$log_re75,
-             c(0,
-               seq(
-                 mean((analysis_df$log_re75 == 0)),
-                 1,
-                 length.out = 5
-               ))),
-  include.lowest = TRUE
+m.out <- matchit(
+  treat ~ log_re75 + log_re74,
+  data = analysis_df,
+  method = "optimal",
+  distance = "mahalanobis"
 )
+optmatch_df <- match.data(m.out)[, c(treatment, outcome, covariates)]
 
-analysis_df_wcut$re74_cut <- cut(
-  analysis_df$log_re74,
-  breaks =
-    quantile(analysis_df$log_re74,
-             c(0,
-               seq(
-                 mean(analysis_df$log_re74 == 0),
-                 1,
-                 length.out = 5
-               ))),
-  include.lowest = TRUE
-)
+post_optmatch_jointVIP <- create_post_jointVIP(new_jointVIP, 
+                                               post_analysis_df = optmatch_df)
 
-# define variables for Mahalanobis distance
-maha.vars <- covariates
-# make distance structure
-my.dist <- build.dist.struct(z = analysis_df_wcut[[treatment]],
-                             X = analysis_df_wcut[, maha.vars])
-# compute match
-match.out <- rcbalance(
-  my.dist,
-  fb.list = list(l1, l2),
-  treated.info = analysis_df_wcut[analysis_df_wcut[[treatment]] == 1, ],
-  control.info = analysis_df_wcut[analysis_df_wcut[[treatment]] == 0, ],
-  exclude.treated = T
-)
-
-rcmatch_df = analysis_df_wcut[c(which(analysis_df_wcut[[treatment]] == 1)[as.numeric(row.names(match.out$matches))],
-                           which(analysis_df_wcut[[treatment]] == 0)[match.out$matches]),
-                         c(treatment, outcome, covariates)]
-
-
-post_rcmatch_jointVIP = create_post_jointVIP(new_jointVIP,
-                                             post_analysis_df = rcmatch_df)
 ```
 
 ```{r setup, eval=FALSE}
@@ -131,8 +89,8 @@ new_jointVIP = create_jointVIP(treatment = treatment,
                                analysis_df = analysis_df)
 
 # gentle reminder of how to create a new post_jointVIP object
-post_rcmatch_jointVIP = create_post_jointVIP(new_jointVIP,
-                                             post_analysis_df = rcmatch_df)
+post_optmatch_jointVIP = create_post_jointVIP(new_jointVIP,
+                                             post_analysis_df = optmatch_df)
 ```
 
 ## Demonstration for additional options in `summary()` and `print()`
@@ -210,17 +168,17 @@ The same variables are specified in the `vignette("jointVIP")`; here we choose r
 ## Demonstration for additional options in `summary()` and `print()`
 
 ```{r sumnprint_post, dpi=300, fig.asp = 0.75, fig.width = 6, out.width = "80%", fig.align = "center", message=FALSE}
-# get_post_measures(post_rcmatch_jointVIP, smd = 'OVB-based')
+# get_post_measures(post_optmatch_jointVIP, smd = 'OVB-based')
 
-summary(post_rcmatch_jointVIP,
+summary(post_optmatch_jointVIP,
         use_abs = FALSE,
         bias_tol = 0.01,
         post_bias_tol = 0.001)
 
-print(post_rcmatch_jointVIP,
+print(post_optmatch_jointVIP,
       bias_tol = 0.001)
 
-plot(post_rcmatch_jointVIP, 
+plot(post_optmatch_jointVIP, 
      plot_title = "Post-match jointVIP using rcbalance matching",
      smd = 'OVB-based',
      use_abs = FALSE,
@@ -231,7 +189,7 @@ plot(post_rcmatch_jointVIP,
 All of the options from above can be used; below will only address additional parameters or function outputs.
 
 * `get_post_measures()` takes in a post_jointVIP object and `smd` specifications for measures from the post-matched results. 
-* `summary()` function adds text output of post-match results in addition to pre-match results. The `post_bias_tol` specifically is a `summary()` parameter that outputs post_bias tolerance for text comparison.
+* `summary()` function adds text output of post-match results in addition to pre-match results. The `post_bias_tol` specifically is a `summary()` parameter that outputs post_bias tolerance for text comparison rounded to the fourth decimal place.
 * `print()` function adds another column to post-match bias.
 * `plot()` function includes two new parameters:
   - `add_post_labs` TRUE (default) shows the variable labels post-matching/weighting; FALSE suppresses it.

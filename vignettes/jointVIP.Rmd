@@ -40,13 +40,13 @@ library(jointVIP)
 # data to use for example
 library(causaldata)
 
-# matching methods shown in example
-library(optmatch)
-library(rcbalance)
+# matching method shown in example
 library(MatchIt)
+library(optmatch)
 
-# weighting methods shown in example
+# weighting method shown in example
 library(WeightIt)
+library(optweight)
 ```
 
 
@@ -173,59 +173,6 @@ m.out <- matchit(
 optmatch_df <- match.data(m.out)[, c(treatment, outcome, covariates)]
 ```
 
-### Refined covariate balance matching
-
-The refined covariate balance matching (rcbalance) is more involved [@pimentel2016large]; see @pimentel2015large for details. Specifically, fine balance needs to be specified in nominal nested sets of the top most desired variables to balance. First, the most stringent balance is performed for `log_re75`, then `log_re74` is specified as well. Since the `log_re75` and `log_re74` are both numeric, slight variable transformation into 6 groups: those with 0 and all quintiles of the remaining earnings. 
-
-```{r rcbalance_example}
-# define fine balance 
-l1 <- c("re75_cut")
-l2 <- c(l1, "re74_cut")
-analysis_df_wcut <- analysis_df
-analysis_df_wcut$re75_cut <- cut(
-  analysis_df$log_re75,
-  breaks =
-    quantile(analysis_df$log_re75,
-             c(0,
-               seq(
-                 mean((analysis_df$log_re75 == 0)),
-                 1,
-                 length.out = 5
-               ))),
-  include.lowest = TRUE
-)
-
-analysis_df_wcut$re74_cut <- cut(
-  analysis_df$log_re74,
-  breaks =
-    quantile(analysis_df$log_re74,
-             c(0,
-               seq(
-                 mean(analysis_df$log_re74 == 0),
-                 1,
-                 length.out = 5
-               ))),
-  include.lowest = TRUE
-)
-
-# define variables for Mahalanobis distance
-maha.vars <- covariates
-# make distance structure
-my.dist <- build.dist.struct(z = analysis_df_wcut[[treatment]],
-                             X = analysis_df_wcut[, maha.vars])
-# compute match
-match.out <- rcbalance(
-  my.dist,
-  fb.list = list(l1, l2),
-  treated.info = analysis_df_wcut[analysis_df_wcut[[treatment]] == 1, ],
-  control.info = analysis_df_wcut[analysis_df_wcut[[treatment]] == 0, ],
-  exclude.treated = T
-)
-
-rcmatch_df = analysis_df_wcut[c(which(analysis_df_wcut[[treatment]] == 1)[as.numeric(row.names(match.out$matches))],
-                           which(analysis_df_wcut[[treatment]] == 0)[match.out$matches]),
-                         c(treatment, outcome, covariates)]
-```
 
 ### Optimal weighting
 
@@ -262,14 +209,6 @@ post_optmatch_jointVIP <- create_post_jointVIP(new_jointVIP,
 summary(post_optmatch_jointVIP)
 print(post_optmatch_jointVIP)
 plot(post_optmatch_jointVIP, plot_title = "Post-match jointVIP using optimal matching")
-```
-
-```{r post_rc, dpi=300, fig.asp = 0.75, fig.width = 6, out.width = "80%", fig.align = "center", message=FALSE}
-post_rcmatch_jointVIP = create_post_jointVIP(new_jointVIP,
-                                             post_analysis_df = rcmatch_df)
-summary(post_rcmatch_jointVIP)
-print(post_rcmatch_jointVIP)
-plot(post_rcmatch_jointVIP, plot_title = "Post-match jointVIP using rcbalance matching")
 ```
 
 
