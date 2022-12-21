@@ -1,0 +1,29 @@
+add_OVB_curves          support function to plot bias curves
+add_variable_labels     support function to plot variable text labels
+bootstrap.plot          plot the bootstrap version of the jointVIP
+                        object
+ceiling_dec             support function for ceiling function with
+                        decimals
+check_measures          Check measures Check to see if there is any
+                        missing values or variables without any
+                        variation or identical rows (only unique rows
+                        will be used)
+create_jointVIP         create jointVIP object
+create_post_jointVIP    create jointVIP object
+floor_dec               support function for floor function with
+                        decimals
+get_boot_measures       Calculate bootstrapped variation additional
+                        tool to help calculate the uncertainty of each
+                        variable's bias
+get_measures            Prepare data frame to plot standardized omitted
+                        variable bias Marginal standardized mean
+                        differences and outcome correlation
+get_post_measures       Post-measures data frame to plot
+                        post-standardized omitted variable bias
+plot.jointVIP           plot the jointVIP object
+plot.post_jointVIP      plot the post_jointVIP object this plot uses
+                        the same custom options as the jointVIP object
+print.jointVIP          Obtains a print for jointVIP object
+print.post_jointVIP     Obtains a print for post_jointVIP object
+summary.jointVIP        Obtains a summary jointVIP object
+summary.post_jointVIP   Obtains a summary post_jointVIP object

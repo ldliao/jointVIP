@@ -1,0 +1,483 @@
+Hmm ... looks like a package
+
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2018-04-01> patch level 2
+Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
+
+(./Rd2.tex
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/bk10.clo))
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/url/url.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.def
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.dfu)))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/t1enc.def))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/color.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/local/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
+No file Rd2.aux.
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1phv.fd) [1{/usr/local/te
+xlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
+Overfull \hbox (38.93013pt too wide) in paragraph at lines 121--122
+[]\T1/ptm/m/n/10 custom op-tions: \T1/zi4/m/n/10 bias_curve_cutoffs\T1/ptm/m/n/
+10 , \T1/zi4/m/n/10 text_size\T1/ptm/m/n/10 , \T1/zi4/m/n/10 max.overlaps\T1/pt
+m/m/n/10 , \T1/zi4/m/n/10 label_cut_std_md\T1/ptm/m/n/10 ,
+[3] [4] [5] [6]
+Underfull \hbox (badness 1817) in paragraph at lines 383--383
+[]\T1/ptm/m/it/10 Prepare data frame to plot stan-dard-ized omit-ted vari-able 
+bias
+[7] (/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/ts1zi4.fd)
+[8]
+Overfull \hbox (38.93013pt too wide) in paragraph at lines 455--456
+[]\T1/ptm/m/n/10 custom op-tions: \T1/zi4/m/n/10 bias_curve_cutoffs\T1/ptm/m/n/
+10 , \T1/zi4/m/n/10 text_size\T1/ptm/m/n/10 , \T1/zi4/m/n/10 max.overlaps\T1/pt
+m/m/n/10 , \T1/zi4/m/n/10 label_cut_std_md\T1/ptm/m/n/10 ,
+
+Overfull \hbox (80.13095pt too wide) in paragraph at lines 455--456
+\T1/zi4/m/n/10 label_cut_outcome_cor\T1/ptm/m/n/10 , \T1/zi4/m/n/10 label_cut_b
+ias\T1/ptm/m/n/10 , \T1/zi4/m/n/10 OVB_curves\T1/ptm/m/n/10 , \T1/zi4/m/n/10 ad
+d_var_labs\T1/ptm/m/n/10 , \T1/zi4/m/n/10 expanded_y_curvelab 
+[9]
+Overfull \hbox (38.93013pt too wide) in paragraph at lines 521--522
+[]\T1/ptm/m/n/10 custom op-tions: \T1/zi4/m/n/10 bias_curve_cutoffs\T1/ptm/m/n/
+10 , \T1/zi4/m/n/10 text_size\T1/ptm/m/n/10 , \T1/zi4/m/n/10 max.overlaps\T1/pt
+m/m/n/10 , \T1/zi4/m/n/10 label_cut_std_md\T1/ptm/m/n/10 ,
+
+Overfull \hbox (80.13095pt too wide) in paragraph at lines 521--522
+\T1/zi4/m/n/10 label_cut_outcome_cor\T1/ptm/m/n/10 , \T1/zi4/m/n/10 label_cut_b
+ias\T1/ptm/m/n/10 , \T1/zi4/m/n/10 OVB_curves\T1/ptm/m/n/10 , \T1/zi4/m/n/10 ad
+d_var_labs\T1/ptm/m/n/10 , \T1/zi4/m/n/10 expanded_y_curvelab 
+[10] [11] [12] [13] [14]
+No file Rd2.ind.
+[15]
+(/private/var/folders/bc/5h145sp53sjf96mhnxcbtpyw0000gn/T/RtmpVhuVEt/Rd2pdf166a
+72dedfc55/Rd2.aux)
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+ )
+(see the transcript file for additional information){/usr/local/texlive/2018/te
+xmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc}{/usr/local/texlive/2018/texmf-
+dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texlive/2018/texmf-dist/fonts/enc/
+dvips/inconsolata/i4-t1-0.enc}</usr/local/texlive/2018/texmf-dist/fonts/type1/p
+ublic/inconsolata/Inconsolata-zi4r.pfb></usr/local/texlive/2018/texmf-dist/font
+s/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1
+/urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times
+/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmr8a.pf
+b></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (15 pages, 105070 bytes).
+Transcript written on Rd2.log.
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2018-04-01> patch level 2
+Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
+
+(./Rd2.tex
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/bk10.clo))
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/url/url.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.def
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.dfu)))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/t1enc.def))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/color.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/local/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
+
+(/private/var/folders/bc/5h145sp53sjf96mhnxcbtpyw0000gn/T/RtmpVhuVEt/Rd2pdf166a
+72dedfc55/Rd2.aux) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1cmr.fd
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(/private/var/folders/bc/5h145sp53sjf96mhnxcbtpyw0000gn/T/RtmpVhuVEt/Rd2pdf166a
+72dedfc55/Rd2.out)
+(/private/var/folders/bc/5h145sp53sjf96mhnxcbtpyw0000gn/T/RtmpVhuVEt/Rd2pdf166a
+72dedfc55/Rd2.out)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1phv.fd)
+(/private/var/folders/bc/5h145sp53sjf96mhnxcbtpyw0000gn/T/RtmpVhuVEt/Rd2pdf166a
+72dedfc55/Rd2.toc [1{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/
+pdftex.map}]) [2]
+Overfull \hbox (38.93013pt too wide) in paragraph at lines 121--122
+[]\T1/ptm/m/n/10 custom op-tions: \T1/zi4/m/n/10 bias_curve_cutoffs\T1/ptm/m/n/
+10 , \T1/zi4/m/n/10 text_size\T1/ptm/m/n/10 , \T1/zi4/m/n/10 max.overlaps\T1/pt
+m/m/n/10 , \T1/zi4/m/n/10 label_cut_std_md\T1/ptm/m/n/10 ,
+[3] [4] [5] [6] [7]
+Underfull \hbox (badness 1817) in paragraph at lines 383--383
+[]\T1/ptm/m/it/10 Prepare data frame to plot stan-dard-ized omit-ted vari-able 
+bias
+[8] (/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/ts1zi4.fd)
+Overfull \hbox (38.93013pt too wide) in paragraph at lines 455--456
+[]\T1/ptm/m/n/10 custom op-tions: \T1/zi4/m/n/10 bias_curve_cutoffs\T1/ptm/m/n/
+10 , \T1/zi4/m/n/10 text_size\T1/ptm/m/n/10 , \T1/zi4/m/n/10 max.overlaps\T1/pt
+m/m/n/10 , \T1/zi4/m/n/10 label_cut_std_md\T1/ptm/m/n/10 ,
+
+Overfull \hbox (80.13095pt too wide) in paragraph at lines 455--456
+\T1/zi4/m/n/10 label_cut_outcome_cor\T1/ptm/m/n/10 , \T1/zi4/m/n/10 label_cut_b
+ias\T1/ptm/m/n/10 , \T1/zi4/m/n/10 OVB_curves\T1/ptm/m/n/10 , \T1/zi4/m/n/10 ad
+d_var_labs\T1/ptm/m/n/10 , \T1/zi4/m/n/10 expanded_y_curvelab 
+[9]
+Overfull \hbox (38.93013pt too wide) in paragraph at lines 521--522
+[]\T1/ptm/m/n/10 custom op-tions: \T1/zi4/m/n/10 bias_curve_cutoffs\T1/ptm/m/n/
+10 , \T1/zi4/m/n/10 text_size\T1/ptm/m/n/10 , \T1/zi4/m/n/10 max.overlaps\T1/pt
+m/m/n/10 , \T1/zi4/m/n/10 label_cut_std_md\T1/ptm/m/n/10 ,
+
+Overfull \hbox (80.13095pt too wide) in paragraph at lines 521--522
+\T1/zi4/m/n/10 label_cut_outcome_cor\T1/ptm/m/n/10 , \T1/zi4/m/n/10 label_cut_b
+ias\T1/ptm/m/n/10 , \T1/zi4/m/n/10 OVB_curves\T1/ptm/m/n/10 , \T1/zi4/m/n/10 ad
+d_var_labs\T1/ptm/m/n/10 , \T1/zi4/m/n/10 expanded_y_curvelab 
+[10] [11] [12] [13] [14] [15]
+No file Rd2.ind.
+[16]
+(/private/var/folders/bc/5h145sp53sjf96mhnxcbtpyw0000gn/T/RtmpVhuVEt/Rd2pdf166a
+72dedfc55/Rd2.aux) )
+(see the transcript file for additional information){/usr/local/texlive/2018/te
+xmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc}{/usr/local/texlive/2018/texmf-
+dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texlive/2018/texmf-dist/fonts/enc/
+dvips/inconsolata/i4-t1-0.enc}</usr/local/texlive/2018/texmf-dist/fonts/type1/p
+ublic/inconsolata/Inconsolata-zi4r.pfb></usr/local/texlive/2018/texmf-dist/font
+s/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1
+/urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times
+/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmr8a.pf
+b></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (16 pages, 107879 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.15 [TeX Live 2018] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (17 entries accepted, 0 rejected).
+Sorting entries....done (61 comparisons).
+Generating output file Rd2.ind....done (39 lines written, 0 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2018-04-01> patch level 2
+Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
+
+(./Rd2.tex
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/bk10.clo))
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/url/url.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.def
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.dfu)))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/t1enc.def))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/color.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/local/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
+
+(/private/var/folders/bc/5h145sp53sjf96mhnxcbtpyw0000gn/T/RtmpVhuVEt/Rd2pdf166a
+72dedfc55/Rd2.aux) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1cmr.fd
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(/private/var/folders/bc/5h145sp53sjf96mhnxcbtpyw0000gn/T/RtmpVhuVEt/Rd2pdf166a
+72dedfc55/Rd2.out)
+(/private/var/folders/bc/5h145sp53sjf96mhnxcbtpyw0000gn/T/RtmpVhuVEt/Rd2pdf166a
+72dedfc55/Rd2.out)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1phv.fd)
+(/private/var/folders/bc/5h145sp53sjf96mhnxcbtpyw0000gn/T/RtmpVhuVEt/Rd2pdf166a
+72dedfc55/Rd2.toc [1{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/
+pdftex.map}]) [2]
+Overfull \hbox (38.93013pt too wide) in paragraph at lines 121--122
+[]\T1/ptm/m/n/10 custom op-tions: \T1/zi4/m/n/10 bias_curve_cutoffs\T1/ptm/m/n/
+10 , \T1/zi4/m/n/10 text_size\T1/ptm/m/n/10 , \T1/zi4/m/n/10 max.overlaps\T1/pt
+m/m/n/10 , \T1/zi4/m/n/10 label_cut_std_md\T1/ptm/m/n/10 ,
+[3] [4] [5] [6] [7]
+Underfull \hbox (badness 1817) in paragraph at lines 383--383
+[]\T1/ptm/m/it/10 Prepare data frame to plot stan-dard-ized omit-ted vari-able 
+bias
+[8] (/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/ts1zi4.fd)
+Overfull \hbox (38.93013pt too wide) in paragraph at lines 455--456
+[]\T1/ptm/m/n/10 custom op-tions: \T1/zi4/m/n/10 bias_curve_cutoffs\T1/ptm/m/n/
+10 , \T1/zi4/m/n/10 text_size\T1/ptm/m/n/10 , \T1/zi4/m/n/10 max.overlaps\T1/pt
+m/m/n/10 , \T1/zi4/m/n/10 label_cut_std_md\T1/ptm/m/n/10 ,
+
+Overfull \hbox (80.13095pt too wide) in paragraph at lines 455--456
+\T1/zi4/m/n/10 label_cut_outcome_cor\T1/ptm/m/n/10 , \T1/zi4/m/n/10 label_cut_b
+ias\T1/ptm/m/n/10 , \T1/zi4/m/n/10 OVB_curves\T1/ptm/m/n/10 , \T1/zi4/m/n/10 ad
+d_var_labs\T1/ptm/m/n/10 , \T1/zi4/m/n/10 expanded_y_curvelab 
+[9]
+Overfull \hbox (38.93013pt too wide) in paragraph at lines 521--522
+[]\T1/ptm/m/n/10 custom op-tions: \T1/zi4/m/n/10 bias_curve_cutoffs\T1/ptm/m/n/
+10 , \T1/zi4/m/n/10 text_size\T1/ptm/m/n/10 , \T1/zi4/m/n/10 max.overlaps\T1/pt
+m/m/n/10 , \T1/zi4/m/n/10 label_cut_std_md\T1/ptm/m/n/10 ,
+
+Overfull \hbox (80.13095pt too wide) in paragraph at lines 521--522
+\T1/zi4/m/n/10 label_cut_outcome_cor\T1/ptm/m/n/10 , \T1/zi4/m/n/10 label_cut_b
+ias\T1/ptm/m/n/10 , \T1/zi4/m/n/10 OVB_curves\T1/ptm/m/n/10 , \T1/zi4/m/n/10 ad
+d_var_labs\T1/ptm/m/n/10 , \T1/zi4/m/n/10 expanded_y_curvelab 
+[10] [11] [12] [13] [14] [15]
+(/private/var/folders/bc/5h145sp53sjf96mhnxcbtpyw0000gn/T/RtmpVhuVEt/Rd2pdf166a
+72dedfc55/Rd2.ind [16] [17])
+(/private/var/folders/bc/5h145sp53sjf96mhnxcbtpyw0000gn/T/RtmpVhuVEt/Rd2pdf166a
+72dedfc55/Rd2.aux)
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+ )
+(see the transcript file for additional information){/usr/local/texlive/2018/te
+xmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc}{/usr/local/texlive/2018/texmf-
+dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texlive/2018/texmf-dist/fonts/enc/
+dvips/inconsolata/i4-t1-0.enc}</usr/local/texlive/2018/texmf-dist/fonts/type1/p
+ublic/inconsolata/Inconsolata-zi4r.pfb></usr/local/texlive/2018/texmf-dist/font
+s/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1
+/urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times
+/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmr8a.pf
+b></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (17 pages, 109341 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.15 [TeX Live 2018] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (17 entries accepted, 0 rejected).
+Sorting entries....done (61 comparisons).
+Generating output file Rd2.ind....done (39 lines written, 0 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2018-04-01> patch level 2
+Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
+
+(./Rd2.tex
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/bk10.clo))
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/url/url.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.def
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.dfu)))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/t1enc.def))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/color.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/local/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
+
+(/private/var/folders/bc/5h145sp53sjf96mhnxcbtpyw0000gn/T/RtmpVhuVEt/Rd2pdf166a
+72dedfc55/Rd2.aux) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1cmr.fd
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(/private/var/folders/bc/5h145sp53sjf96mhnxcbtpyw0000gn/T/RtmpVhuVEt/Rd2pdf166a
+72dedfc55/Rd2.out)
+(/private/var/folders/bc/5h145sp53sjf96mhnxcbtpyw0000gn/T/RtmpVhuVEt/Rd2pdf166a
+72dedfc55/Rd2.out)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1phv.fd)
+(/private/var/folders/bc/5h145sp53sjf96mhnxcbtpyw0000gn/T/RtmpVhuVEt/Rd2pdf166a
+72dedfc55/Rd2.toc [1{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/
+pdftex.map}]) [2]
+Overfull \hbox (38.93013pt too wide) in paragraph at lines 121--122
+[]\T1/ptm/m/n/10 custom op-tions: \T1/zi4/m/n/10 bias_curve_cutoffs\T1/ptm/m/n/
+10 , \T1/zi4/m/n/10 text_size\T1/ptm/m/n/10 , \T1/zi4/m/n/10 max.overlaps\T1/pt
+m/m/n/10 , \T1/zi4/m/n/10 label_cut_std_md\T1/ptm/m/n/10 ,
+[3] [4] [5] [6] [7]
+Underfull \hbox (badness 1817) in paragraph at lines 383--383
+[]\T1/ptm/m/it/10 Prepare data frame to plot stan-dard-ized omit-ted vari-able 
+bias
+[8] (/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/ts1zi4.fd)
+Overfull \hbox (38.93013pt too wide) in paragraph at lines 455--456
+[]\T1/ptm/m/n/10 custom op-tions: \T1/zi4/m/n/10 bias_curve_cutoffs\T1/ptm/m/n/
+10 , \T1/zi4/m/n/10 text_size\T1/ptm/m/n/10 , \T1/zi4/m/n/10 max.overlaps\T1/pt
+m/m/n/10 , \T1/zi4/m/n/10 label_cut_std_md\T1/ptm/m/n/10 ,
+
+Overfull \hbox (80.13095pt too wide) in paragraph at lines 455--456
+\T1/zi4/m/n/10 label_cut_outcome_cor\T1/ptm/m/n/10 , \T1/zi4/m/n/10 label_cut_b
+ias\T1/ptm/m/n/10 , \T1/zi4/m/n/10 OVB_curves\T1/ptm/m/n/10 , \T1/zi4/m/n/10 ad
+d_var_labs\T1/ptm/m/n/10 , \T1/zi4/m/n/10 expanded_y_curvelab 
+[9]
+Overfull \hbox (38.93013pt too wide) in paragraph at lines 521--522
+[]\T1/ptm/m/n/10 custom op-tions: \T1/zi4/m/n/10 bias_curve_cutoffs\T1/ptm/m/n/
+10 , \T1/zi4/m/n/10 text_size\T1/ptm/m/n/10 , \T1/zi4/m/n/10 max.overlaps\T1/pt
+m/m/n/10 , \T1/zi4/m/n/10 label_cut_std_md\T1/ptm/m/n/10 ,
+
+Overfull \hbox (80.13095pt too wide) in paragraph at lines 521--522
+\T1/zi4/m/n/10 label_cut_outcome_cor\T1/ptm/m/n/10 , \T1/zi4/m/n/10 label_cut_b
+ias\T1/ptm/m/n/10 , \T1/zi4/m/n/10 OVB_curves\T1/ptm/m/n/10 , \T1/zi4/m/n/10 ad
+d_var_labs\T1/ptm/m/n/10 , \T1/zi4/m/n/10 expanded_y_curvelab 
+[10] [11] [12] [13] [14] [15]
+(/private/var/folders/bc/5h145sp53sjf96mhnxcbtpyw0000gn/T/RtmpVhuVEt/Rd2pdf166a
+72dedfc55/Rd2.ind [16] [17])
+(/private/var/folders/bc/5h145sp53sjf96mhnxcbtpyw0000gn/T/RtmpVhuVEt/Rd2pdf166a
+72dedfc55/Rd2.aux) )
+(see the transcript file for additional information){/usr/local/texlive/2018/te
+xmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc}{/usr/local/texlive/2018/texmf-
+dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texlive/2018/texmf-dist/fonts/enc/
+dvips/inconsolata/i4-t1-0.enc}</usr/local/texlive/2018/texmf-dist/fonts/type1/p
+ublic/inconsolata/Inconsolata-zi4r.pfb></usr/local/texlive/2018/texmf-dist/font
+s/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1
+/urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times
+/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmr8a.pf
+b></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (17 pages, 109577 bytes).
+Transcript written on Rd2.log.
+Saving output to ‘jointVIP-manual.pdf’ ...
+Done
+You may want to clean up by 'rm -Rf /var/folders/bc/5h145sp53sjf96mhnxcbtpyw0000gn/T//RtmpVhuVEt/Rd2pdf166a72dedfc55'

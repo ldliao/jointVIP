@@ -1,0 +1,469 @@
+
+R version 4.0.5 (2021-03-31) -- "Shake and Throw"
+Copyright (C) 2021 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "jointVIP"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> base::assign(".ExTimings", "jointVIP-Ex.timings", pos = 'CheckExEnv')
+> base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
+> base::assign(".format_ptime",
++ function(x) {
++   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
++   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
++   options(OutDec = '.')
++   format(x[1L:3L], digits = 7L)
++ },
++ pos = 'CheckExEnv')
+> 
+> ### * </HEADER>
+> library('jointVIP')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("bootstrap.plot")
+> ### * bootstrap.plot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: bootstrap.plot
+> ### Title: plot the bootstrap version of the jointVIP object
+> ### Aliases: bootstrap.plot
+> 
+> ### ** Examples
+> 
+> data <- data.frame(year = rnorm(50, 200, 5),
++                    pop = rnorm(50, 1000, 500),
++                    gdpPercap = runif(50, 100, 1000),
++                    trt = rbinom(50, 1, 0.5),
++                    out = rnorm(50, 1, 0.2))
+> # random 20 percent of control as pilot data                  
+> pilot_sample_num = sample(which(data$trt == 0),
++                           length(which(data$trt == 0)) *
++                           0.2)
+> pilot_df = data[pilot_sample_num, ]
+> analysis_df = data[-pilot_sample_num, ]
+> treatment = "trt"
+> outcome = "out"
+> covariates = names(analysis_df)[!names(analysis_df)
++                                 %in% c(treatment, outcome)]
+> new_jointVIP = create_jointVIP(treatment = treatment,
++                                outcome = outcome,
++                                covariates = covariates,
++                                pilot_df = pilot_df,
++                                analysis_df = analysis_df)
+> # more bootstrap number B would be typically used in real settings
+> # this is just a small example
+> set.seed(1234567891)
+> bootstrap.plot(new_jointVIP, B = 15)
+Scale for y is already present.
+Adding another scale for y, which will replace the existing scale.
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("bootstrap.plot", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("create_jointVIP")
+> ### * create_jointVIP
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: create_jointVIP
+> ### Title: create jointVIP object
+> ### Aliases: create_jointVIP
+> 
+> ### ** Examples
+> 
+> 
+> data <- data.frame(year = rnorm(50, 200, 5),
++                    pop = rnorm(50, 1000, 500),
++                    gdpPercap = runif(50, 100, 1000),
++                    trt = rbinom(50, 1, 0.5),
++                    out = rnorm(50, 1, 0.2))
+> # random 20 percent of control as pilot data                  
+> pilot_sample_num = sample(which(data$trt == 0),
++                           length(which(data$trt == 0)) *
++                           0.2)
+> pilot_df = data[pilot_sample_num, ]
+> analysis_df = data[-pilot_sample_num, ]
+> treatment = "trt"
+> outcome = "out"
+> covariates = names(analysis_df)[!names(analysis_df)
++                                 %in% c(treatment, outcome)]
+> new_jointVIP = create_jointVIP(treatment = treatment,
++                                outcome = outcome,
++                                covariates = covariates,
++                                pilot_df = pilot_df,
++                                analysis_df = analysis_df)
+> 
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("create_jointVIP", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("create_post_jointVIP")
+> ### * create_post_jointVIP
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: create_post_jointVIP
+> ### Title: create jointVIP object
+> ### Aliases: create_post_jointVIP
+> 
+> ### ** Examples
+> 
+> data <- data.frame(year = rnorm(50, 200, 5),
++                    pop = rnorm(50, 1000, 500),
++                    gdpPercap = runif(50, 100, 1000),
++                    trt = rbinom(50, 1, 0.5),
++                    out = rnorm(50, 1, 0.2))
+> # random 20 percent of control as pilot data                  
+> pilot_sample_num = sample(which(data$trt == 0),
++                           length(which(data$trt == 0)) *
++                           0.2)
+> pilot_df = data[pilot_sample_num, ]
+> analysis_df = data[-pilot_sample_num, ]
+> treatment = "trt"
+> outcome = "out"
+> covariates = names(analysis_df)[!names(analysis_df)
++                                 %in% c(treatment, outcome)]
+> new_jointVIP = create_jointVIP(treatment = treatment,
++                                outcome = outcome,
++                                covariates = covariates,
++                                pilot_df = pilot_df,
++                                analysis_df = analysis_df)
+>                                
+> ## at this step typically you may wish to do matching or weighting
+> ## the results after can be stored as a post_data
+> ## the post_data here is not matched or weighted, only for illustrative purposes
+> post_data <- data.frame(year = rnorm(50, 200, 5),
++                         pop = rnorm(50, 1000, 500),
++                         gdpPercap = runif(50, 100, 1000),
++                         trt = rbinom(50, 1, 0.5),
++                         out = rnorm(50, 1, 0.2))
+> post_dat_jointVIP =  create_post_jointVIP(new_jointVIP, post_data)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("create_post_jointVIP", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("plot.jointVIP")
+> ### * plot.jointVIP
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: plot.jointVIP
+> ### Title: plot the jointVIP object
+> ### Aliases: plot.jointVIP
+> 
+> ### ** Examples
+> 
+> data <- data.frame(year = rnorm(50, 200, 5),
++                    pop = rnorm(50, 1000, 500),
++                    gdpPercap = runif(50, 100, 1000),
++                    trt = rbinom(50, 1, 0.5),
++                    out = rnorm(50, 1, 0.2))
+> # random 20 percent of control as pilot data                  
+> pilot_sample_num = sample(which(data$trt == 0),
++                           length(which(data$trt == 0)) *
++                           0.2)
+> pilot_df = data[pilot_sample_num, ]
+> analysis_df = data[-pilot_sample_num, ]
+> treatment = "trt"
+> outcome = "out"
+> covariates = names(analysis_df)[!names(analysis_df)
++                                 %in% c(treatment, outcome)]
+> new_jointVIP = create_jointVIP(treatment = treatment,
++                                outcome = outcome,
++                                covariates = covariates,
++                                pilot_df = pilot_df,
++                                analysis_df = analysis_df)
+> plot(new_jointVIP)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("plot.jointVIP", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("plot.post_jointVIP")
+> ### * plot.post_jointVIP
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: plot.post_jointVIP
+> ### Title: plot the post_jointVIP object this plot uses the same custom
+> ###   options as the jointVIP object
+> ### Aliases: plot.post_jointVIP
+> 
+> ### ** Examples
+> 
+> data <- data.frame(year = rnorm(50, 200, 5),
++                    pop = rnorm(50, 1000, 500),
++                    gdpPercap = runif(50, 100, 1000),
++                    trt = rbinom(50, 1, 0.5),
++                    out = rnorm(50, 1, 0.2))
+> # random 20 percent of control as pilot data                  
+> pilot_sample_num = sample(which(data$trt == 0),
++                           length(which(data$trt == 0)) *
++                           0.2)
+> pilot_df = data[pilot_sample_num, ]
+> analysis_df = data[-pilot_sample_num, ]
+> treatment = "trt"
+> outcome = "out"
+> covariates = names(analysis_df)[!names(analysis_df)
++                                 %in% c(treatment, outcome)]
+> new_jointVIP = create_jointVIP(treatment = treatment,
++                                outcome = outcome,
++                                covariates = covariates,
++                                pilot_df = pilot_df,
++                                analysis_df = analysis_df)
+>                                
+> ## at this step typically you may wish to do matching or weighting
+> ## the results after can be stored as a post_data
+> ## the post_data here is not matched or weighted, only for illustrative purposes
+> post_data <- data.frame(year = rnorm(50, 200, 5),
++                         pop = rnorm(50, 1000, 500),
++                         gdpPercap = runif(50, 100, 1000),
++                         trt = rbinom(50, 1, 0.5),
++                         out = rnorm(50, 1, 0.2))
+> post_dat_jointVIP = create_post_jointVIP(new_jointVIP, post_data)
+> plot(post_dat_jointVIP)
+Warning in plot.post_jointVIP(post_dat_jointVIP) :
+  Color not scaled to previous pre-bias plot since the post-bias is greater than pre-bias
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("plot.post_jointVIP", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("print.jointVIP")
+> ### * print.jointVIP
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: print.jointVIP
+> ### Title: Obtains a print for jointVIP object
+> ### Aliases: print.jointVIP
+> 
+> ### ** Examples
+> 
+> data <- data.frame(year = rnorm(50, 200, 5),
++                    pop = rnorm(50, 1000, 500),
++                    gdpPercap = runif(50, 100, 1000),
++                    trt = rbinom(50, 1, 0.5),
++                    out = rnorm(50, 1, 0.2))
+> # random 20 percent of control as pilot data                  
+> pilot_sample_num = sample(which(data$trt == 0),
++                           length(which(data$trt == 0)) *
++                           0.2)
+> pilot_df = data[pilot_sample_num, ]
+> analysis_df = data[-pilot_sample_num, ]
+> treatment = "trt"
+> outcome = "out"
+> covariates = names(analysis_df)[!names(analysis_df)
++                                 %in% c(treatment, outcome)]
+> new_jointVIP = create_jointVIP(treatment = treatment,
++                                outcome = outcome,
++                                covariates = covariates,
++                                pilot_df = pilot_df,
++                                analysis_df = analysis_df)
+> print(new_jointVIP)
+           bias
+gdpPercap 0.232
+pop       0.167
+year      0.111
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("print.jointVIP", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("print.post_jointVIP")
+> ### * print.post_jointVIP
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: print.post_jointVIP
+> ### Title: Obtains a print for post_jointVIP object
+> ### Aliases: print.post_jointVIP
+> 
+> ### ** Examples
+> 
+> data <- data.frame(year = rnorm(50, 200, 5),
++                    pop = rnorm(50, 1000, 500),
++                    gdpPercap = runif(50, 100, 1000),
++                    trt = rbinom(50, 1, 0.5),
++                    out = rnorm(50, 1, 0.2))
+> # random 20 percent of control as pilot data                  
+> pilot_sample_num = sample(which(data$trt == 0),
++                           length(which(data$trt == 0)) *
++                           0.2)
+> pilot_df = data[pilot_sample_num, ]
+> analysis_df = data[-pilot_sample_num, ]
+> treatment = "trt"
+> outcome = "out"
+> covariates = names(analysis_df)[!names(analysis_df)
++                                 %in% c(treatment, outcome)]
+> new_jointVIP = create_jointVIP(treatment = treatment,
++                                outcome = outcome,
++                                covariates = covariates,
++                                pilot_df = pilot_df,
++                                analysis_df = analysis_df)
+>                                
+> ## at this step typically you may wish to do matching or weighting
+> ## the results after can be stored as a post_data
+> ## the post_data here is not matched or weighted, only for illustrative purposes
+> post_data <- data.frame(year = rnorm(50, 200, 5),
++                         pop = rnorm(50, 1000, 500),
++                         gdpPercap = runif(50, 100, 1000),
++                         trt = rbinom(50, 1, 0.5),
++                         out = rnorm(50, 1, 0.2))
+> post_dat_jointVIP = create_post_jointVIP(new_jointVIP, post_data)
+> print(post_dat_jointVIP)
+           bias post_bias
+gdpPercap 0.232     0.101
+pop       0.167     0.232
+year      0.111     0.249
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("print.post_jointVIP", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("summary.jointVIP")
+> ### * summary.jointVIP
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: summary.jointVIP
+> ### Title: Obtains a summary jointVIP object
+> ### Aliases: summary.jointVIP
+> 
+> ### ** Examples
+> 
+> data <- data.frame(year = rnorm(50, 200, 5),
++                    pop = rnorm(50, 1000, 500),
++                    gdpPercap = runif(50, 100, 1000),
++                    trt = rbinom(50, 1, 0.5),
++                    out = rnorm(50, 1, 0.2))
+> # random 20 percent of control as pilot data                  
+> pilot_sample_num = sample(which(data$trt == 0),
++                           length(which(data$trt == 0)) *
++                           0.2)
+> pilot_df = data[pilot_sample_num, ]
+> analysis_df = data[-pilot_sample_num, ]
+> treatment = "trt"
+> outcome = "out"
+> covariates = names(analysis_df)[!names(analysis_df)
++                                 %in% c(treatment, outcome)]
+> new_jointVIP = create_jointVIP(treatment = treatment,
++                                outcome = outcome,
++                                covariates = covariates,
++                                pilot_df = pilot_df,
++                                analysis_df = analysis_df)
+> summary(new_jointVIP)
+Max absolute bias is 0.232
+3 variables are above the desired 0.01 absolute bias tolerance
+3 variables can be plotted
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("summary.jointVIP", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("summary.post_jointVIP")
+> ### * summary.post_jointVIP
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: summary.post_jointVIP
+> ### Title: Obtains a summary post_jointVIP object
+> ### Aliases: summary.post_jointVIP
+> 
+> ### ** Examples
+> 
+> data <- data.frame(year = rnorm(50, 200, 5),
++                    pop = rnorm(50, 1000, 500),
++                    gdpPercap = runif(50, 100, 1000),
++                    trt = rbinom(50, 1, 0.5),
++                    out = rnorm(50, 1, 0.2))
+> # random 20 percent of control as pilot data                  
+> pilot_sample_num = sample(which(data$trt == 0),
++                           length(which(data$trt == 0)) *
++                           0.2)
+> pilot_df = data[pilot_sample_num, ]
+> analysis_df = data[-pilot_sample_num, ]
+> treatment = "trt"
+> outcome = "out"
+> covariates = names(analysis_df)[!names(analysis_df)
++                                 %in% c(treatment, outcome)]
+> new_jointVIP = create_jointVIP(treatment = treatment,
++                                outcome = outcome,
++                                covariates = covariates,
++                                pilot_df = pilot_df,
++                                analysis_df = analysis_df)
+>                                
+> ## at this step typically you may wish to do matching or weighting
+> ## the results after can be stored as a post_data
+> ## the post_data here is not matched or weighted, only for illustrative purposes
+> post_data <- data.frame(year = rnorm(50, 200, 5),
++                         pop = rnorm(50, 1000, 500),
++                         gdpPercap = runif(50, 100, 1000),
++                         trt = rbinom(50, 1, 0.5),
++                         out = rnorm(50, 1, 0.2))
+> post_dat_jointVIP = create_post_jointVIP(new_jointVIP, post_data)
+> summary(post_dat_jointVIP)
+Max absolute bias is 0.232
+3 variables are above the desired 0.01 absolute bias tolerance
+3 variables can be plotted
+
+Max absolute post-bias is 0.249
+Post-measure has 3 variable(s) above the desired 0.005 absolute bias tolerance
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("summary.post_jointVIP", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  2.126 0.08 2.316 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

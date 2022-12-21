@@ -1,0 +1,196 @@
+---
+title: "additional_options"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{additional_options}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+devtools::load_all(".")
+```
+
+## Setting up to demonstrate `jointVIP`
+
+See the `vignette("jointVIP")` to get started on how to use `jointVIP` package. Using the same data sets, this vignette's main purpose is to demonstrate other options that are available. 
+
+```{r data_cleaning, include=FALSE}
+# load jointVIP package
+library(jointVIP)
+
+# data to use for example
+library(causaldata)
+
+# matching methods shown in example
+library(MatchIt)
+library(optmatch)
+# load data for estimating earnings from 1978
+# treatment is the NSW program
+pilot_df = cps_mixtape
+analysis_df = nsw_mixtape
+
+transform_earn <- function(data, variables){
+  data = data.frame(data)
+  log_variables = sapply(variables, 
+                         function(s){paste0('log_',s)})
+  data[,log_variables] =
+    apply(data[,variables], 2, 
+        function(x){ifelse(x == 0, 
+                           log(x + 1), 
+                           log(x))})
+  return(data)
+}
+
+pilot_df <- cps_mixtape
+pilot_df <- transform_earn(pilot_df, c('re74', 're75', 're78'))
+
+analysis_df <- nsw_mixtape
+analysis_df <- transform_earn(analysis_df, c('re74', 're75', 're78'))
+
+treatment = 'treat'
+outcome = 'log_re78'
+covariates = c(names(analysis_df)[!names(analysis_df) %in% c(treatment,
+                                           outcome, "data_id",
+                                           "re74", "re75",
+                                           "re78")])
+
+new_jointVIP = create_jointVIP(treatment = treatment,
+                               outcome = outcome,
+                               covariates = covariates,
+                               pilot_df = pilot_df,
+                               analysis_df = analysis_df)
+
+m.out <- matchit(
+  treat ~ log_re75 + log_re74,
+  data = analysis_df,
+  method = "optimal",
+  distance = "mahalanobis"
+)
+optmatch_df <- match.data(m.out)[, c(treatment, outcome, covariates)]
+
+post_optmatch_jointVIP <- create_post_jointVIP(new_jointVIP, 
+                                               post_analysis_df = optmatch_df)
+
+```
+
+```{r setup, eval=FALSE}
+library(jointVIP)
+
+# gentle reminder of how to create a new jointVIP object
+new_jointVIP = create_jointVIP(treatment = treatment,
+                               outcome = outcome,
+                               covariates = covariates,
+                               pilot_df = pilot_df,
+                               analysis_df = analysis_df)
+
+# gentle reminder of how to create a new post_jointVIP object
+post_optmatch_jointVIP = create_post_jointVIP(new_jointVIP,
+                                             post_analysis_df = optmatch_df)
+```
+
+## Demonstration for additional options in `summary()` and `print()`
+
+```{r sumnprint}
+# # simplest usage
+# summary(new_jointVIP)
+
+summary(new_jointVIP, 
+        smd = 'standard', 
+        use_abs = FALSE, 
+        bias_tol = 0.005)
+
+print(new_jointVIP, 
+      smd = 'standard', 
+      use_abs = FALSE, 
+      bias_tol = 0.005)
+
+# not run
+# get_measures(new_jointVIP, smd = 'OVB-based')
+```
+The `summary()` and `print()` functions have the same additional parameters and uses rounded numbers to the third decimal place.
+
+* The `smd` parameter allows only `standard` or `OVB-based` options. While the OVB-based, stands for omitted variable bias-based, standardized mean difference (SMD) is used as default, a pooled version of the standardized mean difference (standard) can be specified. The `standard` option is the typical option used in balance tables and Love plots that uses both treated and control variances from the analysis data set to construct the SMD. 
+* The `use_abs` parameter takes in either TRUE or FALSE, stating if set TRUE (default), the absolute measures are used. Otherwise, signed measured are used if set to be FALSE. 
+* The `bias_tol` parameter is to set the absolute bias tolerance that one wishes to examine at a glance. The default is 0.01. 
+
+Under the hood, `get_measures()` function is used to calculate. If the researcher wishes to save the measures calculated, perhaps `get_measures()` would be used; example is shown above. Only signed measures are presented as outputs for that function.
+
+## Demonstration for additional options in `plot()`
+
+```{r plot_ex, dpi=300, fig.asp = 0.75, fig.width = 6, out.width = "80%", fig.align = "center", message=FALSE}
+# # simplest usage
+# plot(new_jointVIP)
+
+plot(new_jointVIP, 
+     smd = 'standard', 
+     use_abs = FALSE, 
+     plot_title = 'Signed version of the jointVIP with standard/pooled SMD')
+
+plot(new_jointVIP, 
+     bias_curve_cutoffs = c(0.005, 0.05, 0.10),
+     text_size = 5, 
+     label_cut_std_md = 0.1,
+     max.overlaps = 15,
+     plot_title = 'Increased text size and bias curve specifications',
+     expanded_y_curvelab = 0.002
+     #label_cut_outcome_cor = 0.2,
+     #label_cut_bias = 0.1
+     )
+
+plot(new_jointVIP, 
+     OVB_curves = FALSE,
+     add_var_labs = FALSE,
+     plot_title = 'No bias curves or variable labels'
+     )
+```
+
+There are many parameters for the `plot()` option. The `smd` and `use_abs` options functions the same as above. The other main parameter input is `plot_title`, which allows users to specify the title of the plot. Additional parameters not listed as a main parameter is explained and example usage is shown above.
+
+* `bias_curve_cutoffs`: draws bias curves by the specifications. This is only used when `smd` is specified as `OVB-based`.
+* `text_size`: text size of the variable labels can be increased.
+* `max.overlaps`: maximum overlap of the variable labels.
+* `label_cut_std_md`: standardized mean difference label cutoff, an example would be, if you wish to label all variables with standardized mean difference above 0.1.
+* `label_cut_outcome_cor`: outcome correlation label cutoff, an example would be, if you wish to label all variables with outcome correlation above 0.2.
+* `label_cut_bias`: bias label cutoff, an example would be, if you wish to label all variables with bias difference above 0.1.
+* `OVB_curves`: TRUE (default) draws the omitted variable bias curves, FALSE suppresses the bias curves. If `bias_curve_cutoffs` also specified, `OVB_curves` takes priority. This is only used when `smd` is specified as `OVB-based`.
+* `add_var_labs`: TRUE (default) adds variable labels. This suppresses all `label_cut` inputs if specified FALSE.
+* `expanded_y_curvelab`: if one wishes to expand the y-axis, the bias curve labels don't automatically get updated. So, this allows the fine-tuning of the bias-curve labels. Typically this is used under the hood for bootstrap version of the plot. However, user can specify this if they wish. This is only used when `smd` is specified as `OVB-based`.
+
+# Post-analysis parameters examples
+
+The same variables are specified in the `vignette("jointVIP")`; here we choose refined covariate balance matching example to demonstrate the additional parameters. 
+
+## Demonstration for additional options in `summary()` and `print()`
+
+```{r sumnprint_post, dpi=300, fig.asp = 0.75, fig.width = 6, out.width = "80%", fig.align = "center", message=FALSE}
+# get_post_measures(post_optmatch_jointVIP, smd = 'OVB-based')
+
+summary(post_optmatch_jointVIP,
+        use_abs = FALSE,
+        bias_tol = 0.01,
+        post_bias_tol = 0.001)
+
+print(post_optmatch_jointVIP,
+      bias_tol = 0.001)
+
+plot(post_optmatch_jointVIP, 
+     plot_title = "Post-match jointVIP using rcbalance matching",
+     smd = 'OVB-based',
+     use_abs = FALSE,
+     add_post_labs = TRUE,
+     post_label_cut_bias = 0.001)
+```
+
+All of the options from above can be used; below will only address additional parameters or function outputs.
+
+* `get_post_measures()` takes in a post_jointVIP object and `smd` specifications for measures from the post-matched results. 
+* `summary()` function adds text output of post-match results in addition to pre-match results. The `post_bias_tol` specifically is a `summary()` parameter that outputs post_bias tolerance for text comparison rounded to the fourth decimal place.
+* `print()` function adds another column to post-match bias.
+* `plot()` function includes two new parameters:
+  - `add_post_labs` TRUE (default) shows the variable labels post-matching/weighting; FALSE suppresses it.
+  - `post_label_cut_bias` numeric number for variable labels; only used when `add_post_labs` is TRUE.
