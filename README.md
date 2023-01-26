@@ -1,9 +1,12 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Joint variable importance plot
+# Joint variable importance plot <img src="man/figures/jointVIP_logo.png" align="right" width="150"/>
 
 <!-- badges: start -->
+
+[![CRAN_Status_Badge](https://img.shields.io/cran/v/jointVIP?color=952100)](https://cran.r-project.org/package=jointVIP)
+[![CRAN_Downloads_Badge](https://cranlogs.r-pkg.org/badges/jointVIP?color=952100)](https://cran.r-project.org/package=jointVIP)
 <!-- badges: end -->
 
 Joint variable importance plot (jointVIP) visualizes each variable’s
@@ -13,12 +16,10 @@ curves enable comparisons to support prioritization.
 
 ## Installation
 
-You can install the development version of jointVIP from
-[GitHub](https://github.com/) with:
+You can install the `jointVIP` package on CRAN using:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("ldliao/jointVIP")
+install.packages("jointVIP")
 ```
 
 ## BRFSS Example

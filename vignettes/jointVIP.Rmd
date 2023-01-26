@@ -18,6 +18,10 @@ knitr::opts_chunk$set(
 devtools::load_all(".")
 ```
 
+```{r download, eval=FALSE}
+install.packages("jointVIP")
+```
+
 ## The purpose of the jointVIP
 
 The joint variable importance plot (jointVIP for short) is designed to help identify which variables to prioritize based on both treatment and outcome for adjustment. This plot should be used during the design stage of the observational study prior to the analysis phase.
