@@ -1,26 +1,30 @@
 ---
-title: 'jointVIP: Prioritizing variables in observational study design with joint variable importance plot in R'
+title: 'jointVIP: Prioritizing variables in observational study design with joint
+  variable importance plot in R'
 tags:
-  - R
-  - observational study
-  - study design
-  - visualization
-  - causal inference
+- R
+- observational study
+- study design
+- visualization
+- causal inference
+date: "3 February 2023"
+output:
+  html_document:
+    df_print: paged
 authors:
-  - name: Lauren D. Liao
-    orcid: 0000-0003-4697-6909
-    corresponding: true
-    affiliation: 1
-  - name: Samuel D. Pimentel
-    orcid: 0000-0002-0409-6586
-    affiliation: 2
-affiliations:
- - name: Division of Biostatistics, University of California, Berkeley, USA
-   index: 1
- - name: Department of Statistics, University of California, Berkeley, USA
-   index: 2
-date: 3 February 2023
+- name: Lauren D. Liao
+  orcid: "0000-0003-4697-6909"
+  corresponding: yes
+  affiliation: 1
+- name: Samuel D. Pimentel
+  orcid: "0000-0002-0409-6586"
+  affiliation: 2
 bibliography: paper.bib
+affiliations:
+- name: Division of Biostatistics, University of California, Berkeley, USA
+  index: 1
+- name: Department of Statistics, University of California, Berkeley, USA
+  index: 2
 ---
 
 # Summary
