@@ -1,6 +1,14 @@
 `jointVIP` News and Updates
 ======
 
+# jointVIP development version on 0.1.1
+
+* Current version hosted on GitHub
+
+* Paper folder is now tracked on GitHub
+
+* Currently working on adding weighted version of SMD for easier post-adjusted estimation for weights
+
 # jointVIP 0.1.1
 
 * Added logo, installation, status badges

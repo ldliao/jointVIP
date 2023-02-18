@@ -19,7 +19,11 @@ curves enable comparisons to support prioritization.
 You can install the `jointVIP` package on CRAN using:
 
 ``` r
+# for version on CRAN
 install.packages("jointVIP")
+
+# for development version on github
+devtools::install_github("ldliao/jointVIP")
 ```
 
 ## BRFSS Example
