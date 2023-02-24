@@ -115,11 +115,12 @@ get_post_measures <- function(object, smd = 'OVB-based'){
   covariates <- names(object$post_analysis_df)[!(names(object$post_analysis_df)
                                                  %in% c(object$treatment,
                                                         object$outcome))]
-
-  post_md <- apply(object$post_analysis_df[,covariates], 2,
-              function(x){
-                mean(x[treated == 1]) - mean(x[treated == 0])
-              })
+  
+  w0 = object$wts[treated == 0]
+  w1 = object$wts[treated == 1]
+  
+  post_md <- colSums(object$post_analysis_df[treated == 1,covariates]*w1)/sum(w1) - 
+    colSums(object$post_analysis_df[treated == 0,covariates]*w0)/sum(w0)
 
   post_measures = measures
   post_measures$post_std_md <- post_md/measures$pre_sd

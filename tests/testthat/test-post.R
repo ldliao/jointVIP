@@ -40,7 +40,38 @@ test_that("post-related methods work!", {
     "Max absolute bias is 0.166\n2 variables are above the desired 0.01 absolute bias tolerance\n3 variables can be plotted\n\nMax absolute post-bias is 0.111\nPost-measure has 3 variable(s) above the desired 0.005 absolute bias tolerance"
   )
   
+  # testing wts here
+  expect_error(create_post_jointVIP(new_jointVIP, post_data, wts = 1),
+               fixed = TRUE,
+               "length of `wts` must be the same number of rows as `post_analysis_df`")
   
+  expect_error(create_post_jointVIP(new_jointVIP, post_data, wts = c(1,NA)),
+               fixed = TRUE,
+               "length of `wts` must be the same number of rows as `post_analysis_df`")
+  
+  expect_error(create_post_jointVIP(new_jointVIP, post_data, wts = rep(NA, nrow(post_data))),
+               fixed = TRUE,
+               "`wts` must be numeric")
+  
+  expect_error(create_post_jointVIP(new_jointVIP, post_data, wts = c(1,rep(NA, nrow(post_data)-1))),
+               fixed = TRUE,
+               "`wts` cannot contain NA or all be 0")
+  
+  expect_error(create_post_jointVIP(new_jointVIP, post_data, wts = c(1, rep(NULL, nrow(post_data)-1))),
+               fixed = TRUE,
+               "length of `wts` must be the same number of rows as `post_analysis_df`")
+  
+  expect_error(create_post_jointVIP(new_jointVIP, post_data, wts = rep(0, nrow(post_data))),
+               fixed = TRUE,
+               "`wts` cannot contain NA or all be 0")
+  
+  expect_no_error(create_post_jointVIP(new_jointVIP, post_data, wts = rep(1,nrow(post_data))),
+          )
+  
+  expect_no_error(create_post_jointVIP(new_jointVIP, 
+                                       post_data, 
+                                       wts = sample(1:10,nrow(post_data),replace = T)),
+  )
   
   expect_equal(length(
     plot(

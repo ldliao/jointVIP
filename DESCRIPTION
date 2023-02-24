@@ -1,6 +1,6 @@
 Package: jointVIP
 Title: Prioritize Variables with Joint Variable Importance Plot in Observational Study Design
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(person(given = "Lauren D.",
            family = "Liao",
            role = c("aut", "cre"),
@@ -21,8 +21,8 @@ Description: In the observational study design stage, matching/weighting methods
     tuning parameters in existing methods. Post-matching and/or weighting plots can also
     be used to visualize and assess the quality of the observational study design. The
     package and its usage is showcased in "Using Joint Variable Importance Plots to 
-    Prioritize Variables in Assessing the Impact of Glyburide on Adverse Birth Outcomes" by 
-    Liao et al. (2023) <arXiv:2301.09754>.
+    Prioritize Variables in Assessing the Impact of Glyburide on Adverse Birth Outcomes"
+    by Liao et al. (2023) <arXiv:2301.09754>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

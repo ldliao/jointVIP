@@ -4,12 +4,14 @@
 \alias{create_post_jointVIP}
 \title{create jointVIP object}
 \usage{
-create_post_jointVIP(object, post_analysis_df)
+create_post_jointVIP(object, post_analysis_df, wts = NA)
 }
 \arguments{
 \item{object}{a jointVIP object}
 
 \item{post_analysis_df}{post matched or weighted data.frame}
+
+\item{wts}{user-supplied weights}
 }
 \value{
 a post_jointVIP object (subclass of jointVIP)

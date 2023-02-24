@@ -1,6 +1,12 @@
 `jointVIP` News and Updates
 ======
 
+# jointVIP 0.1.2
+
+* Post-adjusted estimation for weights are now updated accordingly
+
+* Package citation is added with package paper currently hosted on arXiv
+
 # jointVIP development version on 0.1.1
 
 * Current version hosted on GitHub
