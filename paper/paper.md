@@ -1,30 +1,31 @@
 ---
 title: 'jointVIP: Prioritizing variables in observational study design with joint
   variable importance plot in R'
+authors:
+- affiliation: 1
+  corresponding: yes
+  name: Lauren D. Liao
+  orcid: 0000-0003-4697-6909
+- affiliation: 2
+  name: Samuel D. Pimentel
+  orcid: 0000-0002-0409-6586
+date: "3 February 2023"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+bibliography: paper.bib
 tags:
 - R
 - observational study
 - study design
 - visualization
 - causal inference
-date: "3 February 2023"
-output:
-  html_document:
-    df_print: paged
-authors:
-- name: Lauren D. Liao
-  orcid: "0000-0003-4697-6909"
-  corresponding: yes
-  affiliation: 1
-- name: Samuel D. Pimentel
-  orcid: "0000-0002-0409-6586"
-  affiliation: 2
-bibliography: paper.bib
 affiliations:
-- name: Division of Biostatistics, University of California, Berkeley, USA
-  index: 1
-- name: Department of Statistics, University of California, Berkeley, USA
-  index: 2
+- index: 1
+  name: Division of Biostatistics, University of California, Berkeley, USA
+- index: 2
+  name: Department of Statistics, University of California, Berkeley, USA
 ---
 
 # Summary
@@ -119,17 +120,17 @@ post_optmatch_jointVIP <- create_post_jointVIP(new_jointVIP,
 
 ```r   
 summary(post_optmatch_jointVIP)
-> Max absolute bias is 0.113
-> 2 variables are above the desired 0.01 absolute bias tolerance
-> 8 variables can be plotted
->
-> Max absolute post-bias is 0.005
-> Post-measure has 0 variable(s) above the desired 0.005 absolute bias tolerance
+# > Max absolute bias is 0.113
+# > 2 variables are above the desired 0.01 absolute bias tolerance
+# > 8 variables can be plotted
+# >
+# > Max absolute post-bias is 0.005
+# > Post-measure has 0 variable(s) above the desired 0.005 absolute bias tolerance
 
 print(post_optmatch_jointVIP)
->           bias post_bias
-> log_re75 0.113     0.005
-> log_re74 0.045     0.003
+# >           bias post_bias
+# > log_re75 0.113     0.005
+# > log_re74 0.045     0.003
 ```
 
 # Discussion
