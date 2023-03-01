@@ -139,6 +139,7 @@ We have developed user-friendly software to prioritize variables for adjustment 
 
 # Acknowledgements
 
+The authors thank Emily Z. Wang for helpful comments.
 SDP is supported by Hellman Family Fellowship and by the National Science Foundation (grant 2142146). LDL is supported by National Science Foundation Graduate Research Fellowship (grant DGE 2146752). 
 
 # References
