@@ -22,7 +22,8 @@ Description: In the observational study design stage, matching/weighting methods
     be used to visualize and assess the quality of the observational study design. The
     package and its usage is showcased in "Using Joint Variable Importance Plots to 
     Prioritize Variables in Assessing the Impact of Glyburide on Adverse Birth Outcomes"
-    by Liao et al. (2023) <arXiv:2301.09754>.
+    by Liao et al. (2023) <arXiv:2301.09754>. See the package paper <arxiv:2302.10367>
+    for a beginner friendly introduction.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
