@@ -20,8 +20,8 @@ get_measures = function(object, smd='OVB-based'){
   ovb_denom <- apply(object$pilot_df[,covariates], 2, stats::sd)
   standard_denom <- apply(object$analysis_df[,covariates], 2,
                           function(x){
-                            if(stats::var(x[treated == 1]) == 0 |
-                               stats::var(x[treated == 1]) == 0){NA}
+                            if(stats::var(x[treated == 1]) == 0 &
+                               stats::var(x[treated == 0]) == 0){NA}
                             else{
                               sqrt(stats::var(x[treated == 1])/2 +
                                      stats::var(x[treated == 0])/2)
