@@ -23,7 +23,7 @@ test_that("plot.jointVIP() is able to show the desired plot", {
   p1 <- plot(new_jointVIP,
              plot_title = paste0("jointVIP for ", outcome))
   p2 <- plot(new_jointVIP, use_abs = FALSE)
-  p3 <- plot(new_jointVIP, smd = 'standard')
+  p3 <- plot(new_jointVIP, smd = 'pooled')
 
   expect_equal(capture_output(print(p1$layers[[1]])),
                paste0("geom_point: na.rm = FALSE\n",
@@ -40,33 +40,33 @@ test_that("plot.jointVIP() is able to show the desired plot", {
 
   expect_equal("jointVIP for out", p1$labels$title)
   expect_equal("Joint Variable Importance Plot", p2$labels$title)
-  expect_equal("OVB-based SMD", p1$labels$subtitle)
+  expect_equal("cross-sample SMD", p1$labels$subtitle)
   expect_equal("Absolute Standardized Mean Difference", p1$labels$x)
   expect_equal("Absolute Outcome Correlation", p1$labels$y)
-  expect_equal("standard SMD", p3$labels$subtitle)
+  expect_equal("pooled SMD", p3$labels$subtitle)
   expect_equal("Standardized Mean Difference", p2$labels$x)
   expect_equal("Outcome Correlation", p2$labels$y)
   expect_equal(length(p1$layers), 8)
-  expect_equal(length(plot(new_jointVIP, smd = 'standard')$layers), 2)
+  expect_equal(length(plot(new_jointVIP, smd = 'pooled')$layers), 2)
   expect_equal(length(plot(new_jointVIP,
-                           smd = 'OVB-based',
+                           smd = 'cross-sample',
                            bias_curve_cutoffs = c(0.05, 0.07))$layers), 5)
 
   expect_error(plot(new_jointVIP, smd = 'blah'), fixed=TRUE,
-               "smd options only include `OVB-based` or `standard`")
+               "smd options only include `cross-sample` or `pooled`")
   expect_error(plot(new_jointVIP, smd = 2), fixed=TRUE,
-               "smd options only include `OVB-based` or `standard`")
+               "smd options only include `cross-sample` or `pooled`")
   expect_error(plot(new_jointVIP, bias_curve_cutoffs = "a"), fixed=TRUE,
                "`bias_curve_cutoffs` must be numeric")
   expect_warning(plot(new_jointVIP, bias_curve_cutoffs = c(0,0.1,0.2)), fixed=TRUE,
                  "0 in the `bias_curve_cutoffs` will not be plotted")
-  expect_equal(length(plot(new_jointVIP, OVB_curves = FALSE)$layers), 2)
-  expect_error(plot(new_jointVIP, OVB_curves = "a"), fixed=TRUE,
-               "`OVB_curves` can only be set as TRUE or FALSE")
+  expect_equal(length(plot(new_jointVIP, bias_curves = FALSE)$layers), 2)
+  expect_error(plot(new_jointVIP, bias_curves = "a"), fixed=TRUE,
+               "`bias_curves` can only be set as TRUE or FALSE")
   expect_error(plot(new_jointVIP, add_var_labs = "a"), fixed=TRUE,
                "`add_var_labs` can only be set as TRUE or FALSE")
-  expect_error(plot(new_jointVIP, OVB_curves = 1), fixed=TRUE,
-               "`OVB_curves` can only be set as TRUE or FALSE")
+  expect_error(plot(new_jointVIP, bias_curves = 1), fixed=TRUE,
+               "`bias_curves` can only be set as TRUE or FALSE")
   expect_error(plot(new_jointVIP, add_var_labs = 1), fixed=TRUE,
                "`add_var_labs` can only be set as TRUE or FALSE")
   expect_equal(length(plot(new_jointVIP, add_var_labs = FALSE)$layers),

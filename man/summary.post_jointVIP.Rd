@@ -7,7 +7,7 @@
 \method{summary}{post_jointVIP}(
   object,
   ...,
-  smd = "OVB-based",
+  smd = "cross-sample",
   use_abs = TRUE,
   bias_tol = 0.01,
   post_bias_tol = 0.005
@@ -18,7 +18,7 @@
 
 \item{...}{not used}
 
-\item{smd}{specify the standardized mean difference is \code{OVB-based} or \code{standard}}
+\item{smd}{specify the standardized mean difference is \code{cross-sample} or \code{pooled}}
 
 \item{use_abs}{TRUE (default) for absolute measures}
 

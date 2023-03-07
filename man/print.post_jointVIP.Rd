@@ -4,14 +4,14 @@
 \alias{print.post_jointVIP}
 \title{Obtains a print for post_jointVIP object}
 \usage{
-\method{print}{post_jointVIP}(x, ..., smd = "OVB-based", use_abs = TRUE, bias_tol = 0.01)
+\method{print}{post_jointVIP}(x, ..., smd = "cross-sample", use_abs = TRUE, bias_tol = 0.01)
 }
 \arguments{
 \item{x}{a post_jointVIP object}
 
 \item{...}{not used}
 
-\item{smd}{specify the standardized mean difference is \code{OVB-based} or \code{standard}}
+\item{smd}{specify the standardized mean difference is \code{cross-sample} or \code{pooled}}
 
 \item{use_abs}{TRUE (default) for absolute measures}
 

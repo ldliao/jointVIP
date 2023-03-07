@@ -1,3 +1,4 @@
+library(testthat)
 test_that("bootstap related code works", {
   set.seed(1234567891)
   data <- data.frame(year = rnorm(50, 200, 5),

@@ -78,7 +78,7 @@ After transformation, the both data has new variables:
 * `log_re75` log-real earnings in 1975
 * `log_re78` outcome of interest: log-real earnings in 1978
 
-The `jointVIP` package uses `pilot_df` and `analysis_df` to denote datasets used. The `analysis_df` is the matching/weighting dataset of interest while `pilot_df` contains the external controls not used in the analysis. The `pilot_df` is used to help inform the outcome correlation and compare the omitted variable bias-based (OVB-based) standardized mean difference. If external data is not available, one may choose to sacrifice a portion of the analysis controls to form the `pilot_df`.
+The `jointVIP` package uses `pilot_df` and `analysis_df` to denote datasets used. The `analysis_df` is the matching/weighting dataset of interest while `pilot_df` contains the external controls not used in the analysis. The `pilot_df` is used to help inform the outcome correlation and compare the omitted variable bias-based (cross-sample) standardized mean difference. If external data is not available, one may choose to sacrifice a portion of the analysis controls to form the `pilot_df`.
 
 ```{r data_cleaning}
 # load data for estimating earnings from 1978
@@ -138,7 +138,7 @@ The `summary()` function outputs the maximum absolute bias, the number of variab
 
 ```{r summary}
 summary(new_jointVIP, 
-        smd = "OVB-based",
+        smd = "cross-sample",
         use_abs = TRUE,
         bias_tol = 0.01)
 ```
@@ -147,7 +147,7 @@ The `print()` function outputs the variables and its associated bias above the a
 
 ```{r print}
 print(new_jointVIP,
-      smd = "OVB-based",
+      smd = "cross-sample",
       use_abs = TRUE,
       bias_tol = 0.01)
 ```
@@ -192,8 +192,7 @@ optwt <- weightit(treat ~ log_re74 + log_re75,
                   tols = 0.005, include.obj = TRUE)
 # summary(optwt)
 
-optwt_df = ordered_analysis_df[row.names(optwt$covs),
-                               c(covariates, treatment, outcome)]
+optwt_df = ordered_analysis_df[, c(covariates, treatment, outcome)]
 ```
 
 ## Post-matching/weighting assessment with `post_jointVIP` object

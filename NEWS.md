@@ -7,6 +7,14 @@
 
 * Package citation is added with package paper currently hosted on arXiv
 
+* Rebranded OVB curves to unadjusted bias curves
+
+* Rebranded OVB-based SMD to cross-sample SMD
+
+* Rebranded standard SMD to pooled SMD
+
+* Fixed a bug with NA measures
+
 # jointVIP development version on 0.1.1
 
 * Current version hosted on GitHub

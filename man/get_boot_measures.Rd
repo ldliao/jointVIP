@@ -5,12 +5,12 @@
 \title{Calculate bootstrapped variation
 additional tool to help calculate the uncertainty of each variable's bias}
 \usage{
-get_boot_measures(object, smd = "OVB-based", use_abs = TRUE, B = 100)
+get_boot_measures(object, smd = "cross-sample", use_abs = TRUE, B = 100)
 }
 \arguments{
 \item{object}{jointVIP object}
 
-\item{smd}{calculate standardized mean difference either using \code{OVB-based} or \code{standard}}
+\item{smd}{calculate standardized mean difference either using \code{cross-sample} or \code{pooled}}
 
 \item{use_abs}{TRUE (default) for absolute measures}
 

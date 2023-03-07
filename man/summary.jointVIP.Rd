@@ -4,14 +4,14 @@
 \alias{summary.jointVIP}
 \title{Obtains a summary jointVIP object}
 \usage{
-\method{summary}{jointVIP}(object, ..., smd = "OVB-based", use_abs = TRUE, bias_tol = 0.01)
+\method{summary}{jointVIP}(object, ..., smd = "cross-sample", use_abs = TRUE, bias_tol = 0.01)
 }
 \arguments{
 \item{object}{a jointVIP object}
 
 \item{...}{not used}
 
-\item{smd}{specify the standardized mean difference is \code{OVB-based} or \code{standard}}
+\item{smd}{specify the standardized mean difference is \code{cross-sample} or \code{pooled}}
 
 \item{use_abs}{TRUE (default) for absolute measures}
 

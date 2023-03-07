@@ -4,12 +4,12 @@
 \alias{get_post_measures}
 \title{Post-measures data frame to plot post-standardized omitted variable bias}
 \usage{
-get_post_measures(object, smd = "OVB-based")
+get_post_measures(object, smd = "cross-sample")
 }
 \arguments{
 \item{object}{post_jointVIP object}
 
-\item{smd}{calculate standardized mean difference either using \code{OVB-based} or \code{standard}}
+\item{smd}{calculate standardized mean difference either using \code{cross-sample} or \code{pooled}}
 }
 \value{
 measures needed for jointVIP

@@ -77,7 +77,7 @@ test_that("post-related methods work!", {
     plot(
       post_jointVIP,
       plot_title = "Post-match jointVIP",
-      smd = 'OVB-based',
+      smd = 'cross-sample',
       use_abs = FALSE,
       add_post_labs = TRUE,
       post_label_cut_bias = 0.001
@@ -89,7 +89,7 @@ test_that("post-related methods work!", {
     plot(
       post_jointVIP,
       plot_title = "Post-match jointVIP",
-      smd = 'OVB-based',
+      smd = 'cross-sample',
       use_abs = FALSE,
       add_post_labs = FALSE,
       post_label_cut_bias = 0.001
@@ -101,7 +101,7 @@ test_that("post-related methods work!", {
     plot(
       post_jointVIP,
       plot_title = "Post-match jointVIP",
-      smd = 'standard',
+      smd = 'pooled',
       use_abs = FALSE,
       add_post_labs = FALSE,
       post_label_cut_bias = 0.001

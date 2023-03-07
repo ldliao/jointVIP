@@ -5,14 +5,14 @@
 
 <!-- badges: start -->
 
-[![CRAN_Status_Badge](https://img.shields.io/cran/v/jointVIP?color=952100)](https://cran.r-project.org/package=jointVIP)
-[![CRAN_Downloads_Badge](https://cranlogs.r-pkg.org/badges/jointVIP?color=952100)](https://cran.r-project.org/package=jointVIP)
+[![CRAN\_Status\_Badge](https://img.shields.io/cran/v/jointVIP?color=952100)](https://cran.r-project.org/package=jointVIP)
+[![CRAN\_Downloads\_Badge](https://cranlogs.r-pkg.org/badges/jointVIP?color=952100)](https://cran.r-project.org/package=jointVIP)
 <!-- badges: end -->
 
 Joint variable importance plot (jointVIP) visualizes each variable’s
 outcome importance via Pearson’s correlation and treatment importance
-via omitted variable bias-based standardized mean differences. Bias
-curves enable comparisons to support prioritization.
+via cross-sample standardized mean differences. Bias curves enable
+comparisons to support prioritization.
 
 ## Installation
 

@@ -2,11 +2,11 @@
 #' Marginal standardized mean differences and outcome correlation
 #'
 #' @param object jointVIP object
-#' @param smd calculate standardized mean difference either using `OVB-based` or `standard`
+#' @param smd calculate standardized mean difference either using `cross-sample` or `pooled`
 #' @return measures needed for jointVIP
 #' @export
 #' @importFrom stats sd var cor complete.cases
-get_measures = function(object, smd='OVB-based'){
+get_measures = function(object, smd="cross-sample"){
   treated <- object$analysis_df[, object$treatment]
   covariates <- names(object$analysis_df)[!(names(object$analysis_df)
                                           %in% c(object$treatment,
@@ -17,8 +17,8 @@ get_measures = function(object, smd='OVB-based'){
                 mean(x[treated == 1]) - mean(x[treated == 0])
               })
 
-  ovb_denom <- apply(object$pilot_df[,covariates], 2, stats::sd)
-  standard_denom <- apply(object$analysis_df[,covariates], 2,
+  cs_denom <- apply(object$pilot_df[,covariates], 2, stats::sd)
+  pooled_denom <- apply(object$analysis_df[,covariates], 2,
                           function(x){
                             if(stats::var(x[treated == 1]) == 0 &
                                stats::var(x[treated == 0]) == 0){NA}
@@ -33,10 +33,10 @@ get_measures = function(object, smd='OVB-based'){
                          stats::cor(x, object$pilot_df[,object$outcome])
                        })
 
-  if(!smd %in% c('OVB-based', 'standard')){
-    stop("smd options only include `OVB-based` or `standard`")
+  if(!smd %in% c("cross-sample", "pooled")){
+    stop("smd options only include `cross-sample` or `pooled`")
   } else {
-    smd_calc <- if(smd=='OVB-based'){md/ovb_denom}else{md/standard_denom}
+    smd_calc <- if(smd=="cross-sample"){md/cs_denom}else{md/pooled_denom}
   }
 
   measures = data.frame(
@@ -46,7 +46,7 @@ get_measures = function(object, smd='OVB-based'){
   )
 
   if('post_jointVIP' %in% class(object)){
-    denom = if(smd=='OVB-based'){ovb_denom}else{standard_denom}
+    denom = if(smd=="cross-sample"){cs_denom}else{pooled_denom}
     measures = data.frame(
       outcome_cor = outcome_cor,
       std_md = smd_calc,
@@ -105,10 +105,10 @@ check_measures = function(measures){
 #' Post-measures data frame to plot post-standardized omitted variable bias
 #'
 #' @param object post_jointVIP object
-#' @param smd calculate standardized mean difference either using `OVB-based` or `standard`
+#' @param smd calculate standardized mean difference either using `cross-sample` or `pooled`
 #' @return measures needed for jointVIP
 #' @export
-get_post_measures <- function(object, smd = 'OVB-based'){
+get_post_measures <- function(object, smd = "cross-sample"){
   measures <- get_measures(object, smd = smd)
 
   treated <- object$post_analysis_df[, object$treatment]
@@ -136,14 +136,14 @@ get_post_measures <- function(object, smd = 'OVB-based'){
 #' additional tool to help calculate the uncertainty of each variable's bias
 #'
 #' @param object jointVIP object
-#' @param smd calculate standardized mean difference either using `OVB-based` or `standard`
+#' @param smd calculate standardized mean difference either using `cross-sample` or `pooled`
 #' @param use_abs TRUE (default) for absolute measures
 #' @param B 100 (default) for the number of times the bootstrap step wished to run
 #' @return bootstrapped measures needed for bootstrap-jointVIP
 #' @export
 #' @importFrom stats sd var cor complete.cases
 get_boot_measures = function(object,
-                             smd = 'OVB-based',
+                             smd = "cross-sample",
                              use_abs = TRUE,
                              B = 100) {
   if(!is.numeric(B)){

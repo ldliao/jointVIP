@@ -5,12 +5,12 @@
 \title{Prepare data frame to plot standardized omitted variable bias
 Marginal standardized mean differences and outcome correlation}
 \usage{
-get_measures(object, smd = "OVB-based")
+get_measures(object, smd = "cross-sample")
 }
 \arguments{
 \item{object}{jointVIP object}
 
-\item{smd}{calculate standardized mean difference either using \code{OVB-based} or \code{standard}}
+\item{smd}{calculate standardized mean difference either using \code{cross-sample} or \code{pooled}}
 }
 \value{
 measures needed for jointVIP

@@ -7,7 +7,7 @@
 \method{plot}{jointVIP}(
   x,
   ...,
-  smd = "OVB-based",
+  smd = "cross-sample",
   use_abs = TRUE,
   plot_title = "Joint Variable Importance Plot"
 )
@@ -15,9 +15,9 @@
 \arguments{
 \item{x}{a jointVIP object}
 
-\item{...}{custom options: \code{bias_curve_cutoffs}, \code{text_size}, \code{max.overlaps}, \code{label_cut_std_md}, \code{label_cut_outcome_cor}, \code{label_cut_bias}, \code{OVB_curves}, \code{add_var_labs}, \code{expanded_y_curvelab}}
+\item{...}{custom options: \code{bias_curve_cutoffs}, \code{text_size}, \code{max.overlaps}, \code{label_cut_std_md}, \code{label_cut_outcome_cor}, \code{label_cut_bias}, \code{bias_curves}, \code{add_var_labs}, \code{expanded_y_curvelab}}
 
-\item{smd}{specify the standardized mean difference is \code{OVB-based} or \code{standard}}
+\item{smd}{specify the standardized mean difference is \code{cross-sample} or \code{pooled}}
 
 \item{use_abs}{TRUE (default) for absolute measures}
 

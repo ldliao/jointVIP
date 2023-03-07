@@ -7,7 +7,7 @@
 bootstrap.plot(
   x,
   ...,
-  smd = "OVB-based",
+  smd = "cross-sample",
   use_abs = TRUE,
   plot_title = "Joint Variable Importance Plot",
   B = 100
@@ -16,9 +16,9 @@ bootstrap.plot(
 \arguments{
 \item{x}{a jointVIP object}
 
-\item{...}{custom options: \code{bias_curve_cutoffs}, \code{text_size}, \code{max.overlaps}, \code{label_cut_std_md}, \code{label_cut_outcome_cor}, \code{label_cut_bias}, \code{OVB_curves}, \code{add_var_labs}}
+\item{...}{custom options: \code{bias_curve_cutoffs}, \code{text_size}, \code{max.overlaps}, \code{label_cut_std_md}, \code{label_cut_outcome_cor}, \code{label_cut_bias}, \code{bias_curves}, \code{add_var_labs}}
 
-\item{smd}{specify the standardized mean difference is \code{OVB-based} or \code{standard}}
+\item{smd}{specify the standardized mean difference is \code{cross-sample} or \code{pooled}}
 
 \item{use_abs}{TRUE (default) for absolute measures}
 
