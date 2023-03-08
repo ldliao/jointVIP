@@ -54,6 +54,7 @@ get_measures = function(object, smd="cross-sample"){
       pre_sd = denom
     )
   }
+  measures = check_measures(measures)
   return(measures)
 }
 

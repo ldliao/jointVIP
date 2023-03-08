@@ -5,8 +5,8 @@
 
 <!-- badges: start -->
 
-[![CRAN\_Status\_Badge](https://img.shields.io/cran/v/jointVIP?color=952100)](https://cran.r-project.org/package=jointVIP)
-[![CRAN\_Downloads\_Badge](https://cranlogs.r-pkg.org/badges/jointVIP?color=952100)](https://cran.r-project.org/package=jointVIP)
+[![CRAN_Status_Badge](https://img.shields.io/cran/v/jointVIP?color=952100)](https://cran.r-project.org/package=jointVIP)
+[![CRAN_Downloads_Badge](https://cranlogs.r-pkg.org/badges/jointVIP?color=952100)](https://cran.r-project.org/package=jointVIP)
 <!-- badges: end -->
 
 Joint variable importance plot (jointVIP) visualizes each variable’s

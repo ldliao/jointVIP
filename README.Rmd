@@ -11,9 +11,11 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "80%"
 )
+
 devtools::load_all(".")
 library(fastDummies)
 library(dplyr)
+
 ## using brfss example
 brfss <-
   read.csv("http://static.lib.virginia.edu/statlab/materials/data/brfss_2015_sample.csv")

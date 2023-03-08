@@ -17,7 +17,7 @@ devtools::load_all(".")
 
 ## Setting up to demonstrate `jointVIP`
 
-See the `vignette("jointVIP")` to get started on how to use `jointVIP` package. Using the same data sets, this vignette's main purpose is to demonstrate other options that are available. 
+See the Get started with jointVIP vignette to get started on how to use `jointVIP` package. Using the same data sets, this vignette's main purpose is to demonstrate other options that are available. 
 
 ```{r data_cleaning, include=FALSE}
 # load jointVIP package
@@ -114,7 +114,8 @@ print(new_jointVIP,
 ```
 The `summary()` and `print()` functions have the same additional parameters and uses rounded numbers to the third decimal place.
 
-* The `smd` parameter allows only `pooled` or `cross-sample` options. While the cross-sample, stands for omitted variable bias-based, standardized mean difference (SMD) is used as default, a pooled version of the standardized mean difference (standard) can be specified. The `pooled` option is the typical option used in balance tables and Love plots that uses both treated and control variances from the analysis data set to construct the SMD. 
+* The `smd` parameter allows only `pooled` or `cross-sample` options. The cross-sample is based on the analysis sample numerator and pilot sample denominator (equivalent to standardized version of the one-sample omitted variable bias). The cross-sample version is the default. The pooled version of the standardized mean difference (standard) can be specified. The `pooled` option is the standard option used in balance tables and Love plots that uses both treated and control variances from the analysis data set to construct the SMD. Note this `pooled` option applies the same formula to both binary and continuous variables.
+
 * The `use_abs` parameter takes in either TRUE or FALSE, stating if set TRUE (default), the absolute measures are used. Otherwise, signed measured are used if set to be FALSE. 
 * The `bias_tol` parameter is to set the absolute bias tolerance that one wishes to examine at a glance. The default is 0.01. 
 
@@ -129,7 +130,7 @@ Under the hood, `get_measures()` function is used to calculate. If the researche
 plot(new_jointVIP, 
      smd = 'pooled', 
      use_abs = FALSE, 
-     plot_title = 'Signed version of the jointVIP with standard/pooled SMD')
+     plot_title = 'Signed version of the jointVIP with pooled SMD')
 
 plot(new_jointVIP, 
      bias_curve_cutoffs = c(0.005, 0.05, 0.10),
@@ -157,13 +158,13 @@ There are many parameters for the `plot()` option. The `smd` and `use_abs` optio
 * `label_cut_std_md`: standardized mean difference label cutoff, an example would be, if you wish to label all variables with standardized mean difference above 0.1.
 * `label_cut_outcome_cor`: outcome correlation label cutoff, an example would be, if you wish to label all variables with outcome correlation above 0.2.
 * `label_cut_bias`: bias label cutoff, an example would be, if you wish to label all variables with bias difference above 0.1.
-* `bias_curves`: TRUE (default) draws the omitted variable bias curves, FALSE suppresses the bias curves. If `bias_curve_cutoffs` also specified, `OVB_curves` takes priority. This is only used when `smd` is specified as `cross-sample`.
+* `bias_curves`: TRUE (default) draws the omitted variable bias curves, FALSE suppresses the bias curves. If `bias_curve_cutoffs` also specified, `bias_curves` takes priority. This is only used when `smd` is specified as `cross-sample`.
 * `add_var_labs`: TRUE (default) adds variable labels. This suppresses all `label_cut` inputs if specified FALSE.
 * `expanded_y_curvelab`: if one wishes to expand the y-axis, the bias curve labels don't automatically get updated. So, this allows the fine-tuning of the bias-curve labels. Typically this is used under the hood for bootstrap version of the plot. However, user can specify this if they wish. This is only used when `smd` is specified as `cross-sample`.
 
 # Post-analysis parameters examples
 
-The same variables are specified in the `vignette("jointVIP")`; here we choose refined covariate balance matching example to demonstrate the additional parameters. 
+The same variables are specified in the Get started with jointVIP vignette; here we choose a matching example to demonstrate the additional parameters. 
 
 ## Demonstration for additional options in `summary()` and `print()`
 
