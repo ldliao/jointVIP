@@ -12,7 +12,8 @@
 Joint variable importance plot (jointVIP) visualizes each variable’s
 outcome importance via Pearson’s correlation and treatment importance
 via cross-sample standardized mean differences. Bias curves enable
-comparisons to support prioritization.
+comparisons to support variable prioritization among potential
+confounders.
 
 ## Installation
 

@@ -1,14 +1,56 @@
 ## S3 generics and methods
 
 
+#' support function for one-hot encoding
+#'
+#' @param df data.frame object for performing one-hot encoding
+#' @return data.frame object with factor variables one-hot encoded for each level
+one_hot <-
+  function(df) {
+    char_vars <- unlist(lapply(df[, , drop = FALSE], is.character))
+    
+    if(sum(char_vars) > 0){
+      # cat("character variables are converted into factor variables\n")
+      df[sapply(df, is.character)] <-
+        lapply(df[sapply(df, is.character)],
+               as.factor)
+    }
+    fac_vars <- unlist(lapply(df[, , drop = FALSE], is.factor))
+    
+    if (sum(fac_vars) > 0) {
+      # cat("all factor variables are one-hot encoded\n")
+      lvls <- lapply(df[, fac_vars, drop = FALSE], nlevels)
+      
+      # binary
+      for (bin_var in names(lvls)[lvls == 2]) {
+        col_name_first_fac_lvl <-
+          paste0(c(bin_var, levels(df[[bin_var]])[1]), collapse = "_")
+        df[[col_name_first_fac_lvl]] <-
+          ifelse(df[[bin_var]] == levels(df[[bin_var]])[1],
+                 1, 0)
+      }
+      
+      # categorical with multiple levels
+      for (multi_var in names(lvls)[lvls > 2]) {
+        col_names_lvls <- paste(multi_var, levels(df[[multi_var]]), sep = "_")
+        one_hot_mtx <- stats::model.matrix( ~ 0 + df[[multi_var]], df)
+        colnames(one_hot_mtx) <- col_names_lvls
+        df <- cbind(df, one_hot_mtx)
+      }
+    }
+    
+    return(Filter(function(x)
+      ! is.factor(x), df))
+  }
+
 #' create jointVIP object
 #'
 #' This is creates the jointVIP object & check inputs
-#' @param treatment string denoting the name of the treatment variable
-#' @param outcome string denoting the name of the outcome variable
+#' @param treatment string denoting the name of the binary treatment variable, containing numeric values: 0 denoting control and 1 denoting treated
+#' @param outcome string denoting the name of a numeric outcome variable
 #' @param covariates vector of strings or list denoting column names of interest
-#' @param pilot_df data.frame of the pilot data
-#' @param analysis_df data.frame of the analysis data
+#' @param pilot_df data.frame of the pilot data; character and factor variables are automatically one-hot encoded
+#' @param analysis_df data.frame of the analysis data; character and factor variables are automatically one-hot encoded
 #'
 #' @return a jointVIP object
 #'
@@ -64,6 +106,8 @@ create_jointVIP <- function(treatment,
                              all(x %in% 0:1)
                            }))) {
       stop("`treatment` must be binary: 0 (control) and 1 (treated)")
+    }  else if ((!is.numeric(pilot_df[,outcome])) & (!is.numeric(analysis_df[,outcome]))) {
+      stop("`outcome` must be denoting a numeric variable")
     }
     if (var(pilot_df[, outcome]) == 0) {
       stop("`pilot_df` outcome must have some variation")
@@ -72,6 +116,8 @@ create_jointVIP <- function(treatment,
       stop("`pilot_df` should only be controls only")
     }
   }
+  
+
   # construction function
   new_jointVIP <- function(treatment,
                            outcome,
@@ -83,8 +129,24 @@ create_jointVIP <- function(treatment,
                 covariates,
                 pilot_df,
                 analysis_df)
+    
     pilot_df = pilot_df[, c(treatment, outcome, covariates)]
     analysis_df = analysis_df[, c(treatment, outcome, covariates)]
+    
+    ## one hot encoding
+    pilot_df = one_hot(pilot_df)
+    analysis_df = one_hot(analysis_df)
+    
+    if(!identical(names(pilot_df[, -c(1, 2)]),names(analysis_df[, -c(1, 2)]))){
+      full_covs = c(names(pilot_df[, -c(1, 2)]),names(analysis_df[, -c(1, 2)]))
+      in_dat = duplicated(full_covs) | duplicated(full_covs, fromLast = TRUE)
+      covs = unique(full_covs[in_dat])
+      cat("dropping some levels due to mismatch after one-hot encoding\nkeeping variables that exist in both dataframes")
+      pilot_df = pilot_df[,c(treatment, outcome, covs)]
+      analysis_df = analysis_df[,c(treatment, outcome, covs)]
+      covariates = covs
+    }
+    
     structure(
       list(
         treatment = treatment,
@@ -152,6 +214,9 @@ create_post_jointVIP <- function(object,
   } else if (!"data.frame" %in% class(post_analysis_df)) {
     stop("`post_analysis_df` must be a data.frame class")
   }
+  
+  post_analysis_df = one_hot(post_analysis_df)
+  
   if (!setequal(names(post_analysis_df), names(object$analysis_df))) {
     stop(
       "`post_analysis_df` must have the same covariates, treatment, and outcome in `analysis_df`"

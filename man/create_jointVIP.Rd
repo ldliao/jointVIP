@@ -7,15 +7,15 @@
 create_jointVIP(treatment, outcome, covariates, pilot_df, analysis_df)
 }
 \arguments{
-\item{treatment}{string denoting the name of the treatment variable}
+\item{treatment}{string denoting the name of the binary treatment variable, containing numeric values: 0 denoting control and 1 denoting treated}
 
-\item{outcome}{string denoting the name of the outcome variable}
+\item{outcome}{string denoting the name of a numeric outcome variable}
 
 \item{covariates}{vector of strings or list denoting column names of interest}
 
-\item{pilot_df}{data.frame of the pilot data}
+\item{pilot_df}{data.frame of the pilot data; character and factor variables are automatically one-hot encoded}
 
-\item{analysis_df}{data.frame of the analysis data}
+\item{analysis_df}{data.frame of the analysis data; character and factor variables are automatically one-hot encoded}
 }
 \value{
 a jointVIP object

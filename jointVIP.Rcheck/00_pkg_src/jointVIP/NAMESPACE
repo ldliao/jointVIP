@@ -18,3 +18,4 @@ importFrom(stats,complete.cases)
 importFrom(stats,cor)
 importFrom(stats,sd)
 importFrom(stats,var)
+

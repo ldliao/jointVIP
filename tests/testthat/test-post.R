@@ -108,4 +108,25 @@ test_that("post-related methods work!", {
     )$layers
   ),
   3)
+  
+  post_data[['hi']] <- sample(c('A','C'), 50, TRUE)
+  expect_error(create_post_jointVIP(new_jointVIP, post_data, wts = rep(0, nrow(post_data))),
+               fixed = TRUE,
+               "`post_analysis_df` must have the same covariates, treatment, and outcome in `analysis_df`")
+  
+  
+  pilot_df[['hi']] <- sample(c('A','C'), nrow(pilot_df), TRUE)
+  analysis_df[['hi']] <- sample(c('A','C'), nrow(analysis_df), TRUE)
+  treatment = "trt"
+  outcome = "out"
+  covariates = names(analysis_df)[!names(analysis_df)
+                                  %in% c(treatment, outcome)]
+  new_jointVIP <- create_jointVIP(treatment,
+                                  outcome,
+                                  covariates,
+                                  pilot_df,
+                                  analysis_df)
+  expect_no_error(create_post_jointVIP(new_jointVIP, 
+                                       post_data),
+  )
 })
