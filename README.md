@@ -101,3 +101,10 @@ importance for adjustment than `age_25to34`. Although `race_black` and
 `age_over65` have similar absolute standardized mean differences (0.322
 and 0.333, respectively), `age_over65` is more important to adjust for
 since its highly correlated with the outcome.
+
+## Acknowledgement
+
+Ford, C. 2018. “Getting Started with Matching Methods.” UVA Library
+StatLab.
+<https://library.virginia.edu/data/articles/getting-started-with-matching-methods/>
+(accessed Jan 29, 2024).
