@@ -104,7 +104,8 @@ since its highly correlated with the outcome.
 
 ## Acknowledgement
 
-Ford, C. 2018. “Getting Started with Matching Methods.” UVA Library
+- Centers for Disease Control and Prevention (CDC). Behavioral Risk Factor Surveillance System Survey Questionnaire. Atlanta, Georgia: U.S. Department of Health and Human Services, Centers for Disease Control and Prevention, 2015.
+- Ford, C. 2018. “Getting Started with Matching Methods.” UVA Library
 StatLab.
 <https://library.virginia.edu/data/articles/getting-started-with-matching-methods/>
 (accessed Jan 29, 2024).
