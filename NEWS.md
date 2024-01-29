@@ -1,6 +1,14 @@
 `jointVIP` News and Updates
 ======
 
+# jointVIP development version on 0.1.2
+
+* Made documents more explicit on the user-inputs and edits for clarity
+
+* Added reviewer's suggestions on contribution guidelines
+
+* Added one-hot encoding to process data frames
+
 # jointVIP 0.1.2
 
 * Post-adjusted estimation for weights are now updated accordingly
