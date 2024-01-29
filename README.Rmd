@@ -110,3 +110,6 @@ plot(brfss_jointVIP)
 ```
 
 In this example, `age_over65` and `average_drinks` are two most important variables to adjust. At a bias tolerance of 0.01, 3 variables: `age_over65`, `average_drinks`, and `age_25to34` are above the tolerance threshold. Moreover, `age_over65` and `average_drinks` are of higher importance for adjustment than `age_25to34`. Although `race_black` and `age_over65` have similar absolute standardized mean differences (0.322 and 0.333, respectively), `age_over65` is more important to adjust for since its highly correlated with the outcome.
+
+## Acknowledgement
+Ford, C. 2018. “Getting Started with Matching Methods.” UVA Library StatLab. https://library.virginia.edu/data/articles/getting-started-with-matching-methods/ (accessed Jan 29, 2024).
