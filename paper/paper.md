@@ -30,7 +30,7 @@ affiliations:
 
 # Summary
  
-Credible causal effect estimation requires treated subjects and controls to be otherwise similar. In observational settings, such as analysis of electronic health records, this is not guaranteed. Investigators must balance background variables so they are similar in treated and control groups. Common approaches include matching (grouping individuals into small homogeneous sets) or weighting (upweighting or downweighting individuals) to create similar profiles. However, creating identical distributions may be impossible if many variables are measured, and not all variables are of equal importance to the outcome. The joint variable importance plot (`jointVIP`) package to guides decisions about which variables to prioritize for adjustment by quantifying and visualizing each variable's relationship to both treatment and outcome.
+Credible causal effect estimation requires treated subjects and controls to be otherwise similar. In observational settings, such as analysis of electronic health records, this is not guaranteed. Investigators must balance background variables so they are similar in treated and control groups. Common approaches include matching (grouping individuals into small homogeneous sets) or weighting (upweighting or downweighting individuals) to create similar profiles. However, creating identical distributions may be impossible if many variables are measured, and not all variables are of equal importance to the outcome. The joint variable importance plot (`jointVIP`) package guides decisions about which variables to prioritize for adjustment by quantifying and visualizing each variable's relationship to both treatment and outcome.
 
 # Statement of need
 
@@ -42,7 +42,7 @@ To improve observational study design, we propose the joint variable importance 
 
 # Development
 
-The `jointVIP` package was created in the R programming language [@cran]. The package uses the S3 object system and leverages system generic functions, `print()`, `summary()`, and `plot()`. Plotting the jointVIP object outputs a plot of the `ggplot2` class. An interactive R Shiny application, available online at https://ldliao.shinyapps.io/jointVIP/, showcases the package. 
+The `jointVIP` package was created in the R programming language [@cran]. The package creates a new S3 class called "jointvip" and uses S3 generic to dispatch `print()`, `summary()`, and `plot()`. Plotting the jointVIP object outputs a plot of the `ggplot2` class. An interactive R Shiny application, available online at https://ldliao.shinyapps.io/jointVIP/, showcases the package. 
 
 # Usage
 The `jointVIP` package is available from the Comprehensive R Archive Network [CRAN](https://CRAN.R-project.org/package=jointVIP) and [GitHub](https://github.com/ldliao/jointVIP). 
@@ -59,7 +59,7 @@ library(jointVIP)
 
 To create an object of the jointVIP class, the user needs to supply two datasets and specify the treatment, outcome, and background variable names. Two processed datasets,“pilot” and “analysis” samples, are in the form of data.frames. The analysis sample contains both treated and control groups. The pilot sample contains only control individuals, and they are excluded from the subsequent analysis stage. The treatment variable must be binary: 0 specified for the control group and 1 specified for the treated group. Background variables are measured before both treatment and outcome. The outcome of interest can be either binary or continuous.  
 
-We demonstrate the utility of this package to investigate the effect of a job training program on earnings [@causaldata; @dehejia1999causal; @lalonde1986evaluating].  The treatment is whether the individual is selected for the job training program. The outcomeis earnings in 1978. Covariates are age, education, race/ethnicity, and previous earnings in 1974 and 1975.  After [preprocessing both dataset and log-transforming the earnings,](https://cran.rstudio.com/web/packages/jointVIP/vignettes/jointVIP.html), we use the `create_jointVIP()` function to create a jointVIP object stored as *new_jointVIP*. 
+We demonstrate the utility of this package to investigate the effect of a job training program on earnings [@causaldata; @dehejia1999causal; @lalonde1986evaluating].  The treatment is whether the individual is selected for the job training program. The outcome is earnings in 1978. Covariates are age, education, race/ethnicity, and previous earnings in 1974 and 1975.  After [preprocessing both dataset and log-transforming the earnings,](https://cran.rstudio.com/web/packages/jointVIP/vignettes/jointVIP.html), we use the `create_jointVIP()` function to create a jointVIP object stored as *new_jointVIP*. 
 
 
 
