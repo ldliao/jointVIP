@@ -1,6 +1,10 @@
 # MIT License
 
+<<<<<<< HEAD
 Copyright (c) 2024 jointVIP authors
+=======
+Copyright (c) 2022-24 Lauren D. Liao
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

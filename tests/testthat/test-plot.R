@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 test_that("jointVIP plot basic input checks", {
   set.seed(1234567891)
   data <- data.frame(year = rnorm(50, 200, 5),
@@ -36,6 +37,10 @@ test_that("jointVIP plot basic input checks", {
 
 
 test_that("jointVIP plot layer checks", {
+=======
+library(testthat)
+test_that("plot.jointVIP() is able to show the desired plot", {
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
   set.seed(1234567891)
   data <- data.frame(year = rnorm(50, 200, 5),
                      gdpPercap = runif(50, 100, 1000),
@@ -74,6 +79,7 @@ test_that("jointVIP plot layer checks", {
                       "stat_identity: na.rm = FALSE\n",
                       "position_identity "))
 
+<<<<<<< HEAD
   expect_equal(length(p1$layers), 8)
   expect_equal(length(plot(new_jointVIP, smd = 'pooled')$layers), 2)
   expect_equal(length(plot(new_jointVIP,
@@ -111,6 +117,8 @@ test_that("jointVIP label checks", {
   p2 <- plot(new_jointVIP, use_abs = FALSE)
   p3 <- plot(new_jointVIP, smd = 'pooled')
 
+=======
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
   expect_equal("jointVIP for out", p1$labels$title)
   expect_equal("Joint Variable Importance Plot", p2$labels$title)
   expect_equal("cross-sample SMD", p1$labels$subtitle)
@@ -119,6 +127,7 @@ test_that("jointVIP label checks", {
   expect_equal("pooled SMD", p3$labels$subtitle)
   expect_equal("Standardized Mean Difference", p2$labels$x)
   expect_equal("Outcome Correlation", p2$labels$y)
+<<<<<<< HEAD
 })
 
 test_that("jointVIP input expect errors", {
@@ -146,6 +155,13 @@ test_that("jointVIP input expect errors", {
              plot_title = paste0("jointVIP for ", outcome))
   p2 <- plot(new_jointVIP, use_abs = FALSE)
   p3 <- plot(new_jointVIP, smd = 'pooled')
+=======
+  expect_equal(length(p1$layers), 8)
+  expect_equal(length(plot(new_jointVIP, smd = 'pooled')$layers), 2)
+  expect_equal(length(plot(new_jointVIP,
+                           smd = 'cross-sample',
+                           bias_curve_cutoffs = c(0.05, 0.07))$layers), 5)
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 
   expect_error(plot(new_jointVIP, smd = 'blah'), fixed=TRUE,
                "smd options only include `cross-sample` or `pooled`")
@@ -155,7 +171,11 @@ test_that("jointVIP input expect errors", {
                "`bias_curve_cutoffs` must be numeric")
   expect_warning(plot(new_jointVIP, bias_curve_cutoffs = c(0,0.1,0.2)), fixed=TRUE,
                  "0 in the `bias_curve_cutoffs` will not be plotted")
+<<<<<<< HEAD
 
+=======
+  expect_equal(length(plot(new_jointVIP, bias_curves = FALSE)$layers), 2)
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
   expect_error(plot(new_jointVIP, bias_curves = "a"), fixed=TRUE,
                "`bias_curves` can only be set as TRUE or FALSE")
   expect_error(plot(new_jointVIP, add_var_labs = "a"), fixed=TRUE,
@@ -164,6 +184,11 @@ test_that("jointVIP input expect errors", {
                "`bias_curves` can only be set as TRUE or FALSE")
   expect_error(plot(new_jointVIP, add_var_labs = 1), fixed=TRUE,
                "`add_var_labs` can only be set as TRUE or FALSE")
+<<<<<<< HEAD
+=======
+  expect_equal(length(plot(new_jointVIP, add_var_labs = FALSE)$layers),
+               length(plot(new_jointVIP, add_var_labs = TRUE)$layers)-1)
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 
   expect_error(plot(new_jointVIP, max.overlaps = 0), fixed=TRUE,
                "`max.overlaps` must be a positive numeric")
@@ -196,6 +221,7 @@ test_that("jointVIP input expect errors", {
   expect_warning(capture_output(plot(new_jointVIP, "standard")), fixed = TRUE,
                  "anything passed in ... must be named or it'll be ignored")
 })
+<<<<<<< HEAD
 
 test_that("post_jointVIP basic checks", {
   set.seed(1234567891)
@@ -397,3 +423,5 @@ test_that("jointVIP bootstrap plot checks", {
   expect_error(bootstrap.plot(new_jointVIP, B = 0),fixed=TRUE,
                "B is too small please make it a larger number")
 })
+=======
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5

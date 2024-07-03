@@ -1,0 +1,17 @@
+add_OVB_curves	add_OVB_curves
+add_variable_labels	add_variable_labels
+bootstrap.plot	bootstrap.plot
+ceiling_dec	ceiling_dec
+check_measures	check_measures
+create_jointVIP	create_jointVIP
+create_post_jointVIP	create_post_jointVIP
+floor_dec	floor_dec
+get_boot_measures	get_boot_measures
+get_measures	get_measures
+get_post_measures	get_post_measures
+plot.jointVIP	plot.jointVIP
+plot.post_jointVIP	plot.post_jointVIP
+print.jointVIP	print.jointVIP
+print.post_jointVIP	print.post_jointVIP
+summary.jointVIP	summary.jointVIP
+summary.post_jointVIP	summary.post_jointVIP

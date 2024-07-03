@@ -46,6 +46,7 @@ With the cleaned data, you can specify details in the function
 library(jointVIP)
 ## basic example code
 
+<<<<<<< HEAD
 library(dplyr)
 #> 
 #> Attaching package: 'dplyr'
@@ -68,20 +69,35 @@ data('brfss', package='jointVIP')
 treatment = 'smoke'
 outcome = 'COPD'
 covariates = names(brfss)[!names(brfss) %in% c(treatment, outcome)]
+=======
+treatment = 'smoke'
+outcome = 'COPD'
+covariates = names(df)[!names(df) %in% c(treatment, outcome)]
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 
 ## select the pilot sample from random portion
 ## pilot data here are considered as 'external controls'
 ## can be a separate dataset; should be chosen with caution
 set.seed(1234895)
 pilot_prop = 0.2
+<<<<<<< HEAD
 pilot_sample_num = sample(which(brfss %>% pull(treatment) == 0),
                           length(which(brfss %>% pull(treatment) == 0)) *
+=======
+pilot_sample_num = sample(which(df %>% pull(treatment) == 0),
+                          length(which(df %>% pull(treatment) == 0)) *
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
                           pilot_prop)
 
 ## set up pilot and analysis data
 ## we want to make sure these two data are non-overlapping
+<<<<<<< HEAD
 pilot_df = brfss[pilot_sample_num, ]
 analysis_df = brfss[-pilot_sample_num, ]
+=======
+pilot_df = df[pilot_sample_num, ]
+analysis_df = df[-pilot_sample_num, ]
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 
 ## minimal example
 brfss_jointVIP = create_jointVIP(treatment = treatment,
@@ -99,9 +115,12 @@ summary(brfss_jointVIP)
 #> Max absolute bias is 0.032
 #> 3 variables are above the desired 0.01 absolute bias tolerance
 #> 13 variables can be plotted
+<<<<<<< HEAD
 ```
 
 ``` r
+=======
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 print(brfss_jointVIP)
 #>                 bias
 #> age_over65     0.032
@@ -126,7 +145,12 @@ since its highly correlated with the outcome.
 
 ## Acknowledgement
 
+<<<<<<< HEAD
 Ford, C. 2018. “Getting Started with Matching Methods.” UVA Library
+=======
+- Centers for Disease Control and Prevention (CDC). Behavioral Risk Factor Surveillance System Survey Questionnaire. Atlanta, Georgia: U.S. Department of Health and Human Services, Centers for Disease Control and Prevention, 2015.
+- Ford, C. 2018. “Getting Started with Matching Methods.” UVA Library
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 StatLab.
 <https://library.virginia.edu/data/articles/getting-started-with-matching-methods/>
 (accessed Jan 29, 2024).

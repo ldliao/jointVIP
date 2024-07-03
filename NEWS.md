@@ -9,8 +9,11 @@
 
 * Added one-hot encoding to process data frames
 
+<<<<<<< HEAD
 * Reorganized code as per reviewer's suggestion
 
+=======
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 # jointVIP 0.1.2
 
 * Post-adjusted estimation for weights are now updated accordingly
