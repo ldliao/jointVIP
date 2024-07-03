@@ -1,5 +1,10 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 test_that("jointVIP print check", {
+=======
+library(testthat)
+test_that("print.jointVIP() is able to show the desired print", {
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 =======
 library(testthat)
 test_that("print.jointVIP() is able to show the desired print", {
@@ -28,9 +33,12 @@ test_that("print.jointVIP() is able to show the desired print", {
 
   expect_output(print(new_jointVIP))
 <<<<<<< HEAD
+<<<<<<< HEAD
   expect_output(print(new_jointVIP, use_abs = FALSE))
   expect_true(all(as.numeric(unlist(stringr::str_extract_all(capture.output(print(new_jointVIP, use_abs = TRUE)), "\\d+\\.\\d+"))) > 0))
 
+=======
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 =======
 >>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
   expect_warning(capture_output(print(new_jointVIP, "standard")), fixed = TRUE,
@@ -38,6 +46,7 @@ test_that("print.jointVIP() is able to show the desired print", {
   expect_equal(capture_output(print(new_jointVIP)),
                "           bias\npop       0.765\nyear      0.211\ngdpPercap 0.152\nlifeExp   0.032")
 })
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 test_that("post_jointVIP print check", {
@@ -85,5 +94,7 @@ test_that("post_jointVIP print check", {
   expect_equal(capture_output(print(post_jointVIP)),
                "           bias post_bias\npop       0.166     0.091\ngdpPercap 0.012     0.111")
 })
+=======
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 =======
 >>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5

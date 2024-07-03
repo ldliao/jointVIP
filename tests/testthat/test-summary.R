@@ -1,5 +1,10 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 test_that("jointVIP summary check", {
+=======
+library(testthat)
+test_that("summary.jointVIP() is able to show the desired summary", {
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 =======
 library(testthat)
 test_that("summary.jointVIP() is able to show the desired summary", {
@@ -27,6 +32,7 @@ test_that("summary.jointVIP() is able to show the desired summary", {
                                  analysis_df)
 
   expect_output(summary(new_jointVIP))
+<<<<<<< HEAD
 <<<<<<< HEAD
   expect_output(summary(new_jointVIP, use_abs = FALSE))
   expect_equal(capture_output(summary(new_jointVIP)),
@@ -83,11 +89,16 @@ test_that("post_jointVIP summary check", {
   expect_output(summary(post_jointVIP))
   expect_output(summary(post_jointVIP, use_abs = FALSE))
 =======
+=======
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
   expect_equal(capture_output(summary(new_jointVIP)),
                  paste0("Max absolute bias is 0.765\n4 variables",
                   " are above the desired 0.01 absolute bias tolerance\n4",
                   " variables can be plotted"))
   expect_warning(capture_output(summary(new_jointVIP, "standard")), fixed = TRUE,
                  "anything passed in ... must be named or it'll be ignored")
+<<<<<<< HEAD
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
+=======
 >>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 })

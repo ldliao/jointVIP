@@ -14,7 +14,10 @@ knitr::opts_chunk$set(
 
 devtools::load_all(".")
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 library(fastDummies)
 library(dplyr)
 
@@ -41,6 +44,9 @@ names(df) <- c("COPD", "smoke", "sex", "weight",
                "race_hispanic", "race_other", "age_18to24",
                "age_25to34", "age_35to44", "age_45to54",
                "age_55to64", "age_over65")
+<<<<<<< HEAD
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
+=======
 >>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 ```
 
@@ -75,6 +81,7 @@ library(jointVIP)
 ## basic example code
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 library(dplyr)
 
 # load data
@@ -88,6 +95,11 @@ treatment = 'smoke'
 outcome = 'COPD'
 covariates = names(df)[!names(df) %in% c(treatment, outcome)]
 >>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
+=======
+treatment = 'smoke'
+outcome = 'COPD'
+covariates = names(df)[!names(df) %in% c(treatment, outcome)]
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 
 ## select the pilot sample from random portion
 ## pilot data here are considered as 'external controls'
@@ -95,8 +107,13 @@ covariates = names(df)[!names(df) %in% c(treatment, outcome)]
 set.seed(1234895)
 pilot_prop = 0.2
 <<<<<<< HEAD
+<<<<<<< HEAD
 pilot_sample_num = sample(which(brfss %>% pull(treatment) == 0),
                           length(which(brfss %>% pull(treatment) == 0)) *
+=======
+pilot_sample_num = sample(which(df %>% pull(treatment) == 0),
+                          length(which(df %>% pull(treatment) == 0)) *
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 =======
 pilot_sample_num = sample(which(df %>% pull(treatment) == 0),
                           length(which(df %>% pull(treatment) == 0)) *
@@ -106,8 +123,13 @@ pilot_sample_num = sample(which(df %>% pull(treatment) == 0),
 ## set up pilot and analysis data
 ## we want to make sure these two data are non-overlapping
 <<<<<<< HEAD
+<<<<<<< HEAD
 pilot_df = brfss[pilot_sample_num, ]
 analysis_df = brfss[-pilot_sample_num, ]
+=======
+pilot_df = df[pilot_sample_num, ]
+analysis_df = df[-pilot_sample_num, ]
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 =======
 pilot_df = df[pilot_sample_num, ]
 analysis_df = df[-pilot_sample_num, ]

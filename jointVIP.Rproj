@@ -1,8 +1,13 @@
 Version: 1.0
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 RestoreWorkspace: No
 SaveWorkspace: No
+=======
+RestoreWorkspace: Default
+SaveWorkspace: Default
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 =======
 RestoreWorkspace: Default
 SaveWorkspace: Default
@@ -18,6 +23,7 @@ RnwWeave: Sweave
 LaTeX: pdfLaTeX
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 AutoAppendNewline: Yes
 StripTrailingWhitespace: Yes
 LineEndingConversion: Posix
@@ -26,6 +32,11 @@ BuildType: Package
 PackageUseDevtools: Yes
 PackageInstallArgs: --no-multiarch --with-keep.source
 PackageRoxygenize: rd,collate,namespace
+=======
+BuildType: Package
+PackageUseDevtools: Yes
+PackageInstallArgs: --no-multiarch --with-keep.source
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 =======
 BuildType: Package
 PackageUseDevtools: Yes

@@ -1,5 +1,10 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 test_that("create_jointVIP function creates a valid jointVIP S3 object", {
+=======
+library(testthat)
+test_that("create_jointVIP() creates a valid JointVIP object", {
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 =======
 library(testthat)
 test_that("create_jointVIP() creates a valid JointVIP object", {
@@ -31,6 +36,7 @@ test_that("create_jointVIP() creates a valid JointVIP object", {
   expect_s3_class(new_jointVIP, "jointVIP")
   expect_equal(dim(new_jointVIP$pilot_df), c(4,8))
 <<<<<<< HEAD
+<<<<<<< HEAD
 })
 
 test_that("error arise for invalid construction", {
@@ -60,6 +66,8 @@ test_that("error arise for invalid construction", {
 
 =======
 >>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
+=======
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
   expect_error(create_jointVIP(treatment,
                                outcome,
                                covariates,
@@ -81,6 +89,7 @@ test_that("error arise for invalid construction", {
                                analysis_df),
                "`covariates` must be in both pilot_df and analysis_df",
                fixed=TRUE)
+<<<<<<< HEAD
 <<<<<<< HEAD
 
   expect_error(create_jointVIP(treatment,
@@ -152,6 +161,11 @@ test_that("factored and numeric data are set correctly", {
   expect_true(all(c("metro_N", "three_lvl_fac_A") %in% names(new_jointVIP$pilot_df)))
   
 >>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
+=======
+  expect_equal(new_jointVIP$pilot_df$metro_N, as.numeric(pilot_df$metro == 'N'))
+  expect_true(all(c("metro_N", "three_lvl_fac_A") %in% names(new_jointVIP$pilot_df)))
+  
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
   data[['out']] = as.factor(data[['out']])
   pilot_sample_num = sample(which(data$trt == 0),
                             length(which(data$trt == 0)) *
@@ -164,6 +178,7 @@ test_that("factored and numeric data are set correctly", {
                                   %in% c(treatment, outcome)]
   expect_error(create_jointVIP(treatment,
 <<<<<<< HEAD
+<<<<<<< HEAD
                                outcome,
                                covariates,
                                pilot_df,
@@ -172,6 +187,8 @@ test_that("factored and numeric data are set correctly", {
                fixed=TRUE)
 })
 =======
+=======
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
                                               outcome,
                                               covariates,
                                               pilot_df,
@@ -181,4 +198,7 @@ test_that("factored and numeric data are set correctly", {
   
 })
 
+<<<<<<< HEAD
+>>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
+=======
 >>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
