@@ -1,0 +1,63 @@
+Package: jointVIP
+Title: Prioritize Variables with Joint Variable Importance Plot in Observational Study Design
+Version: 0.1.2.001
+Authors@R: c(person(given = "Lauren D.",
+           family = "Liao",
+           role = c("aut", "cre"),
+           email = "ldliao@berkeley.edu",
+           comment = c(ORCID = "0000-0003-4697-6909")),
+           person(given = "Samuel D.",
+           family = "Pimentel",
+           role = c("aut"),
+           email = "spi@berkeley.edu",
+           comment = c(ORCID = "0000-0002-0409-6586")))
+Description: In the observational study design stage, matching/weighting methods are
+    conducted. However, when many background variables are present, the decision as to 
+    which variables to prioritize for matching/weighting is not trivial. Thus, the 
+    joint treatment-outcome variable importance plots are created to guide variable
+    selection. The joint variable importance plots enhance variable comparisons via
+    unadjusted bias curves derived under the omitted variable bias framework. The 
+    plots translate variable importance into recommended values for tuning parameters 
+    in existing methods. Post-matching and/or weighting plots can also be used to 
+    visualize and assess the quality of the observational study design. The method 
+    motivation and derivation is presented in "Prioritizing Variables for Observational 
+    Study Design using the Joint Variable Importance Plot" by Liao et al. (2024) 
+    <doi:10.1080/00031305.2024.2303419>. See the package paper by Liao and Pimentel 
+    (2023) <arxiv:2302.10367> for a beginner friendly user introduction.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+Depends:
+    R (>= 3.3)
+Suggests: 
+    causaldata,
+    devtools (>= 2.4.5),
+    knitr,
+    MatchIt,
+    WeightIt,
+    optmatch,
+    optweight (>= 0.2.4),
+    rmarkdown (>= 2.18),
+    testthat (>= 3.0.0),
+    stringr
+Config/testthat/edition: 3
+Collate: 
+    'data.R'
+    'support.R'
+    'check_measures.R'
+    'create_jointVIP.R'
+    'create_post_jointVIP.R'
+    'get_measures.R'
+    'get_post_measures.R'
+    'get_boot_measures.R'
+    'plot.R'
+    'print.R'
+    'summary.R'
+Imports: 
+    ggrepel (>= 0.9.2),
+    ggplot2 (>= 3.4.0)
+VignetteBuilder: knitr
+URL: https://github.com/ldliao/jointVIP
+BugReports: https://github.com/ldliao/jointVIP/issues
+LazyData: true
