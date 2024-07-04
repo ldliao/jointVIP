@@ -1,7 +1,7 @@
 `jointVIP` News and Updates
 ======
 
-# jointVIP 0.1.2.001
+## jointVIP development version 0.1.2.001
 
 * Made documents more explicit on the user-inputs and edits for clarity
 
@@ -11,7 +11,7 @@
 
 * Reorganized code as per reviewer's suggestion
 
-# jointVIP 0.1.2
+## jointVIP 0.1.2
 
 * Post-adjusted estimation for weights are now updated accordingly
 
@@ -25,7 +25,7 @@
 
 * Fixed a bug with NA measures
 
-# jointVIP 0.1.1.001
+## jointVIP development version 0.1.1.001
 
 * Current version hosted on GitHub
 
@@ -33,7 +33,7 @@
 
 * Currently working on adding weighted version of SMD for easier post-adjusted estimation for weights
 
-# jointVIP 0.1.1
+## jointVIP 0.1.1
 
 * Added logo, installation, status badges
 
