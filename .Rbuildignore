@@ -11,3 +11,6 @@
 ^README\.Rmd$
 >>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 ^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

@@ -58,6 +58,6 @@ Imports:
     ggrepel (>= 0.9.2),
     ggplot2 (>= 3.4.0)
 VignetteBuilder: knitr
-URL: https://github.com/ldliao/jointVIP
+URL: https://github.com/ldliao/jointVIP, https://ldliao.github.io/jointVIP/
 BugReports: https://github.com/ldliao/jointVIP/issues
 LazyData: true
