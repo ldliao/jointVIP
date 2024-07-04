@@ -1,14 +1,6 @@
 Package: jointVIP
 Title: Prioritize Variables with Joint Variable Importance Plot in Observational Study Design
-<<<<<<< HEAD
-<<<<<<< HEAD
 Version: 0.1.2.001
-=======
-Version: 0.1.2
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
-=======
-Version: 0.1.2
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 Authors@R: c(person(given = "Lauren D.",
            family = "Liao",
            role = c("aut", "cre"),
@@ -28,8 +20,6 @@ Description: In the observational study design stage, matching/weighting methods
     plots translate variable importance into recommended values for tuning parameters 
     in existing methods. Post-matching and/or weighting plots can also be used to 
     visualize and assess the quality of the observational study design. The method 
-<<<<<<< HEAD
-<<<<<<< HEAD
     motivation and derivation is presented in "Prioritizing Variables for Observational 
     Study Design using the Joint Variable Importance Plot" by Liao et al. (2024) 
     <doi:10.1080/00031305.2024.2303419>. See the package paper by Liao and Pimentel 
@@ -38,21 +28,6 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
-=======
-=======
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
-    motivation and derivation is presented in "Using Joint Variable Importance Plots 
-    to Prioritize Variables in Assessing the Impact of Glyburide on Adverse Birth 
-    Outcomes" by Liao et al. (2023) <arXiv:2301.09754>. See the package paper by Liao 
-    and Pimentel (2023) <arxiv:2302.10367> for a beginner friendly user introduction.
-License: MIT + file LICENSE
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
-<<<<<<< HEAD
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
-=======
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 Depends:
     R (>= 3.3)
 Suggests: 
@@ -64,8 +39,6 @@ Suggests:
     optmatch,
     optweight (>= 0.2.4),
     rmarkdown (>= 2.18),
-<<<<<<< HEAD
-<<<<<<< HEAD
     testthat (>= 3.0.0),
     stringr
 Config/testthat/edition: 3
@@ -81,28 +54,10 @@ Collate:
     'plot.R'
     'print.R'
     'summary.R'
-=======
-=======
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
-    testthat (>= 3.0.0)
-Config/testthat/edition: 3
-Collate: 
-    'measures.R'
-    'general.R'
-<<<<<<< HEAD
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
-=======
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 Imports: 
     ggrepel (>= 0.9.2),
     ggplot2 (>= 3.4.0)
 VignetteBuilder: knitr
 URL: https://github.com/ldliao/jointVIP
 BugReports: https://github.com/ldliao/jointVIP/issues
-<<<<<<< HEAD
-<<<<<<< HEAD
 LazyData: true
-=======
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
-=======
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5

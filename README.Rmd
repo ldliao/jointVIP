@@ -13,41 +13,6 @@ knitr::opts_chunk$set(
 )
 
 devtools::load_all(".")
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
-library(fastDummies)
-library(dplyr)
-
-## using brfss example
-brfss <-
-  read.csv("http://static.lib.virginia.edu/statlab/materials/data/brfss_2015_sample.csv")
-## data cleaning
-brfss$COPD = ifelse(factor(brfss$COPD) == 'No', 0, 1) # reference is no
-brfss$RACE = factor(brfss$RACE)
-brfss$RACE <-
-  relevel(brfss$RACE, ref = 'White') # reference is majority in data
-brfss$AGE = factor(brfss$AGE)
-brfss$SEX = ifelse(factor(brfss$SEX) == 'Female', 0, 1) # reference is majority in data
-## dichotimize the variables
-brfss = dummy_cols(brfss)
-df = (brfss[, !(names(brfss) %in% c("RACE", "AGE"))])
-outcome = 'COPD'
-treatment = 'SMOKE'
-covariates = names(brfss)[!names(brfss) %in% c(outcome, treatment)]
-## cleaned data
-df = (brfss[, !(names(brfss) %in% c("RACE", "AGE"))])
-names(df) <- c("COPD", "smoke", "sex", "weight",
-               "average_drinks", "race_white", "race_black",
-               "race_hispanic", "race_other", "age_18to24",
-               "age_25to34", "age_35to44", "age_45to54",
-               "age_55to64", "age_over65")
-<<<<<<< HEAD
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
-=======
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 ```
 
 # Joint variable importance plot <img src="man/figures/jointVIP_logo.png" align="right" width="150"/>
@@ -79,9 +44,6 @@ With the cleaned data, you can specify details in the function `create_jointVIP(
 ```{r example}
 library(jointVIP)
 ## basic example code
-
-<<<<<<< HEAD
-<<<<<<< HEAD
 library(dplyr)
 
 # load data
@@ -90,50 +52,21 @@ data('brfss', package='jointVIP')
 treatment = 'smoke'
 outcome = 'COPD'
 covariates = names(brfss)[!names(brfss) %in% c(treatment, outcome)]
-=======
-treatment = 'smoke'
-outcome = 'COPD'
-covariates = names(df)[!names(df) %in% c(treatment, outcome)]
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
-=======
-treatment = 'smoke'
-outcome = 'COPD'
-covariates = names(df)[!names(df) %in% c(treatment, outcome)]
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 
 ## select the pilot sample from random portion
 ## pilot data here are considered as 'external controls'
 ## can be a separate dataset; should be chosen with caution
 set.seed(1234895)
-pilot_prop = 0.2
-<<<<<<< HEAD
-<<<<<<< HEAD
+pilot_prop = 0.2 
 pilot_sample_num = sample(which(brfss %>% pull(treatment) == 0),
                           length(which(brfss %>% pull(treatment) == 0)) *
-=======
-pilot_sample_num = sample(which(df %>% pull(treatment) == 0),
-                          length(which(df %>% pull(treatment) == 0)) *
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
-=======
-pilot_sample_num = sample(which(df %>% pull(treatment) == 0),
-                          length(which(df %>% pull(treatment) == 0)) *
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
                           pilot_prop)
 
 ## set up pilot and analysis data
 ## we want to make sure these two data are non-overlapping
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 pilot_df = brfss[pilot_sample_num, ]
 analysis_df = brfss[-pilot_sample_num, ]
-=======
-pilot_df = df[pilot_sample_num, ]
-analysis_df = df[-pilot_sample_num, ]
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
-=======
-pilot_df = df[pilot_sample_num, ]
-analysis_df = df[-pilot_sample_num, ]
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
 
 ## minimal example
 brfss_jointVIP = create_jointVIP(treatment = treatment,

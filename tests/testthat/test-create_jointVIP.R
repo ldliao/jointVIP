@@ -1,14 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 test_that("create_jointVIP function creates a valid jointVIP S3 object", {
-=======
-library(testthat)
-test_that("create_jointVIP() creates a valid JointVIP object", {
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
-=======
-library(testthat)
-test_that("create_jointVIP() creates a valid JointVIP object", {
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
   set.seed(1234567891)
   data <- data.frame(year = rnorm(50, 200, 5),
                      pop = rnorm(50, 1000, 500),
@@ -35,8 +25,6 @@ test_that("create_jointVIP() creates a valid JointVIP object", {
 
   expect_s3_class(new_jointVIP, "jointVIP")
   expect_equal(dim(new_jointVIP$pilot_df), c(4,8))
-<<<<<<< HEAD
-<<<<<<< HEAD
 })
 
 test_that("error arise for invalid construction", {
@@ -64,10 +52,6 @@ test_that("error arise for invalid construction", {
                                  pilot_df,
                                  analysis_df)
 
-=======
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
-=======
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
   expect_error(create_jointVIP(treatment,
                                outcome,
                                covariates,
@@ -89,8 +73,6 @@ test_that("error arise for invalid construction", {
                                analysis_df),
                "`covariates` must be in both pilot_df and analysis_df",
                fixed=TRUE)
-<<<<<<< HEAD
-<<<<<<< HEAD
 
   expect_error(create_jointVIP(treatment,
                                outcome,
@@ -156,16 +138,6 @@ test_that("factored and numeric data are set correctly", {
   expect_equal(new_jointVIP$pilot_df$metro_N, as.numeric(pilot_df$metro == 'N'))
   expect_true(all(c("metro_N", "three_lvl_fac_A") %in% names(new_jointVIP$pilot_df)))
 
-=======
-  expect_equal(new_jointVIP$pilot_df$metro_N, as.numeric(pilot_df$metro == 'N'))
-  expect_true(all(c("metro_N", "three_lvl_fac_A") %in% names(new_jointVIP$pilot_df)))
-  
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
-=======
-  expect_equal(new_jointVIP$pilot_df$metro_N, as.numeric(pilot_df$metro == 'N'))
-  expect_true(all(c("metro_N", "three_lvl_fac_A") %in% names(new_jointVIP$pilot_df)))
-  
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
   data[['out']] = as.factor(data[['out']])
   pilot_sample_num = sample(which(data$trt == 0),
                             length(which(data$trt == 0)) *
@@ -177,8 +149,6 @@ test_that("factored and numeric data are set correctly", {
   covariates = names(analysis_df)[!names(analysis_df)
                                   %in% c(treatment, outcome)]
   expect_error(create_jointVIP(treatment,
-<<<<<<< HEAD
-<<<<<<< HEAD
                                outcome,
                                covariates,
                                pilot_df,
@@ -186,19 +156,3 @@ test_that("factored and numeric data are set correctly", {
                "`outcome` must be denoting a numeric variable",
                fixed=TRUE)
 })
-=======
-=======
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
-                                              outcome,
-                                              covariates,
-                                              pilot_df,
-                                              analysis_df),
-               "`outcome` must be denoting a numeric variable",
-               fixed=TRUE)
-  
-})
-
-<<<<<<< HEAD
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
-=======
->>>>>>> 38802c698b7513bb5bd529d7c210b18f5081a4d5
