@@ -11,7 +11,7 @@
 
 * Reorganized code as per reviewer's suggestion
 
-## jointVIP 0.1.2
+# jointVIP 0.1.2
 
 * Post-adjusted estimation for weights are now updated accordingly
 
@@ -33,7 +33,7 @@
 
 * Currently working on adding weighted version of SMD for easier post-adjusted estimation for weights
 
-## jointVIP 0.1.1
+# jointVIP 0.1.1
 
 * Added logo, installation, status badges
 
