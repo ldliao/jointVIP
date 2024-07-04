@@ -195,3 +195,4 @@ All of the options from above can be used; below will only address additional pa
 * `plot()` function includes two new parameters:
   - `add_post_labs` TRUE (default) shows the variable labels post-matching/weighting; FALSE suppresses it.
   - `post_label_cut_bias` numeric number for variable labels; only used when `add_post_labs` is TRUE.
+
