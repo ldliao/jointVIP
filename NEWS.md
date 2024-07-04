@@ -1,7 +1,7 @@
 `jointVIP` News and Updates
 ======
 
-# jointVIP development version on 0.1.2
+# jointVIP 0.1.2.001
 
 * Made documents more explicit on the user-inputs and edits for clarity
 
@@ -25,7 +25,7 @@
 
 * Fixed a bug with NA measures
 
-# jointVIP development version on 0.1.1
+# jointVIP 0.1.1.001
 
 * Current version hosted on GitHub
 
