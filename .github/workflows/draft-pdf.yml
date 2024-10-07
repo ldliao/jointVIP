@@ -14,4 +14,5 @@ jobs:
           # This should be the path to the paper within your repo.
           paper-path: paper/paper.md
       - name: Upload
+        working-directory: paper/
         run: cat paper.pdf
