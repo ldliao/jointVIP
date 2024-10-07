@@ -11,9 +11,9 @@ authors:
   orcid: 0000-0002-0409-6586
 date: "3 February 2023"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
-  pdf_document: default
 bibliography: paper.bib
 tags:
 - R
