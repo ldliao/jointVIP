@@ -1,93 +1,33 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/404.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/articles/additional_options.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/articles/jointVIP.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/index.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/reference/add_bias_curves.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/reference/add_variable_labels.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/reference/bootstrap.plot.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/reference/brfss.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/reference/ceiling_dec.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/reference/check_measures.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/reference/create_jointVIP.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/reference/create_post_jointVIP.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/reference/floor_dec.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/reference/get_boot_measures.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/reference/get_measures.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/reference/get_post_measures.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/reference/one_hot.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/reference/plot.jointVIP.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/reference/plot.post_jointVIP.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/reference/print.jointVIP.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/reference/print.post_jointVIP.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/reference/summary.jointVIP.html</loc>
-  </url>
-  <url>
-    <loc>https://ldliao.github.io/jointVIP/reference/summary.post_jointVIP.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://ldliao.github.io/jointVIP/404.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/CONTRIBUTING.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/LICENSE-text.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/LICENSE.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/articles/additional_options.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/articles/index.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/articles/jointVIP.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/authors.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/index.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/news/index.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/reference/add_bias_curves.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/reference/add_variable_labels.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/reference/bootstrap.plot.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/reference/brfss.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/reference/ceiling_dec.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/reference/check_measures.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/reference/create_jointVIP.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/reference/create_post_jointVIP.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/reference/floor_dec.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/reference/get_boot_measures.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/reference/get_measures.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/reference/get_post_measures.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/reference/index.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/reference/one_hot.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/reference/plot.jointVIP.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/reference/plot.post_jointVIP.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/reference/print.jointVIP.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/reference/print.post_jointVIP.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/reference/summary.jointVIP.html</loc></url>
+<url><loc>https://ldliao.github.io/jointVIP/reference/summary.post_jointVIP.html</loc></url>
 </urlset>
+
