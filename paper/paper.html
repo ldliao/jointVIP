@@ -1699,7 +1699,7 @@ relationship of each covariate with the outcome variable, which
 substantially influences the degree of bias incurred by ignoring it.</p>
 <p>To improve observational study design, we propose the joint variable
 importance plot (jointVIP) <span class="citation">(Liao et al.
-2023)</span>, implemented in the <code>jointVIP</code> package. The
+2024)</span>, implemented in the <code>jointVIP</code> package. The
 jointVIP represents both treatment and outcome relationships for each
 variable in a single image: each variable’s SMD is plotted against an
 outcome correlation measure (computed in a pilot control sample to avoid
@@ -1766,7 +1766,7 @@ new_jointVIP = create_jointVIP(treatment = treatment,
 <p>The <code>plot()</code> function displays a jointVIP (Figure 1). The
 x-axis describes treatment imbalance in SMD (computed with a denominator
 based on the pilot sample as in <span class="citation">(Liao et al.
-2023)</span>). The y-axis describes outcome correlations in the pilot
+2024)</span>). The y-axis describes outcome correlations in the pilot
 sample. The <code>summary()</code> function outputs the maximum absolute
 bias and the number of variables required for adjustment above the
 absolute bias tolerance, <em>bias_tol</em>. The <em>bias_tol</em>
@@ -1848,10 +1848,11 @@ the user.</p>
 </div>
 <div id="acknowledgements" class="section level1">
 <h1>Acknowledgements</h1>
-<p>The authors thank Emily Z. Wang for helpful comments. SDP is
-supported by Hellman Family Fellowship and by the National Science
-Foundation (grant 2142146). LDL is supported by National Science
-Foundation Graduate Research Fellowship (grant DGE 2146752).</p>
+<p>The authors thank Emily Z. Wang and all reviewers for helpful
+comments. SDP is supported by Hellman Family Fellowship and by the
+National Science Foundation (grant 2142146). LDL is supported by
+National Science Foundation Graduate Research Fellowship (grant DGE
+2146752).</p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>
@@ -1887,18 +1888,18 @@ Computational and Graphical Statistics</em> 15 (3): 609–27. <a href="https://d
 </div>
 <div id="ref-causaldata" class="csl-entry">
 Huntington-Klein, Nick, and Malcolm Barrett. 2021. <em>Causaldata:
-Example Data Sets for Causal Inference Textbooks</em>. <a href="https://CRAN.R-project.org/package=causaldata">https://CRAN.R-project.org/package=causaldata</a>.
+Example Data Sets for Causal Inference Textbooks</em>. <a href="https://doi.org/10.32614/cran.package.causaldata">https://doi.org/10.32614/cran.package.causaldata</a>.
 </div>
 <div id="ref-lalonde1986evaluating" class="csl-entry">
 LaLonde, Robert J. 1986. <span>“Evaluating the Econometric Evaluations
 of Training Programs with Experimental Data.”</span> <em>The American
 Economic Review</em>, 604–20.
 </div>
-<div id="ref-liao2023" class="csl-entry">
+<div id="ref-liao2024" class="csl-entry">
 Liao, Lauren D, Yeyi Zhu, Amanda L Ngo, Rana F Chehab, and Samuel D
-Pimentel. 2023. <span>“Using Joint Variable Importance Plots to
-Prioritize Variables in Assessing the Impact of Glyburide on Adverse
-Birth Outcomes.”</span> <em>arXiv Preprint arXiv:2301.09754</em>.
+Pimentel. 2024. <span>“Prioritizing Variables for Observational Study
+Design Using the Joint Variable Importance Plot.”</span> <em>The
+American Statistician</em>, 1–9. <a href="https://doi.org/10.1080/00031305.2024.2303419">https://doi.org/10.1080/00031305.2024.2303419</a>.
 </div>
 <div id="ref-cran" class="csl-entry">
 R Core Team. 2020. <em>R: A Language and Environment for Statistical
@@ -1914,7 +1915,7 @@ Statistician</em> 39 (1): 33–38. <a href="https://doi.org/10.1017/cbo978051181
 <div id="ref-stuart2011" class="csl-entry">
 Stuart, Elizabeth A, Gary King, Kosuke Imai, and Daniel Ho. 2011.
 <span>“MatchIt: Nonparametric Preprocessing for Parametric Causal
-Inference.”</span> <em>Journal of Statistical Software</em>.
+Inference.”</span> <em>Journal of Statistical Software</em>. <a href="https://doi.org/10.18637/jss.v042.i08">https://doi.org/10.18637/jss.v042.i08</a>.
 </div>
 </div>
 </div>

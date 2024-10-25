@@ -38,7 +38,7 @@ Consider an observational study to measure the effect of a binary treatment vari
 
 Current practice for selecting variables for adjustment focuses primarily on understanding the treatment relationship, via tools such as balance tables and the Love plot [@ahmed2006; @greifer2021; @hansenbowers2008; @rosenbuam1985; @stuart2011]. A key metric is the standardized mean difference (SMD), or the difference in treated and control means over a covariate measure in standard deviations. Researchers commonly try to adjust so that all SMD values are moderately small, or focus on adjustments for variables with the largest initial SMD. However, these approaches neglect important information about the relationship of each covariate with the outcome variable, which substantially influences the degree of bias incurred by ignoring it.
 
-To improve observational study design, we propose the joint variable importance plot (jointVIP) [@liao2023], implemented in the `jointVIP` package. The jointVIP represents both treatment and outcome relationships for each variable in a single image: each variable's SMD is plotted against an outcome correlation measure (computed in a pilot control sample to avoid bias from multiple use of outcome data). Bias curves based on unadjusted, simple one-variable omitted variable bias models are plotted to improve variable comparison. The jointVIP provides valuable insight into variable importance and can be used to specify key parameters in existing matching and weighting methods.
+To improve observational study design, we propose the joint variable importance plot (jointVIP) [@liao2024], implemented in the `jointVIP` package. The jointVIP represents both treatment and outcome relationships for each variable in a single image: each variable's SMD is plotted against an outcome correlation measure (computed in a pilot control sample to avoid bias from multiple use of outcome data). Bias curves based on unadjusted, simple one-variable omitted variable bias models are plotted to improve variable comparison. The jointVIP provides valuable insight into variable importance and can be used to specify key parameters in existing matching and weighting methods.
 
 # Development
 
@@ -80,7 +80,7 @@ new_jointVIP = create_jointVIP(treatment = treatment,
                                analysis_df = analysis_df)
 ```
 
-The `plot()` function displays a jointVIP (Figure 1). The x-axis describes treatment imbalance in SMD (computed with a denominator based on the pilot sample as in [@liao2023]). The y-axis describes outcome correlations in the pilot sample. The `summary()` function outputs the maximum absolute bias and the number of variables required for adjustment above the absolute bias tolerance, *bias_tol*. The *bias_tol* parameter can be used in the `print()` function to see which variables are above the desired tolerance. Additional tuning parameters can be specified in these functions, for details and examples, see [the additional options vignette](https://cran.rstudio.com/web/packages/jointVIP/vignettes/additional_options.html).
+The `plot()` function displays a jointVIP (Figure 1). The x-axis describes treatment imbalance in SMD (computed with a denominator based on the pilot sample as in [@liao2024]). The y-axis describes outcome correlations in the pilot sample. The `summary()` function outputs the maximum absolute bias and the number of variables required for adjustment above the absolute bias tolerance, *bias_tol*. The *bias_tol* parameter can be used in the `print()` function to see which variables are above the desired tolerance. Additional tuning parameters can be specified in these functions, for details and examples, see [the additional options vignette](https://cran.rstudio.com/web/packages/jointVIP/vignettes/additional_options.html).
 
 ```r
 plot(new_jointVIP)
@@ -140,7 +140,7 @@ We have developed user-friendly software to prioritize variables for adjustment 
 
 # Acknowledgements
 
-The authors thank Emily Z. Wang for helpful comments.
+The authors thank Emily Z. Wang and all reviewers for helpful comments.
 SDP is supported by Hellman Family Fellowship and by the National Science Foundation (grant 2142146). LDL is supported by National Science Foundation Graduate Research Fellowship (grant DGE 2146752). 
 
 # References
