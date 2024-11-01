@@ -39,7 +39,7 @@ System (BRFSS) example to answer the causal question: Does smoking
 increase the risk of chronic obstructive pulmonary disease (COPD)? The
 data and background is inspired by [Clay Ford’s work from University of
 Virginia
-Library](https://data.library.virginia.edu/getting-started-with-matching-methods/).
+Library](https://library.virginia.edu/data/articles/getting-started-with-matching-methods).
 First, the data is cleaned to only have numeric variables, i.e., all
 factored variables are transformed via one-hot-encoding. Treatment
 variable `smoke` only contains 0 (control) and 1 (treatment).
