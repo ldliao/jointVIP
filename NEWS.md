@@ -1,6 +1,10 @@
 `jointVIP` News and Updates
 ======
 
+## jointVIP 1.0.0
+
+* corrected package paper details and ready for release and archive
+
 ## jointVIP development version 0.1.2.001
 
 * Made documents more explicit on the user-inputs and edits for clarity
