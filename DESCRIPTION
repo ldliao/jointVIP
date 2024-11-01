@@ -1,6 +1,6 @@
 Package: jointVIP
 Title: Prioritize Variables with Joint Variable Importance Plot in Observational Study Design
-Version: 0.1.2.001
+Version: 1.0.0
 Authors@R: c(person(given = "Lauren D.",
            family = "Liao",
            role = c("aut", "cre"),
