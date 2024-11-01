@@ -10,7 +10,7 @@
 [![status](https://joss.theoj.org/papers/e129c0419dd539da37625f5517de1124/status.svg)](https://joss.theoj.org/papers/e129c0419dd539da37625f5517de1124)
 [![test-coverage](https://github.com/ldliao/jointVIP/actions/workflows/test-coverage.yaml/badge.svg?branch=main)](https://github.com/ldliao/jointVIP/actions/workflows/test-coverage.yaml)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](https://opensource.org/license/mit/)
+[![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](https://opensource.org/license/mit)
 
 <!-- badges: end -->
 
