@@ -1,0 +1,38 @@
+cff-version: "1.2.0"
+authors:
+- family-names: Liao
+  given-names: Lauren D.
+  orcid: "https://orcid.org/0000-0003-4697-6909"
+- family-names: Pimentel
+  given-names: Samuel D.
+  orcid: "https://orcid.org/0000-0002-0409-6586"
+contact:
+- family-names: Liao
+  given-names: Lauren D.
+  orcid: "https://orcid.org/0000-0003-4697-6909"
+doi: 10.5281/zenodo.14020544
+message: If you use this software, please cite our article in the
+  Journal of Open Source Software.
+preferred-citation:
+  authors:
+  - family-names: Liao
+    given-names: Lauren D.
+    orcid: "https://orcid.org/0000-0003-4697-6909"
+  - family-names: Pimentel
+    given-names: Samuel D.
+    orcid: "https://orcid.org/0000-0002-0409-6586"
+  date-published: 2024-11-12
+  doi: 10.21105/joss.06093
+  issn: 2475-9066
+  issue: 103
+  journal: Journal of Open Source Software
+  publisher:
+    name: Open Journals
+  start: 6093
+  title: "jointVIP: Prioritizing variables in observational study design
+    with joint variable importance plot in R"
+  type: article
+  url: "https://joss.theoj.org/papers/10.21105/joss.06093"
+  volume: 9
+title: "jointVIP: Prioritizing variables in observational study design
+  with joint variable importance plot in R"
