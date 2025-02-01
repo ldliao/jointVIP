@@ -80,7 +80,7 @@ covariates = names(brfss)[!names(brfss) %in% c(treatment, outcome)]
 set.seed(1234895)
 pilot_prop = 0.2
 pilot_sample_num = sample(which(brfss %>% pull(treatment) == 0),
-                          length(which(brfss %>% pull(treatment) == 0)) *
+                          length(which(brfss %>% pull(treatment) == 0)) * pilot_prop)
 
 
 ## set up pilot and analysis data
